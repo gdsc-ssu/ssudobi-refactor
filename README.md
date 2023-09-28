@@ -34,7 +34,7 @@
 ## Contributing
 
 <p>
-<a href="https://www.instagram.com/">
+<a href="https://github.com/SujinKim1127">
     <img src="https://avatars.githubusercontent.com/u/58413633?v=4" width="90">
 </a>
 <a href="https://github.com/citrusinesis">

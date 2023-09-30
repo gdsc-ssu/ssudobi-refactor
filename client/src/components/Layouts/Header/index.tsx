@@ -25,6 +25,7 @@ const Header = ({ title, ...props }: Props) => {
 
 const HeaderWrapper = styled.div`
   width: 100%;
+  min-width: 32rem;
   height: 4.4rem;
 
   position: sticky;

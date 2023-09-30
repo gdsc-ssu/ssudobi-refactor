@@ -46,7 +46,7 @@ const buttonStyles: Record<Theme, SerializedStyles> = {
 
 const ButtonWrapper = styled.button<{ theme: Theme }>`
   width: 100%;
-  min-width: 32rem;
+  min-width: 25rem;
   height: 5rem;
   border-radius: 5rem;
   border: none;

@@ -49,7 +49,7 @@ const buttonStyles: Record<Theme, SerializedStyles> = {
 const ButtonWrapper = styled.button<{ theme: Theme }>`
   ${flex('row', 'center', 'center', 0)};
   flex: 1;
-  min-width: 10rem;
+  min-width: 8rem;
   height: 4rem;
   border-radius: 5rem;
   border: none;

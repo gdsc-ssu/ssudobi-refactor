@@ -27,6 +27,7 @@
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.0",
+    "@emotion/babel-preset-css-prop": "^11.11.0",
     "@storybook/addon-essentials": "^7.5.0-alpha.3",
     "@storybook/addon-interactions": "^7.5.0-alpha.3",
     "@storybook/addon-links": "^7.5.0-alpha.3",

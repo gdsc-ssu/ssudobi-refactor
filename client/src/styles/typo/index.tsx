@@ -69,6 +69,11 @@ export const TYPO: TypoType = {
     [TEXT_STYLE_WEIGHT.Reg]: css`
       ${pretendardSemibold.style};
       font-size: 1.6rem;
+    `,
+    /** 얘는 조금 특별하게 굵기 차이가 아닌 간격차이로 인지해주세용 */
+    [TEXT_STYLE_WEIGHT.Lg]: css`
+      ${pretendardSemibold.style};
+      font-size: 1.6rem;
       line-height: -0.08rem;
     `,
   },

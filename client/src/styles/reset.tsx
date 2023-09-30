@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { mq } from './breakpoints';
+import { COLORS } from './colors';
 
 const reset = css`
   html,
@@ -10,7 +11,7 @@ const reset = css`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-color: #f9f9f9;
+    background-color: ${COLORS.white};
     font-size: 9px;
 
     ${mq[2]} {

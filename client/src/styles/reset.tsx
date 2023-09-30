@@ -21,7 +21,7 @@ const reset = css`
       font-size: 10px;
     }
     ${mq[6]} {
-      font-size: 11px;
+      font-size: 10px;
     }
   }
 

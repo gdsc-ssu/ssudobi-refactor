@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -22,7 +24,15 @@
     "react-dom": "latest"
   },
   "devDependencies": {
-    "@types/node": "latest",
+    "@storybook/addon-essentials": "^7.5.0-alpha.3",
+    "@storybook/addon-interactions": "^7.5.0-alpha.3",
+    "@storybook/addon-links": "^7.5.0-alpha.3",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.5.0-alpha.3",
+    "@storybook/react": "^7.5.0-alpha.3",
+    "@storybook/react-vite": "^7.5.0-alpha.3",
+    "@storybook/testing-library": "^0.2.1",
+    "@types/node": "20.7.2",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
@@ -31,7 +41,10 @@
     "eslint-config-next": "latest",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-storybook": "^0.6.14",
     "prettier": "^3.0.3",
-    "typescript": "latest"
+    "storybook": "^7.5.0-alpha.3",
+    "typescript": "latest",
+    "vite": "^4.4.9"
   }
 }

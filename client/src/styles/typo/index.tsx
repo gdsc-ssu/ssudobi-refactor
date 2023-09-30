@@ -93,6 +93,10 @@ export const TYPO: TypoType = {
     `,
   },
   [TEXT_STYLE_SIZE.text1]: {
+    [TEXT_STYLE_WEIGHT.Sb]: css`
+      ${pretendardSemibold.style};
+      font-size: 1.4rem;
+    `,
     [TEXT_STYLE_WEIGHT.Md]: css`
       ${pretendardMedium.style};
       font-size: 1.4rem;

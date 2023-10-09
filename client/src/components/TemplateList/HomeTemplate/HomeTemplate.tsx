@@ -16,7 +16,7 @@ const HomeTemplate = () => {
           <styles.PersonInfo>정명진 / 20181234</styles.PersonInfo>
         </styles.PeopleBox>
       </styles.InfoBox>
-      <styles.PlusBox></styles.PlusBox>
+      <styles.PlusBox>+</styles.PlusBox>
     </styles.Container>
   );
 };

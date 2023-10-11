@@ -1,9 +1,9 @@
 import type { StoryObj } from '@storybook/react';
-import DateButton from '.';
+import ItemButton from '.';
 
 const meta = {
-  title: 'Buttons/DateButton',
-  component: DateButton,
+  title: 'Buttons/ItemButton',
+  component: ItemButton,
   tags: ['autodocs'],
 };
 

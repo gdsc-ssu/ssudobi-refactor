@@ -19,7 +19,7 @@ interface Props extends ComponentProps<'button'> {
   checked: boolean;
 }
 
-const DateButton = ({ title, disabled, checked, ...props }: Props) => {
+const ItemButton = ({ title, disabled, checked, ...props }: Props) => {
   const buttonStyleInjector = (disabled: boolean, checked: boolean) => {
     if (disabled) return buttonStyles.disabled;
     if (checked) return buttonStyles.checked;
@@ -52,17 +52,17 @@ const buttonStyles = {
     }
   `,
   disabled: css`
-    background-color: ${COLORS.primary};
-    border: 0.05rem solid ${COLORS.primary};
-    color: ${COLORS.white};
-    cursor: pointer;
-  `,
-  checked: css`
     background-color: ${COLORS.grey6};
     border: 0.05rem solid ${COLORS.grey3};
     color: ${COLORS.grey3};
     cursor: default;
   `,
+  checked: css`
+    background-color: ${COLORS.primary};
+    border: 0.05rem solid ${COLORS.primary};
+    color: ${COLORS.white};
+    cursor: pointer;
+  `,
 };
 
-export default DateButton;
+export default ItemButton;

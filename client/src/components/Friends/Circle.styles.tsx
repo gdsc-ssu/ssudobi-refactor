@@ -1,15 +1,16 @@
 import { COLORS } from '@/styles/colors';
+import { transform, transition } from '@/styles/tokens';
 import styled from '@emotion/styled';
 
 export const CircleContainer = styled.div<{
   type: 'friend' | 'plus';
 }>`
-  border: 3.51px solid
+  border: 0.3rem solid
     ${(props) => (props.type === 'friend' ? COLORS.primary : COLORS.grey3)};
 
-  width: 42.76px;
-  height: 42.76px;
-  border-radius: 50px;
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,4 +21,13 @@ export const CircleContainer = styled.div<{
   padding-top: ${(props) => (props.type === 'friend' ? 0 : '3px')};
   color: ${(props) =>
     props.type === 'friend' ? COLORS.primary : COLORS.grey3};
+
+  position: relative;
+  ${transition('0.2s', 'ease')};
+
+  cursor: ${(props) => (props.type === 'friend' ? 'default' : 'pointer')};
+
+  &:hover {
+    ${transform('translateY(-0.2rem)')}
+  }
 `;

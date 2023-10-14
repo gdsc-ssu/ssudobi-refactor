@@ -1,9 +1,8 @@
 import * as styles from './Filter.styles';
 import { useState } from 'react';
 import Image from 'next/image';
-import SlideDown from '../../../public/images/TableFilter/SlideDown.svg';
-import SlideTop from '../../../public/images/TableFilter/SlideTop.svg';
-import React from 'react';
+import SlideDown from '@/assets/svg/SlideDown.svg';
+import SlideTop from '@/assets/svg/SlideTop.svg';
 
 interface FProps {
   time: string;

@@ -1,0 +1,34 @@
+name: Chromatic Deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "client/**"
+
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build Storybook
+        run: yarn run build-storybook
+
+      - name: Run Chromatic
+        uses: chromaui/action@v1
+        with:
+          working-directory: client
+          projectToken: ${{ secrets.STORYBOOK_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}

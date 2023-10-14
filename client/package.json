@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_e630dc4df9f544e"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -46,6 +47,7 @@
     "@types/react-dom": "^18.2.12",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
+    "chromatic": "^7.4.0",
     "eslint": "^8.51.0",
     "eslint-config-next": "^13.5.4",
     "eslint-config-prettier": "^9.0.0",
@@ -54,5 +56,7 @@
     "prettier": "^3.0.3",
     "storybook": "^7.5.0-alpha.3",
     "typescript": "latest"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "client@0.1.0"
 }

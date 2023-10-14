@@ -1,8 +1,13 @@
 import styled from '@emotion/styled';
-import Image from 'next/image';
-import Logo from '../../../../public/assets/companions/logo-blue.svg';
+import { css } from '@emotion/react';
+import { TYPO } from '@/styles/typo';
+import { ComponentProps } from 'react';
+import { COLORS } from '@/styles/colors';
+import { flex, transition } from '@/styles/tokens';
+import CloseButton from '@/assets/svg/x-button.svg';
+import { companionIconGetter } from '@/utils/func/companionIconGetter';
 
-interface ModalProps {
+interface ModalProps extends ComponentProps<'div'> {
   /**
    * 이름
    */
@@ -19,51 +24,76 @@ interface ModalProps {
    * 선택 여부
    */
   isSelected: boolean;
+  /**
+   * 제거 가능 여부
+   */
+  isRemovable?: boolean;
 }
 
-const Companion = ({ name, id, memberNo, isSelected }: ModalProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const lid = id;
+const Companion = ({
+  name,
+  id,
+  memberNo,
+  isSelected,
+  isRemovable,
+  ...props
+}: ModalProps) => {
+  const ProfileIcon = companionIconGetter();
+
+  const getContainerStyle = () => {
+    if (isSelected) return containerStyle.selected;
+    else return containerStyle.selectable;
+  };
+
   return (
-    <Container isSelected={isSelected}>
-      <Image width={35} src={Logo} alt="profileLogo" />
-      <Profile>
-        <Name>{name}</Name>
-        <MemberNo>{memberNo}</MemberNo>
-      </Profile>
+    <Container isSelected={isSelected} css={getContainerStyle} {...props}>
+      <ProfileWrapper>
+        <ProfileIcon css={logoStyle} />
+        <Profile>
+          <span css={TYPO.title3.Md}>{name}</span>
+          <span css={TYPO.caption.Reg}>{memberNo}</span>
+        </Profile>
+      </ProfileWrapper>
+      {isRemovable && <CloseButton />}
     </Container>
   );
 };
 
 const Container = styled.div<{ isSelected: boolean }>`
-  background-color: ${(props) => (props.isSelected ? '#d7eafc' : '#f7f7f7')};
-  padding: 15px 30px;
+  min-width: 25rem;
+  padding: 1.5rem 3rem;
+  ${flex('row', 'between', 'center', 0)};
+  ${transition('0.2s', 'linear')};
 
-  display: flex;
+  cursor: pointer;
+`;
 
-  align-items: center;
+const ProfileWrapper = styled.div`
+  flex: 1;
+  ${flex('row', 'start', 'center', 0)};
 `;
 
 const Profile = styled.div`
-  margin-left: 15px;
-  display: flex;
-  flex-direction: column;
+  margin-left: 1.5rem;
+  ${flex('column', 'start', 'start', 0)};
 `;
 
-const Name = styled.div`
-  font-family: Pretendard Variable;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+const logoStyle = css`
+  width: 3.5rem;
+  height: 3.5rem;
 `;
 
-const MemberNo = styled.div`
-  font-family: Pretendard Variable;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`;
+const containerStyle = {
+  selectable: css`
+    background-color: ${COLORS.grey8};
+
+    &:hover {
+      background-color: ${COLORS.grey6};
+    }
+  `,
+  selected: css`
+    background-color: ${COLORS.primaryWeak};
+  `,
+};
 
 export default Companion;

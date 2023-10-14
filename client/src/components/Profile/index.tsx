@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
-import Image from 'next/image';
 import { TYPO } from '@/styles/typo';
-import Logo from '../../../public/assets/companions/logo-blue.svg';
+import { companionIconGetter } from '@/utils/func/companionIconGetter';
+import { css } from '@emotion/react';
+import { flex } from '@/styles/tokens';
+import { ComponentProps } from 'react';
 
-interface ModalProps {
+interface ModalProps extends ComponentProps<'div'> {
   /**
    * 이름
    */
@@ -18,42 +20,34 @@ interface ModalProps {
   id: string;
 }
 
-const Profile = ({ name, id, memberNo }: ModalProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const lid = id;
+const Profile = ({ name, id, memberNo, ...props }: ModalProps) => {
+  const ProfileIcon = companionIconGetter();
+
   return (
-    <Container>
-      <Image width={50} src={Logo} alt="profileLogo" />
+    <Container {...props}>
+      <ProfileIcon css={logoStyle} />
       <InfoDiv>
-        <Name>{name}님, 반가워요!</Name>
-        <MemberNo>{memberNo}</MemberNo>
+        <span css={TYPO.title3.Sb}>{name}님, 반가워요!</span>
+        <span css={TYPO.caption.Reg}>{memberNo}</span>
       </InfoDiv>
     </Container>
   );
 };
 
 const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 66px;
+  ${flex('row', 'center', 'center', 0)};
+  height: 6.6rem;
 `;
 
 const InfoDiv = styled.div`
-  margin-left: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  margin-left: 1.5rem;
+
+  ${flex('column', 'center', 'start', 0.3)};
 `;
 
-const Name = styled.div`
-  ${TYPO.title3.Sb};
-`;
-
-const MemberNo = styled.div`
-  font-family: Pretendard Variable;
-  font-size: 13px;
-  font-style: normal;
+const logoStyle = css`
+  width: 3.5rem;
+  height: 3.5rem;
 `;
 
 export default Profile;

@@ -26,7 +26,7 @@ const NavHeader = ({ title, ...props }: Props) => {
 const HeaderWrapper = styled.div`
   width: 100%;
   min-width: 32rem;
-  height: 4.4rem;
+  height: 5rem;
 
   position: sticky;
   top: 0px;

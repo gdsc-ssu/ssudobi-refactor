@@ -19,18 +19,18 @@ const hovering = css`
   transition: all 0.2s;
 
   &:hover {
-    transform: scale(1.02) translateY(-2px);
+    transform: scale(1.02) translateY(-1px);
   }
 
   &:active {
-    transform: scale(0.99) translateY(1px);
+    transform: scale(0.99) translateY(0.5px);
   }
 `;
 
 const HeaderWrapper = styled.div`
   width: 100%;
   min-width: 32rem;
-  height: 4.4rem;
+  height: 5rem;
   ${flex('row', 'between', 'center', 0)};
 
   position: sticky;

@@ -9,6 +9,7 @@ export const COLORS = {
   grey4: '#CCCCCC',
   grey5: '#D7D7D7',
   grey6: '#F3F5F8',
+  grey7: '#F8FAFC',
   white: '#FEFFFF',
   primaryWhite: '#fcfdff',
 };

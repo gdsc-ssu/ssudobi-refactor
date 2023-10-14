@@ -15,7 +15,5 @@ export const Default: Story = {
   args: {
     title: '모달 제목입니다',
     message: '모달 내용입니다',
-    setIsOpen: () => {},
-    isOpen: false,
   },
 };

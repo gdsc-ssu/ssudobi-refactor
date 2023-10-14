@@ -14,4 +14,5 @@ export const COLORS = {
   white: '#FEFFFF',
   primaryWhite: '#fcfdff',
   primaryWeak: '#D7EAFC',
+  disabled: '#B5B5B5',
 };

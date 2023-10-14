@@ -16,7 +16,5 @@ export const Default: Story = {
     title: '모달 제목입니다',
     message: '모달 내용입니다',
     onCancle: () => {},
-    onConfirm: () => {},
-    isOpen: false,
   },
 };

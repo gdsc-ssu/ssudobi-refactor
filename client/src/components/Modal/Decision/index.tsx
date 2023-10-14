@@ -1,8 +1,11 @@
-import { COLORS } from '@/styles/colors';
-import { TYPO } from '@/styles/typo';
+import { ComponentProps } from 'react';
+import { ModalButton, Message, ModalContent, Title } from '../common';
 import styled from '@emotion/styled';
+import { flex } from '@/styles/tokens';
+import { css } from '@emotion/react';
+import { COLORS } from '@/styles/colors';
 
-interface ModalProps {
+interface ModalProps extends ComponentProps<'button'> {
   /**
    * 모달에 표시할 타이틀
    */
@@ -12,83 +15,35 @@ interface ModalProps {
    */
   message: string;
   /**
-   * 확인 버튼 눌렀을 때 실행되는 함수
-   */
-  onConfirm: () => void;
-  /**
    * 취소 버튼 눌렀을 때 실행되는 함수
    */
   onCancle: () => void;
-  /**
-   * 모달이 표시되어야 하는지 여부
-   */
-  isOpen: boolean;
 }
 
-const DecisionModal = ({
-  title,
-  message,
-  onCancle,
-  onConfirm,
-  isOpen,
-}: ModalProps) => {
-  if (!isOpen) return null;
-
+const DecisionModal = ({ title, message, onCancle, ...props }: ModalProps) => {
   return (
     <ModalContent>
       <Title>{title}</Title>
       <Message>{message}</Message>
-      <div style={{ display: 'flex' }}>
-        <CancleButton onClick={onCancle}>닫기</CancleButton>
-        <ConfirmButton onClick={onConfirm}>확인</ConfirmButton>
-      </div>
+      <ButtonsWrapper>
+        <ModalButton css={closeStyle} onClick={onCancle}>
+          닫기
+        </ModalButton>
+        <ModalButton {...props}>확인</ModalButton>
+      </ButtonsWrapper>
     </ModalContent>
   );
 };
 
-const ModalContent = styled.div`
-  background-color: ${COLORS.white};
-  padding: 2rem;
-  border-radius: 10px;
-  width: 300px;
-  text-align: center;
+const ButtonsWrapper = styled.div`
+  width: 100%;
+  padding: 0rem 2rem;
+  ${flex('row', 'center', 'center', 0.8)};
 `;
 
-const ConfirmButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  background-color: ${COLORS.primary};
-  color: ${COLORS.white};
-  border-radius: 500px;
-  height: 32px;
-  width: 100px;
-  cursor: pointer;
-  ${TYPO.text1.Md};
-`;
-
-const CancleButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  background-color: #b5b5b5;
-  color: ${COLORS.white};
-  border-radius: 500px;
-  height: 32px;
-  width: 100px;
-  cursor: pointer;
-  ${TYPO.text1.Md};
-`;
-
-const Title = styled.div`
-  ${TYPO.text1.Md};
-  text-align: center;
-`;
-
-const Message = styled.p`
-  margin-bottom: 22px;
+const closeStyle = css`
+  background-color: ${COLORS.disabled};
+  color: white;
 `;
 
 export default DecisionModal;

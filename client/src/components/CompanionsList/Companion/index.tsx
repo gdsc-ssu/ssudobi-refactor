@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import Logo from '@/assets/svg/logo-blue.svg';
 import { css } from '@emotion/react';
 import { TYPO } from '@/styles/typo';
 import { ComponentProps } from 'react';
 import { COLORS } from '@/styles/colors';
 import { flex, transition } from '@/styles/tokens';
 import CloseButton from '@/assets/svg/x-button.svg';
+import { companionIconGetter } from './companionIconGetter';
 
 interface ModalProps extends ComponentProps<'div'> {
   /**
@@ -38,6 +38,8 @@ const Companion = ({
   isRemovable,
   ...props
 }: ModalProps) => {
+  const ProfileIcon = companionIconGetter();
+
   const getContainerStyle = () => {
     if (isSelected) return containerStyle.selected;
     else return containerStyle.selectable;
@@ -46,7 +48,7 @@ const Companion = ({
   return (
     <Container isSelected={isSelected} css={getContainerStyle} {...props}>
       <ProfileWrapper>
-        <Logo css={logoStyle} />
+        <ProfileIcon css={logoStyle} />
         <Profile>
           <span css={TYPO.title3.Md}>{name}</span>
           <span css={TYPO.caption.Reg}>{memberNo}</span>

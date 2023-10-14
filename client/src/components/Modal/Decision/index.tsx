@@ -26,10 +26,12 @@ const DecisionModal = ({ title, message, onCancle, ...props }: ModalProps) => {
       <Title>{title}</Title>
       <Message>{message}</Message>
       <ButtonsWrapper>
-        <ModalButton css={closeStyle} onClick={onCancle}>
+        <ModalButton css={[closeStyle, commonStyle]} onClick={onCancle}>
           닫기
         </ModalButton>
-        <ModalButton {...props}>확인</ModalButton>
+        <ModalButton css={commonStyle} {...props}>
+          확인
+        </ModalButton>
       </ButtonsWrapper>
     </ModalContent>
   );
@@ -39,6 +41,11 @@ const ButtonsWrapper = styled.div`
   width: 100%;
   padding: 0rem 2rem;
   ${flex('row', 'center', 'center', 0.8)};
+`;
+
+const commonStyle = css`
+  flex: 1;
+  max-width: 20rem;
 `;
 
 const closeStyle = css`

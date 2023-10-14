@@ -29,6 +29,6 @@ jobs:
       - name: Run Chromatic
         uses: chromaui/action@v1
         with:
-          working-directory: client
+          workingDir: client
           projectToken: ${{ secrets.STORYBOOK_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}

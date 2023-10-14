@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import { ModalButton, Message, ModalContent, Title } from '../common';
+import { css } from '@emotion/react';
 
 interface ModalProps extends ComponentProps<'button'> {
   /**
@@ -17,9 +18,15 @@ const ConfirmModal = ({ title, message, ...props }: ModalProps) => {
     <ModalContent>
       <Title>{title}</Title>
       <Message>{message}</Message>
-      <ModalButton {...props}>확인</ModalButton>
+      <ModalButton css={buttonStyle} {...props}>
+        확인
+      </ModalButton>
     </ModalContent>
   );
 };
+
+const buttonStyle = css`
+  width: 20rem;
+`;
 
 export default ConfirmModal;

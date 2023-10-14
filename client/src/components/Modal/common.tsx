@@ -26,9 +26,8 @@ export const ModalButton = styled.button`
   background-color: ${COLORS.primary};
   color: ${COLORS.white};
   border-radius: 50rem;
-  flex: 1;
+
   height: 3.2rem;
-  max-width: 20rem;
   ${TYPO.text2.Md};
 
   position: relative;

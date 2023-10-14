@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 import { type ComponentProps } from 'react';
 import FrameHeader from './FrameHeader';
 import styled from '@emotion/styled';
+import FrameNavigator from './FrameNavigator';
 
 interface FrameProps extends ComponentProps<'div'> {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ const Frame = ({ children, ...props }: FrameProps) => {
     <div css={backgroundStyle} {...props}>
       <FrameHeader />
       <Container>{children}</Container>
+      <FrameNavigator />
     </div>
   );
 };

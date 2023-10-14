@@ -1,5 +1,5 @@
 import { COLORS } from '@/styles/colors';
-import { flex } from '@/styles/tokens';
+import { flex, transform } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -32,23 +32,27 @@ const Navigator = ({ curRoute, handleRoute }: Props) => {
     {
       icon: <FontAwesomeIcon icon={faPrint} />,
       title: '템플릿',
-      url: '/templates',
+      url: '/template',
     },
     {
       icon: <FontAwesomeIcon icon={faUserGroup} />,
       title: '메이트',
-      url: '/mates',
+      url: '/mate',
     },
     {
       icon: <FontAwesomeIcon icon={faCalendarCheck} />,
       title: '스케줄',
-      url: '/schedules',
+      url: '/schedule',
     },
   ];
   return (
     <NavigatorWrapper>
-      {items.map((item, idx) => (
-        <NavigatorItem checked={item.url === curRoute} key={item.title}>
+      {items.map((item) => (
+        <NavigatorItem
+          checked={item.url === curRoute}
+          onClick={() => handleRoute(item.url)}
+          key={item.title}
+        >
           <span>{item.icon}</span>
           <span>{item.title}</span>
         </NavigatorItem>
@@ -58,14 +62,17 @@ const Navigator = ({ curRoute, handleRoute }: Props) => {
 };
 
 const NavigatorWrapper = styled.div`
-  width: 100%;
-  min-width: 32rem;
+  max-width: 50rem;
+  width: 100vw;
+  min-width: 25rem;
   height: 7rem;
   ${flex('row', 'center', 'center', 0)};
 
   position: fixed;
   bottom: 0px;
-  left: 0px;
+  left: 50%;
+
+  ${transform('translate(-50%, 0)')}
 
   border-top: 0.5px solid rgba(10, 10, 10, 0.1);
 `;

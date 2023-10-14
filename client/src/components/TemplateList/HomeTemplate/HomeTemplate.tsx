@@ -1,4 +1,3 @@
-import React from 'react';
 import * as styles from './HomeTemplate.styles';
 
 const HomeTemplate = () => {

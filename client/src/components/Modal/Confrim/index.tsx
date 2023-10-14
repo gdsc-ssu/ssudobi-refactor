@@ -1,9 +1,6 @@
 import { COLORS } from '@/styles/colors';
-// import { flex } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
-// import { ComponentProps, ReactNode } from 'react';
-// import RoundButton from './path-to-your-round-button'; // 경로를 수정해주세요.
 
 interface ModalProps {
   /**

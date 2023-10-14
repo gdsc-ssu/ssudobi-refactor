@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { TYPO } from '@/styles/typo';
-import Logo from '../../../public/assets/companions/logo-blue.svg';
+import Logo from '@/assets/svg/logo-blue.svg';
 
 interface ModalProps {
   /**

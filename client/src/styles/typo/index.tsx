@@ -44,12 +44,10 @@ export const TYPO: TypoType = {
     [TEXT_STYLE_WEIGHT.Eb]: css`
       ${pretendardExtrabold.style};
       font-size: 4.8rem;
-      letter-spacing: -0.24rem;
     `,
     [TEXT_STYLE_WEIGHT.Sb]: css`
       ${pretendardSemibold.style};
       font-size: 2rem;
-      line-height: 0.3rem;
     `,
   },
   [TEXT_STYLE_SIZE.title2]: {
@@ -60,7 +58,6 @@ export const TYPO: TypoType = {
     [TEXT_STYLE_WEIGHT.Sb]: css`
       ${pretendardSemibold.style};
       font-size: 1.6rem;
-      line-height: 0.3rem;
     `,
     [TEXT_STYLE_WEIGHT.Md]: css`
       ${pretendardMedium.style};
@@ -74,7 +71,6 @@ export const TYPO: TypoType = {
     [TEXT_STYLE_WEIGHT.Lg]: css`
       ${pretendardSemibold.style};
       font-size: 1.6rem;
-      line-height: -0.08rem;
     `,
   },
   [TEXT_STYLE_SIZE.title3]: {
@@ -85,7 +81,6 @@ export const TYPO: TypoType = {
     [TEXT_STYLE_WEIGHT.Md]: css`
       ${pretendardMedium.style};
       font-size: 1.5rem;
-      line-height: 0.3rem;
     `,
     [TEXT_STYLE_WEIGHT.Reg]: css`
       ${pretendardRegular.style};
@@ -109,7 +104,6 @@ export const TYPO: TypoType = {
     [TEXT_STYLE_WEIGHT.Lg]: css`
       ${pretendardRegular.style};
       font-size: 1.4rem;
-      letter-spacing: -0.07rem;
     `,
   },
   [TEXT_STYLE_SIZE.text2]: {
@@ -124,7 +118,6 @@ export const TYPO: TypoType = {
     [TEXT_STYLE_WEIGHT.Reg]: css`
       ${pretendardRegular.style};
       font-size: 1.2rem;
-      letter-spacing: -0.06rem;
     `,
   },
   [TEXT_STYLE_SIZE.text3]: {

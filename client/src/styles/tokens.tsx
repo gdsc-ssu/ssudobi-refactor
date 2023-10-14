@@ -43,3 +43,24 @@ export const flex = (
     gap: ${gap}rem;
   `;
 };
+
+/** tranform injector */
+export const transform = (transformVal: string) => {
+  return css`
+    -webkit-transform: ${transformVal};
+    -moz-transform: ${transformVal};
+    -ms-transform: ${transformVal};
+    transform: ${transformVal};
+  `;
+};
+
+/** transition injector */
+export const transition = (duration: string, animationType = 'linear') => {
+  return css`
+    -o-transition: all ${duration} ${animationType};
+    -webkit-transition: -webkit-transform ${duration};
+    -ms-transition: all ${duration};
+    -moz-transition: all ${duration};
+    transition: all ${duration};
+  `;
+};

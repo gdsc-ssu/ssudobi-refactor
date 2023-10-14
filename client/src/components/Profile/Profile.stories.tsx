@@ -2,7 +2,7 @@ import type { StoryObj } from '@storybook/react';
 import Profile from '.';
 
 const meta = {
-  title: 'profile',
+  title: 'Layout/Profile',
   component: Profile,
   tags: ['autodocs'],
 };

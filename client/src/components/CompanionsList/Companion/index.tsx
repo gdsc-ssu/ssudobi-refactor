@@ -5,7 +5,7 @@ import { ComponentProps } from 'react';
 import { COLORS } from '@/styles/colors';
 import { flex, transition } from '@/styles/tokens';
 import CloseButton from '@/assets/svg/x-button.svg';
-import { companionIconGetter } from './companionIconGetter';
+import { companionIconGetter } from '@/utils/func/companionIconGetter';
 
 interface ModalProps extends ComponentProps<'div'> {
   /**

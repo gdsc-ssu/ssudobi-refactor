@@ -19,3 +19,22 @@ export const Default: Story = {
     isSelected: false,
   },
 };
+
+export const Selected: Story = {
+  args: {
+    name: '최상원',
+    memberNo: '20180399',
+    id: '112',
+    isSelected: true,
+  },
+};
+
+export const Removable: Story = {
+  args: {
+    name: '최상원',
+    memberNo: '20180399',
+    id: '112',
+    isSelected: false,
+    isRemovable: true,
+  },
+};

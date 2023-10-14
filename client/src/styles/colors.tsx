@@ -10,6 +10,8 @@ export const COLORS = {
   grey5: '#D7D7D7',
   grey6: '#F3F5F8',
   grey7: '#F8FAFC',
+  grey8: '#F5F7FA',
   white: '#FEFFFF',
   primaryWhite: '#fcfdff',
+  primaryWeak: '#D7EAFC',
 };

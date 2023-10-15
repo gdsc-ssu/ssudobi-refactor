@@ -14,6 +14,17 @@ const fadeInTopDown = keyframes`
     }
 `;
 
+const fadeInTopDownTranslate = keyframes`
+    from{
+        opacity: 0;
+        ${transform('translate(0px, -10px)')}
+    }
+    to{
+        opacity: 1;
+        ${transform('translate(0px, 0px)')}
+    }
+`;
+
 const popUp = keyframes`
   0%{
     opacity: 0;
@@ -91,6 +102,7 @@ const loginButtonPopup = keyframes`
 
 const animations = {
   fadeInTopDown,
+  fadeInTopDownTranslate,
   popUp,
   circleMovingTop: circleMoving.top,
   circleMovingBottom: circleMoving.bottom,

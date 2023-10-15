@@ -7,10 +7,15 @@ import { flex, transform } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
+/**
+ * 시작 페이지
+ */
 const Landing = () => {
   const { vh } = useVh();
+  const route = useRouter();
 
   const fullPageStyle = useMemo(
     () => css`
@@ -20,6 +25,10 @@ const Landing = () => {
     [vh],
   );
 
+  const handleRouteLogin = () => {
+    route.push('login');
+  };
+
   return (
     <Container css={fullPageStyle}>
       <TitleWrapper>
@@ -27,7 +36,11 @@ const Landing = () => {
         <span css={TYPO.title2.Reg}>숭실대학교 도서관 비대면 예약 시스템</span>
       </TitleWrapper>
       <ButtonWrapper>
-        <RoundButton title="시작하기" theme="white" />
+        <RoundButton
+          title="시작하기"
+          theme="white"
+          onClick={handleRouteLogin}
+        />
         <Caption>{`로그인 시, 개인 정보 처리 방침 및\n서비스 이용 약관에 동의하게 됩니다.`}</Caption>
       </ButtonWrapper>
       <Circle css={[circleStyles.common, circleStyles.top]} />
@@ -66,7 +79,7 @@ const ButtonWrapper = styled.div`
   left: 50%;
 
   ${transform('translate(-50%, -50%)')};
-  ${injectAnimation('loginButtonPopup', '3s', 'ease', '0s')};
+  ${injectAnimation('loginButtonPopup', '3.3s', 'ease', '0s')};
 `;
 
 const Caption = styled.span`

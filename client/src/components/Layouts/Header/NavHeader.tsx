@@ -8,13 +8,14 @@ import { ComponentProps } from 'react';
 
 interface Props extends ComponentProps<'div'> {
   title: string;
+  onBack?: () => void;
 }
 
-const NavHeader = ({ title, ...props }: Props) => {
+const NavHeader = ({ title, onBack, ...props }: Props) => {
   return (
     <HeaderWrapper {...props}>
       <HeaderInner>
-        <Chevron>
+        <Chevron onClick={onBack}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </Chevron>
         <HeaderTitle>{title}</HeaderTitle>

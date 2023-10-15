@@ -62,8 +62,7 @@ const Navigator = ({ curRoute, handleRoute }: Props) => {
 };
 
 const NavigatorWrapper = styled.div`
-  max-width: 50rem;
-  width: 100vw;
+  width: 100%;
   min-width: 25rem;
   height: 7rem;
   ${flex('row', 'center', 'center', 0)};

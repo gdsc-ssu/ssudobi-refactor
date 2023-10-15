@@ -1,6 +1,7 @@
 import { RoundButton } from '@/components/Buttons';
 import { TextInput } from '@/components/Field';
 import { useHeader, useVh } from '@/hooks';
+import useAuth from '@/hooks/useAuth';
 import { COLORS } from '@/styles/colors';
 import { flex } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
@@ -13,6 +14,7 @@ import { useLayoutEffect } from 'react';
 const Login = () => {
   const { setHeader } = useHeader();
   const { fullPageStyle } = useVh();
+  const { handleLogin } = useAuth();
 
   useLayoutEffect(() => {
     setHeader('로그인');
@@ -31,7 +33,7 @@ const Login = () => {
         </InputBox>
       </InputWrapper>
       <ButtonWrapper>
-        <RoundButton title="로그인" theme="primary" />
+        <RoundButton title="로그인" theme="primary" onClick={handleLogin} />
         <Link>비밀번호를 재설정하고 싶어요.</Link>
       </ButtonWrapper>
     </Container>

@@ -9,7 +9,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useMemo } from 'react';
 
-const Login = () => {
+const Landing = () => {
   const { vh } = useVh();
 
   const fullPageStyle = useMemo(
@@ -93,4 +93,4 @@ const circleStyles = {
   `,
 };
 
-export default Login;
+export default Landing;

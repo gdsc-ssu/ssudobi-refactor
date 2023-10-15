@@ -7,7 +7,7 @@ const FrameHeader = () => {
   const { headerTitle } = useHeader();
 
   switch (router.pathname) {
-    case '/login':
+    case '/landing':
       return <></>;
     case '/':
     case '/template':

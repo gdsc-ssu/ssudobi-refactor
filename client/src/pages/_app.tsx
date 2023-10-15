@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const getBgColor = (pathname: string) => {
     switch (pathname) {
-      case '/login':
+      case '/landing':
         return bgColorStyle.login;
       default:
         return bgColorStyle.default;

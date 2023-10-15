@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { mq } from './breakpoints';
 import { COLORS } from './colors';
+import { transition } from './tokens';
 
 const reset = css`
   html,
@@ -13,6 +14,8 @@ const reset = css`
     justify-content: flex-start;
     background-color: ${COLORS.white};
     font-size: 9px;
+
+    ${transition('0.5s', 'linear')};
 
     ${mq[2]} {
       font-size: 9px;

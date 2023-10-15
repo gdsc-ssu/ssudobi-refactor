@@ -5,6 +5,8 @@ import { type ComponentProps } from 'react';
 import FrameHeader from './FrameHeader';
 import styled from '@emotion/styled';
 import FrameNavigator from './FrameNavigator';
+import { COLORS } from '@/styles/colors';
+import { useRouter } from 'next/router';
 
 interface FrameProps extends ComponentProps<'div'> {
   children: React.ReactNode;
@@ -13,6 +15,7 @@ interface FrameProps extends ComponentProps<'div'> {
 /** 모바일 환경 최적화 프레임 */
 const Frame = ({ children, ...props }: FrameProps) => {
   const { vh } = useVh();
+  const router = useRouter();
 
   const backgroundStyle = css`
     max-width: 50rem;
@@ -30,8 +33,17 @@ const Frame = ({ children, ...props }: FrameProps) => {
     }
   `;
 
+  const getBgColor = (pathname: string) => {
+    switch (pathname) {
+      case '/login':
+        return bgColorStyle.login;
+      default:
+        return css``;
+    }
+  };
+
   return (
-    <div css={backgroundStyle} {...props}>
+    <div css={[backgroundStyle, getBgColor(router.pathname)]} {...props}>
       <FrameHeader />
       <Container>{children}</Container>
       <FrameNavigator />
@@ -41,6 +53,13 @@ const Frame = ({ children, ...props }: FrameProps) => {
 
 const Container = styled.div`
   width: 100%;
+  height: 100%;
+  position: relative;
 `;
 
+const bgColorStyle = {
+  login: css`
+    background-color: ${COLORS.primary};
+  `,
+};
 export default Frame;

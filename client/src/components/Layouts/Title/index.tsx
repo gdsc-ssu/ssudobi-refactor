@@ -37,6 +37,7 @@ const TitleWrapper = styled.div`
   ${flex('column', 'start', 'start', 1.1)};
   white-space: pre-line;
   word-break: keep-all;
+  position: relative;
 `;
 
 const typo = {

@@ -29,9 +29,73 @@ const popUp = keyframes`
   }
 `;
 
+const circleMoving = {
+  top: keyframes`
+    0%{
+      opacity: 0;
+      ${transform('rotate(180deg) translate(10%, -10%)')};
+    }
+    50%{
+      opacity: 1;
+      ${transform('rotate(180deg) translate(0%, -10%)')};
+    }
+    100%{
+      opacity: 1;
+      ${transform('rotate(180deg) translate(0%, 0%)')};
+    }
+  `,
+  bottom: keyframes`
+    0%{
+      opacity: 0;
+      ${transform('rotate(10deg) translate(10%, -10%)')};
+    }
+    50%{
+      opacity: 1;
+      ${transform('rotate(10deg) translate(0%, -10%)')};
+    }
+    100%{
+      opacity: 1;
+      ${transform('rotate(10deg) translate(0%, 0%)')};
+    }
+  `,
+};
+
+const loginTitlePopup = keyframes`
+  0%{
+    opacity: 0;
+    top: 50%;
+  }
+  50%{
+    opacity: 1;
+    top: 50%;
+  }
+  100%{
+    opacity: 1;
+    top: 35%;
+  }
+`;
+
+const loginButtonPopup = keyframes`
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 0;
+    top: 55%;
+  }
+  100%{
+    opacity: 1;
+    top: 65%;
+  }
+`;
+
 const animations = {
   fadeInTopDown,
   popUp,
+  circleMovingTop: circleMoving.top,
+  circleMovingBottom: circleMoving.bottom,
+  loginTitlePopup,
+  loginButtonPopup,
 };
 
 export const injectAnimation = (
@@ -39,12 +103,14 @@ export const injectAnimation = (
   duration = '1.5s',
   type = 'linear',
   delay = '0s',
-  afterStyle?: SerializedStyles,
+  relative = false,
 ): SerializedStyles => {
   const newAnimation = css`
-    position: relative;
     animation: ${animations[animation]} ${duration} ${type} ${delay} forwards;
-    ${afterStyle}
+    ${relative &&
+    css`
+      position: relative;
+    `};
   `;
 
   return newAnimation;

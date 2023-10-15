@@ -1,5 +1,6 @@
+import { mq } from '@/styles/breakpoints';
 import { COLORS } from '@/styles/colors';
-import { flex } from '@/styles/tokens';
+import { flex, transform } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -27,12 +28,17 @@ const NavHeader = ({ title, onBack, ...props }: Props) => {
 const HeaderWrapper = styled.div`
   width: 100%;
   min-width: 32rem;
-  height: 5rem;
-
-  position: sticky;
+  height: 6rem;
+  position: fixed;
   top: 0px;
+  left: 50%;
+  ${transform('translate(-50%, 0%)')};
 
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+
+  ${mq[4]} {
+    height: 5rem;
+  }
 `;
 
 const HeaderInner = styled.div`
@@ -49,6 +55,10 @@ const HeaderTitle = styled.span`
 `;
 
 const Chevron = styled.span`
+  height: 100%;
+  aspect-ratio: 1;
+  ${flex('row', 'center', 'center', 0)};
+
   ${TYPO.title2.Md};
   color: ${COLORS.grey0};
   position: absolute;

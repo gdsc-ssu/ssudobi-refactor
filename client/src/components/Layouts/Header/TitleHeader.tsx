@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
-import { flex } from '@/styles/tokens';
+import { flex, transform } from '@/styles/tokens';
 import HumanIcon from '@/assets/svg/human.svg';
 import { css } from '@emotion/react';
+import { mq } from '@/styles/breakpoints';
 
 const TitleHeader = () => {
   return (
@@ -30,14 +31,19 @@ const hovering = css`
 const HeaderWrapper = styled.div`
   width: 100%;
   min-width: 32rem;
-  height: 5rem;
+  height: 6rem;
   ${flex('row', 'between', 'center', 0)};
-
-  position: sticky;
+  position: fixed;
   top: 0px;
+  left: 50%;
+  ${transform('translate(-50%, 0%)')};
 
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
   padding: 0rem 2.7rem;
+
+  ${mq[4]} {
+    height: 5rem;
+  }
 `;
 
 const Logo = styled.span`

@@ -8,22 +8,13 @@ import { TYPO } from '@/styles/typo';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 
 /**
  * 시작 페이지
  */
 const Landing = () => {
-  const { vh } = useVh();
+  const { fullPageStyle } = useVh();
   const route = useRouter();
-
-  const fullPageStyle = useMemo(
-    () => css`
-      width: 100%;
-      height: calc(${vh}px * 100);
-    `,
-    [vh],
-  );
 
   const handleRouteLogin = () => {
     route.push('login');

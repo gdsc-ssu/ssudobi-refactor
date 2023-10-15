@@ -60,6 +60,7 @@ const CustomInput = styled.input`
   }
 
   &::placeholder {
+    ${TYPO.title3.Lg};
     color: ${COLORS.grey5};
   }
 `;

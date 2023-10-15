@@ -51,7 +51,7 @@ const ButtonWrapper = styled.button<{ theme: Theme }>`
   border-radius: 1rem;
   border: none;
   outline: none;
-  ${TYPO.title3.Sb};
+  ${TYPO.text1.Sb};
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 
   ${flex('row', 'center', 'center', 0)};

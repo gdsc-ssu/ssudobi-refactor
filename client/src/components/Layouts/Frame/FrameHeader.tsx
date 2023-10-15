@@ -10,6 +10,10 @@ const FrameHeader = () => {
     router.back();
   };
 
+  const handleMyPage = () => {
+    router.push('/mypage');
+  };
+
   switch (router.pathname) {
     case '/landing':
       return <></>;
@@ -17,7 +21,7 @@ const FrameHeader = () => {
     case '/template':
     case '/mate':
     case '/schedule':
-      return <TitleHeader />;
+      return <TitleHeader mypageHandler={handleMyPage} />;
     default:
       return <NavHeader title={headerTitle} onBack={handleBack} />;
   }

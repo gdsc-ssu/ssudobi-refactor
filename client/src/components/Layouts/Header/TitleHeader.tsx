@@ -6,11 +6,15 @@ import HumanIcon from '@/assets/svg/human.svg';
 import { css } from '@emotion/react';
 import { mq } from '@/styles/breakpoints';
 
-const TitleHeader = () => {
+interface Props {
+  mypageHandler?: () => void;
+}
+
+const TitleHeader = ({ mypageHandler }: Props) => {
   return (
     <HeaderWrapper>
       <Logo>SSUDOBI</Logo>
-      <HumanIcon css={iconStyle} />
+      <HumanIcon onClick={mypageHandler} css={iconStyle} />
     </HeaderWrapper>
   );
 };

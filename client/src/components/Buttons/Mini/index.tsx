@@ -54,7 +54,7 @@ const ButtonWrapper = styled.button<{ theme: Theme }>`
   border-radius: 5rem;
   border: none;
   outline: none;
-  ${TYPO.title3.Md};
+  ${TYPO.text1.Md};
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 
   ${(props) => {

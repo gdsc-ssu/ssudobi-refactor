@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 type Direction = 'row' | 'column';
 type JustifyContent =
@@ -64,3 +65,8 @@ export const transition = (duration: string, animationType = 'linear') => {
     transition: all ${duration};
   `;
 };
+
+export const PageContainer = styled.div`
+  width: 100%;
+  padding: 1rem 2.7rem;
+`;

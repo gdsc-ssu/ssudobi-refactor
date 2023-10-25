@@ -71,6 +71,29 @@ const circleMoving = {
   `,
 };
 
+const usageMoving = {
+  top: keyframes`
+    0%{
+      opacity: 0;
+      ${transform('translate(0%, 20%) rotate(-90deg)')};
+    }
+    100%{
+      opacity: 1;
+      ${transform('translate(0%, 0%) rotate(-90deg)')};
+    }
+  `,
+  bottom: keyframes`
+    0%{
+      opacity: 0;
+      ${transform('translate(0%, -20%) rotate(90deg)')};
+    }
+    100%{
+      opacity: 1;
+      ${transform('translate(0%, 0%) rotate(90deg)')};
+    }
+  `,
+};
+
 const loginTitlePopup = keyframes`
   0%{
     opacity: 0;
@@ -108,6 +131,8 @@ const animations = {
   circleMovingBottom: circleMoving.bottom,
   loginTitlePopup,
   loginButtonPopup,
+  usageMovingTop: usageMoving.top,
+  usageMovingBottom: usageMoving.bottom,
 };
 
 export const injectAnimation = (

@@ -59,7 +59,7 @@ export const transform = (transformVal: string) => {
 export const transition = (duration: string, animationType = 'linear') => {
   return css`
     -o-transition: all ${duration} ${animationType};
-    -webkit-transition: -webkit-transform ${duration};
+    -webkit-transition: all ${duration};
     -ms-transition: all ${duration};
     -moz-transition: all ${duration};
     transition: all ${duration};

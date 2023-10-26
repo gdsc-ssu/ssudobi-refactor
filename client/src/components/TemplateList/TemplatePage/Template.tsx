@@ -2,12 +2,18 @@ import { TemplateProps } from '../TemplateProps';
 import * as styles from '../Common.styles';
 import { COLORS } from '@/styles/colors';
 import styled from '@emotion/styled';
+import RemoveBtn from '@/assets/svg/x-button.svg';
 
 const Template = ({ title, time, place, memo, friends }: TemplateProps) => {
   return (
     <styles.Container>
       <InfoBox>
-        <styles.TitleBox>{title}</styles.TitleBox>
+        <styles.TitleBox>
+          <div>{title}</div>
+          <RemoveBox>
+            <RemoveBtn />
+          </RemoveBox>
+        </styles.TitleBox>
         <styles.DateBox>{time}</styles.DateBox>
         <styles.PlaceBox>{place}</styles.PlaceBox>
         <styles.NoteBox>{memo}</styles.NoteBox>
@@ -22,10 +28,14 @@ const Template = ({ title, time, place, memo, friends }: TemplateProps) => {
   );
 };
 
+const RemoveBox = styled.div`
+  margin-left: auto;
+`;
+
 const InfoBox = styled.div`
   width: 329px;
   background-color: ${COLORS.grey7};
-  padding: 15px 20px;
+  padding: 15px 15px 15px 20px;
   border-radius: 10px 0 0 10px;
 `;
 

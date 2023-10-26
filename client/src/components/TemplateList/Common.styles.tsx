@@ -7,6 +7,7 @@ export const Container = styled.div`
 `;
 
 export const TitleBox = styled.div`
+  display: flex;
   color: ${COLORS.primary};
   ${TYPO.text2.Sb};
 `;

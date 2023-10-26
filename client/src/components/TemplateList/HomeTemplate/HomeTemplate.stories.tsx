@@ -11,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Home: Story = {
+export const Reserve: Story = {
   args: {
     title: '템플릿 제목',
     time: '목요일 12시 - 15시 30분',

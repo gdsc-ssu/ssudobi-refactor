@@ -1,5 +1,7 @@
+import ReservationCheck from '@/components/ReservationCheck';
+
 const Schedule = () => {
-  return <></>;
+  return <ReservationCheck />;
 };
 
 export default Schedule;

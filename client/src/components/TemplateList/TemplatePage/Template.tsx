@@ -3,6 +3,7 @@ import * as styles from '../Common.styles';
 import { COLORS } from '@/styles/colors';
 import styled from '@emotion/styled';
 import RemoveBtn from '@/assets/svg/x-button.svg';
+import { getDayOfWeek } from '@/utils/func/getDayOfWeek';
 
 const Template = ({
   title,
@@ -11,6 +12,7 @@ const Template = ({
   place,
   memo,
   friends,
+  type,
 }: TemplateProps) => {
   return (
     <styles.Container>
@@ -22,13 +24,23 @@ const Template = ({
           </RemoveBox>
         </styles.TitleBox>
         <styles.DateBox>
-          {beginTime} {endTime}
+          {type === 'RESERVE'
+            ? getDayOfWeek(beginTime) +
+              beginTime.slice(10, 13) +
+              '시 -' +
+              endTime.slice(10, 13) +
+              '시'
+            : endTime}
         </styles.DateBox>
         <styles.PlaceBox>{place}</styles.PlaceBox>
         <styles.NoteBox>{memo}</styles.NoteBox>
         <styles.PeopleBox>
-          {friends.map((el) => {
-            return <styles.PersonInfo key={el}>{el}</styles.PersonInfo>;
+          {friends.map((el, idx) => {
+            return (
+              <styles.PersonInfo key={idx}>
+                {Object.values(el.name)} / {Object.values(el.memberNo)}
+              </styles.PersonInfo>
+            );
           })}
         </styles.PeopleBox>
       </InfoBox>

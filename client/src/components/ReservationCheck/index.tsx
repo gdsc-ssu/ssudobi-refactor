@@ -1,37 +1,47 @@
 import styled from '@emotion/styled';
 import { Title } from '../Layouts';
 import Template from '../TemplateList/TemplatePage/Template';
+import { useAtomValue } from 'jotai';
+import { authInfoState } from '@/atoms/authInfoState';
+import { getAccessToken } from '@/utils/lib/tokenHandler';
+import { useQuery } from '@tanstack/react-query';
+import { getReservationData } from '@/apis/ReserveData';
+import { ReservationData } from '@/@types/ReservationList';
 
 const ReservationCheck = () => {
-  const name = '김수진';
+  const authInfo = useAtomValue(authInfoState);
+  const AccessToken = getAccessToken();
+  const { data: reservationData } = useQuery<ReservationData | undefined>(
+    ['reserveData', AccessToken],
+    () => getReservationData(AccessToken),
+    { enabled: AccessToken !== undefined },
+  );
+
   return (
     <Container>
       <TitleBox>
         <Title
-          title={`${name}님, \n 현재 예약 정보를 확인해 보세요.`}
+          title={`${authInfo?.name}님, \n 현재 예약 정보를 확인해 보세요.`}
           subtitle=""
           animated={false}
         />
       </TitleBox>
       <ReservationListsBox>
-        <ListBox>
-          <Template
-            title="1234"
-            time="1234"
-            place="세미나실"
-            memo="memo"
-            friends={['2344', '2343']}
-          />
-        </ListBox>
-        <ListBox>
-          <Template
-            title="1234"
-            time="1234"
-            place="세미나실"
-            memo="memo"
-            friends={['2344', '2343']}
-          />
-        </ListBox>
+        {reservationData?.data?.totalCount !== undefined
+          ? reservationData?.data?.list.map((el, idx) => (
+              <ListBox key={idx}>
+                <Template
+                  title="외부 예약"
+                  beginTime={el.beginTime}
+                  endTime={el.endTime}
+                  place={el.room.name}
+                  memo="memo"
+                  friends={el.patrons}
+                  type="RESERVE"
+                />
+              </ListBox>
+            ))
+          : '예약 없음'}
       </ReservationListsBox>
     </Container>
   );

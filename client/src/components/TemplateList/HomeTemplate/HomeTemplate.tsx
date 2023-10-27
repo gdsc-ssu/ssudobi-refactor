@@ -3,12 +3,21 @@ import * as styles from '../Common.styles';
 import styled from '@emotion/styled';
 import { COLORS } from '@/styles/colors';
 
-const HomeTemplate = ({ title, time, place, memo, friends }: TemplateProps) => {
+const HomeTemplate = ({
+  title,
+  beginTime,
+  endTime,
+  place,
+  memo,
+  friends,
+}: TemplateProps) => {
   return (
     <styles.Container>
       <InfoBox>
         <styles.TitleBox>{title}</styles.TitleBox>
-        <styles.DateBox>{time}</styles.DateBox>
+        <styles.DateBox>
+          {beginTime} {endTime}
+        </styles.DateBox>
         <styles.PlaceBox>{place}</styles.PlaceBox>
         <styles.NoteBox>{memo}</styles.NoteBox>
         <styles.PeopleBox>

@@ -4,7 +4,14 @@ import { COLORS } from '@/styles/colors';
 import styled from '@emotion/styled';
 import RemoveBtn from '@/assets/svg/x-button.svg';
 
-const Template = ({ title, time, place, memo, friends }: TemplateProps) => {
+const Template = ({
+  title,
+  beginTime,
+  endTime,
+  place,
+  memo,
+  friends,
+}: TemplateProps) => {
   return (
     <styles.Container>
       <InfoBox>
@@ -14,7 +21,9 @@ const Template = ({ title, time, place, memo, friends }: TemplateProps) => {
             <RemoveBtn />
           </RemoveBox>
         </styles.TitleBox>
-        <styles.DateBox>{time}</styles.DateBox>
+        <styles.DateBox>
+          {beginTime} {endTime}
+        </styles.DateBox>
         <styles.PlaceBox>{place}</styles.PlaceBox>
         <styles.NoteBox>{memo}</styles.NoteBox>
         <styles.PeopleBox>

@@ -5,7 +5,6 @@ import { Title } from '../Layouts';
 import { SquareButton } from '../Buttons';
 import Template from '../TemplateList/TemplatePage/Template';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { MyTemplate } from '@/@types/MyTemplate';
 
 export const templateAtom = atom<MyTemplate>({

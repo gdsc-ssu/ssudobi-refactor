@@ -1,5 +1,11 @@
 import { ComponentProps } from 'react';
-import { ModalButton, Message, ModalContent, Title } from '../common';
+import {
+  ModalButton,
+  Message,
+  ModalContent,
+  Title,
+  ModalOverlay,
+} from '../common';
 import { css } from '@emotion/react';
 
 interface ModalProps extends ComponentProps<'button'> {
@@ -15,13 +21,15 @@ interface ModalProps extends ComponentProps<'button'> {
 
 const ConfirmModal = ({ title, message, ...props }: ModalProps) => {
   return (
-    <ModalContent>
-      <Title>{title}</Title>
-      <Message>{message}</Message>
-      <ModalButton css={buttonStyle} {...props}>
-        확인
-      </ModalButton>
-    </ModalContent>
+    <ModalOverlay>
+      <ModalContent>
+        <Title>{title}</Title>
+        <Message>{message}</Message>
+        <ModalButton css={buttonStyle} {...props}>
+          확인
+        </ModalButton>
+      </ModalContent>
+    </ModalOverlay>
   );
 };
 

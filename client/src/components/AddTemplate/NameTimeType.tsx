@@ -13,11 +13,19 @@ import { MyTemplate } from '@/@types/MyTemplate';
 import { templateAtom } from '.';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
+import Usage from '../Buttons/Usage';
 
 type CheckedButtons = {
   '1시간': boolean;
   '2시간': boolean;
   '3시간': boolean;
+};
+
+type UsageBtns = {
+  학습: boolean;
+  회의: boolean;
+  수업: boolean;
+  기타: boolean;
 };
 
 const NameTimeType = () => {
@@ -43,6 +51,23 @@ const NameTimeType = () => {
     setCheckedButtons(newCheckedButtons);
   };
 
+  const [usageBtns, setUsageBtns] = useState<UsageBtns>({
+    학습: true,
+    회의: false,
+    수업: false,
+    기타: false,
+  });
+  const handleUsageBtnClick = (usageTitle: keyof typeof usageBtns) => {
+    const newUsageBtns = {
+      학습: false,
+      회의: false,
+      수업: false,
+      기타: false,
+    };
+    newUsageBtns[usageTitle] = true;
+    setUsageBtns(newUsageBtns);
+  };
+
   const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
   const setAtomTemplate = useSetAtom(templateAtom);
 
@@ -53,11 +78,18 @@ const NameTimeType = () => {
     return selectedHour || '';
   };
 
+  const SelectUsage = () => {
+    const selectUsg = Object.keys(usageBtns).find(
+      (key) => usageBtns[key as keyof UsageBtns] === true,
+    );
+    return selectUsg || '';
+  };
+
   const handleOnClickNext = () => {
     const updatedTemplate = {
       ...template,
       title: title,
-      type: '수업',
+      type: SelectUsage(),
       time: parseInt(AvailableTime()?.slice(0, 1), 10),
       seminarType: isSeminar ? '세미나' : '개방형',
     };
@@ -114,7 +146,34 @@ const NameTimeType = () => {
       </SmallMenuBox>
       <SmallMenuBox>
         <SmallTitleBox>사용 용도를 선택해 주세요.</SmallTitleBox>
-        {/** TODO: 사용용도 컴포넌트 추가하기 */}
+        <FlexBox>
+          <UsageMarginBox>
+            <Usage
+              title="학습"
+              checked={usageBtns['학습']}
+              onClick={() => handleUsageBtnClick('학습')}
+            />
+          </UsageMarginBox>
+          <Usage
+            title="회의"
+            checked={usageBtns['회의']}
+            onClick={() => handleUsageBtnClick('회의')}
+          />
+        </FlexBox>
+        <FlexBox>
+          <UsageMarginBox>
+            <Usage
+              title="수업"
+              checked={usageBtns['수업']}
+              onClick={() => handleUsageBtnClick('수업')}
+            />
+          </UsageMarginBox>
+          <Usage
+            title="기타"
+            checked={usageBtns['기타']}
+            onClick={() => handleUsageBtnClick('기타')}
+          />
+        </FlexBox>
       </SmallMenuBox>
 
       <MenuBox>
@@ -205,4 +264,13 @@ const DescriptionBox = styled.div`
   margin-bottom: 10px;
 `;
 
+const FlexBox = styled.div`
+  display: flex;
+  margin-bottom: 7px;
+`;
+
+const UsageMarginBox = styled.div`
+  margin-right: 6px;
+  width: 100%;
+`;
 export default NameTimeType;

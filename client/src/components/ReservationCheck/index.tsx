@@ -38,6 +38,7 @@ const ReservationCheck = () => {
                   memo="memo"
                   friends={el.patrons}
                   type="RESERVE"
+                  reserveId={el.id}
                 />
               </ListBox>
             ))

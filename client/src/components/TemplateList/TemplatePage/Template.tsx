@@ -4,6 +4,11 @@ import { COLORS } from '@/styles/colors';
 import styled from '@emotion/styled';
 import RemoveBtn from '@/assets/svg/x-button.svg';
 import { getDayOfWeek } from '@/utils/func/getDayOfWeek';
+import { getAccessToken } from '@/utils/lib/tokenHandler';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { postReservationCancel } from '@/apis/ReserveData';
+import { useState } from 'react';
+import DecisionModal from '@/components/Modal/Decision';
 
 const Template = ({
   title,
@@ -13,39 +18,73 @@ const Template = ({
   memo,
   friends,
   type,
+  reserveId,
 }: TemplateProps) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const AccessToken = getAccessToken();
+  const queryClient = useQueryClient();
+
+  const CancelReserve = useMutation(
+    () => postReservationCancel(reserveId, AccessToken),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['reserveCancel']);
+      },
+    },
+  );
+
+  const handleOnClickRemoveBtn = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+  const handleRemove = () => {
+    CancelReserve.mutate();
+    setIsModalOpen(false);
+  };
+
   return (
-    <styles.Container>
-      <InfoBox>
-        <styles.TitleBox>
-          <div>{title}</div>
-          <RemoveBox>
-            <RemoveBtn />
-          </RemoveBox>
-        </styles.TitleBox>
-        <styles.DateBox>
-          {type === 'RESERVE'
-            ? getDayOfWeek(beginTime) +
-              beginTime.slice(10, 13) +
-              '시 -' +
-              endTime.slice(10, 13) +
-              '시'
-            : endTime}
-        </styles.DateBox>
-        <styles.PlaceBox>{place}</styles.PlaceBox>
-        <styles.NoteBox>{memo}</styles.NoteBox>
-        <styles.PeopleBox>
-          {friends.map((el, idx) => {
-            return (
-              <styles.PersonInfo key={idx}>
-                {Object.values(el.name)} / {Object.values(el.memberNo)}
-              </styles.PersonInfo>
-            );
-          })}
-        </styles.PeopleBox>
-      </InfoBox>
-      <SideLine />
-    </styles.Container>
+    <>
+      <styles.Container>
+        <InfoBox>
+          <styles.TitleBox>
+            <div>{title}</div>
+            <RemoveBox onClick={handleOnClickRemoveBtn}>
+              <RemoveBtn />
+            </RemoveBox>
+          </styles.TitleBox>
+          <styles.DateBox>
+            {type === 'RESERVE'
+              ? getDayOfWeek(beginTime) +
+                beginTime.slice(10, 13) +
+                '시 -' +
+                endTime.slice(10, 13) +
+                '시'
+              : endTime}
+          </styles.DateBox>
+          <styles.PlaceBox>{place}</styles.PlaceBox>
+          <styles.NoteBox>{memo}</styles.NoteBox>
+          <styles.PeopleBox>
+            {friends.map((el, idx) => {
+              return (
+                <styles.PersonInfo key={idx}>
+                  {Object.values(el.name)} / {Object.values(el.memberNo)}
+                </styles.PersonInfo>
+              );
+            })}
+          </styles.PeopleBox>
+        </InfoBox>
+        <SideLine />
+      </styles.Container>
+      {isModalOpen ? (
+        <DecisionModal
+          title={title}
+          message="예약을 정말 취소할까요?"
+          onCancle={() => setIsModalOpen(!isModalOpen)}
+          onClick={handleRemove}
+        />
+      ) : (
+        ''
+      )}
+    </>
   );
 };
 

@@ -107,19 +107,10 @@ const NameTimeType = () => {
       </TitleBox>
       <MenuBox>
         <MenuTitle>템플릿 이름</MenuTitle>
-        <TextInput
-          value={title}
-          onChange={(e) => {
-            setTitle(e.currentTarget.value);
-          }}
-          placeholder="ex. 슈도비 프로젝트 회의"
-        />
+        <TextInput value={title} placeholder="ex. 슈도비 프로젝트 회의" />
       </MenuBox>
       <MenuBox>
-        <MenuTitle>사용 시간과 용도를 선택해 주세요.</MenuTitle>
-      </MenuBox>
-      <SmallMenuBox>
-        <SmallTitleBox>사용 시간</SmallTitleBox>
+        <MenuTitle>사용 시간</MenuTitle>
         <TimesBox>
           <ItemButton
             style={{ marginRight: '8px' }}
@@ -143,7 +134,6 @@ const NameTimeType = () => {
             onClick={() => handleButtonClick('3시간')}
           />
         </TimesBox>
-      </SmallMenuBox>
       <SmallMenuBox>
         <SmallTitleBox>사용 용도를 선택해 주세요.</SmallTitleBox>
         <FlexBox>

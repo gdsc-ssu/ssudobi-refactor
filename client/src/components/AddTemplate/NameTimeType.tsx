@@ -8,6 +8,15 @@ import { TextInput } from '../Field';
 import { ItemButton } from '../Buttons';
 import RoundButton from '../Buttons/Round';
 import Link from 'next/link';
+import { useAtom, useSetAtom } from 'jotai';
+import { MyTemplate } from '@/@types/MyTemplate';
+import { templateAtom } from '.';
+
+type CheckedButtons = {
+  '1시간': boolean;
+  '2시간': boolean;
+  '3시간': boolean;
+};
 
 const NameTimeType = () => {
   const { setHeader } = useHeader();
@@ -16,8 +25,8 @@ const NameTimeType = () => {
   }, []);
 
   const [title, setTitle] = useState<string>('');
-  const [checkedButtons, setCheckedButtons] = useState({
   const [isSeminar, setIsSeminar] = useState<boolean>(true);
+  const [checkedButtons, setCheckedButtons] = useState<CheckedButtons>({
     '1시간': true,
     '2시간': false,
     '3시간': false,
@@ -32,6 +41,27 @@ const NameTimeType = () => {
     setCheckedButtons(newCheckedButtons);
   };
 
+  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const setAtomTemplate = useSetAtom(templateAtom);
+
+  const AvailableTime = () => {
+    const selectedHour = Object.keys(checkedButtons).find(
+      (key) => checkedButtons[key as keyof CheckedButtons] === true,
+    );
+    return selectedHour || '';
+  };
+
+  const handleOnClickNext = () => {
+    const updatedTemplate = {
+      ...template,
+      title: title,
+      type: '수업',
+      time: parseInt(AvailableTime()?.slice(0, 1), 10),
+      seminarType: isSeminar ? '세미나' : '개방형',
+    };
+    setAtomTemplate(updatedTemplate);
+  };
+
   return (
     <PageContainer>
       <TitleBox>
@@ -43,7 +73,13 @@ const NameTimeType = () => {
       </TitleBox>
       <MenuBox>
         <MenuTitle>템플릿 이름</MenuTitle>
-        <TextInput value={title} placeholder="ex. 슈도비 프로젝트 회의" />
+        <TextInput
+          value={title}
+          onChange={(e) => {
+            setTitle(e.currentTarget.value);
+          }}
+          placeholder="ex. 슈도비 프로젝트 회의"
+        />
       </MenuBox>
       <MenuBox>
         <MenuTitle>세미나실 종류</MenuTitle>
@@ -64,6 +100,7 @@ const NameTimeType = () => {
           />
         </TypeBox>
       </MenuBox>
+
       <MenuBox>
         <MenuTitle>사용 시간</MenuTitle>
         <TimesBox>
@@ -101,6 +138,7 @@ const NameTimeType = () => {
               style={{ width: '322px' }}
               title="다음 단계로"
               theme="primary"
+              onClick={handleOnClickNext}
             />
           </Link>
         </NextWidthBox>
@@ -120,6 +158,10 @@ const MenuBox = styled.div`
 const TimesBox = styled.div`
   display: flex;
   width: 241px;
+`;
+
+const TypeBox = styled.div`
+  display: flex;
 `;
 
 const NextFixedBox = styled.div`

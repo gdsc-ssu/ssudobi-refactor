@@ -1,10 +1,25 @@
 import styled from '@emotion/styled';
-import { useAtomValue } from 'jotai';
+import { atom, useAtomValue } from 'jotai';
 import { authInfoState } from '@/atoms/authInfoState';
 import { Title } from '../Layouts';
 import { SquareButton } from '../Buttons';
 import Template from '../TemplateList/TemplatePage/Template';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { MyTemplate } from '@/@types/MyTemplate';
+
+export const templateAtom = atom<MyTemplate>({
+  title: '',
+  place: '',
+  day: '',
+  time: 0,
+  usePerson: 0,
+  startTime: '',
+  finishTime: '',
+  people: [],
+  semina: 0,
+  type: '',
+});
 
 const AddTemplate = () => {
   const authInfo = useAtomValue(authInfoState);

@@ -8,6 +8,9 @@ import Link from 'next/link';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
 import { ItemButton } from '../Buttons';
+import { useAtom, useSetAtom } from 'jotai';
+import { MyTemplate } from '@/@types/MyTemplate';
+import { templateAtom } from '.';
 
 const CompanionsRoom = () => {
   const { setHeader } = useHeader();
@@ -15,7 +18,9 @@ const CompanionsRoom = () => {
     setHeader('템플릿 추가하기');
   }, []);
 
-  const [checkedButtons, setCheckedButtons] = useState({
+  const [seminarCheckedButtons, setSeminarCheckedButtons] = useState<{
+    [key: string]: boolean;
+  }>({
     '1번': false,
     '2번': false,
     '3번': false,
@@ -23,17 +28,42 @@ const CompanionsRoom = () => {
     '5번': false,
     '6번': false,
     '7번': false,
-    '8번': false,
+    '9번': false,
   });
-  const handleButtonClick = (buttonTitle: keyof typeof checkedButtons) => {
+
+  const [OpenCheckedButtons, setOpenCheckedButtons] = useState<{
+    [key: string]: boolean;
+  }>({
+    '1번': false,
+    '2번': false,
+    '3번': false,
+    '4번': false,
+    '5번': false,
+    '6번': false,
+    '7번': false,
+  });
+
+  const handleButtonClickSeminar = (
+    buttonTitle: keyof typeof seminarCheckedButtons,
+  ) => {
     const newCheckedButtons = {
-      ...checkedButtons,
+      ...seminarCheckedButtons,
     };
     newCheckedButtons[buttonTitle] = !newCheckedButtons[buttonTitle];
-    setCheckedButtons(newCheckedButtons);
+    setSeminarCheckedButtons(newCheckedButtons);
   };
 
-  const buttonTitles: (keyof typeof checkedButtons)[] = [
+  const handleButtonClickOpen = (
+    buttonTitle: keyof typeof OpenCheckedButtons,
+  ) => {
+    const newCheckedButtons = {
+      ...OpenCheckedButtons,
+    };
+    newCheckedButtons[buttonTitle] = !newCheckedButtons[buttonTitle];
+    setOpenCheckedButtons(newCheckedButtons);
+  };
+
+  const seminarBtnTitles: (keyof typeof seminarCheckedButtons)[] = [
     '1번',
     '2번',
     '3번',
@@ -41,8 +71,44 @@ const CompanionsRoom = () => {
     '5번',
     '6번',
     '7번',
-    '8번',
+    '9번',
   ];
+
+  const OpenBtnTitles: (keyof typeof OpenCheckedButtons)[] = [
+    '1번',
+    '2번',
+    '3번',
+    '4번',
+    '5번',
+    '6번',
+    '7번',
+  ];
+
+  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const [seminarNum, setSeminarNum] = useState<number[]>([]);
+  const setAtomTemplate = useSetAtom(templateAtom);
+
+  const handleOnClickNext = () => {
+    const selectedNumbers = Object.keys(
+      template.seminarType === '개방형'
+        ? OpenCheckedButtons
+        : seminarCheckedButtons,
+    )
+      .filter((key) => {
+        const isChecked =
+          template.seminarType === '개방형'
+            ? OpenCheckedButtons[key]
+            : seminarCheckedButtons[key];
+        return isChecked === true;
+      })
+      .map((selectedKey) => parseInt(selectedKey, 10));
+
+    const updateTemplate = {
+      ...template,
+      semina: selectedNumbers,
+    };
+    setAtomTemplate(updateTemplate);
+  };
 
   return (
     <>
@@ -61,14 +127,25 @@ const CompanionsRoom = () => {
         <MenuBox style={{ marginTop: '50px' }}>
           <MenuTitle>사용 세미나룸</MenuTitle>
           <RoomNumbersBox>
-            {buttonTitles.map((title, index) => (
+            {(template.seminarType === '개방형'
+              ? OpenBtnTitles
+              : seminarBtnTitles
+            ).map((title, index) => (
               <ItemButton
                 key={index}
                 style={{ marginRight: '8px' }}
-                title={title}
+                title={String(title)}
                 disabled={false}
-                checked={checkedButtons[title]}
-                onClick={() => handleButtonClick(title)}
+                checked={
+                  template.seminarType === '개방형'
+                    ? OpenCheckedButtons[title]
+                    : seminarCheckedButtons[title]
+                }
+                onClick={() => {
+                  template.seminarType === '개방형'
+                    ? handleButtonClickOpen(title)
+                    : handleButtonClickSeminar(title);
+                }}
               />
             ))}
           </RoomNumbersBox>
@@ -83,6 +160,7 @@ const CompanionsRoom = () => {
                 style={{ width: '322px' }}
                 title="다음 단계로"
                 theme="primary"
+                onClick={handleOnClickNext}
               />
             </Link>
           </NextWidthBox>

@@ -1,6 +1,9 @@
 import { useHeader } from '@/hooks';
 import { PageContainer } from '@/styles/tokens';
 import { useLayoutEffect, useState } from 'react';
+import { MyTemplate } from '@/@types/MyTemplate';
+import { useAtom } from 'jotai';
+import { templateAtom } from '.';
 
 const TemplateTimeTable = () => {
   const { setHeader } = useHeader();
@@ -8,6 +11,7 @@ const TemplateTimeTable = () => {
     setHeader('템플릿 추가하기');
   }, []);
 
+  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
 
   return (
     <>

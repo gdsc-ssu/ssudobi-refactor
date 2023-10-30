@@ -107,7 +107,13 @@ const NameTimeType = () => {
       </TitleBox>
       <MenuBox>
         <MenuTitle>템플릿 이름</MenuTitle>
-        <TextInput value={title} placeholder="ex. 슈도비 프로젝트 회의" />
+        <TextInput
+          value={title}
+          onChange={(e) => {
+            setTitle(e.currentTarget.value);
+          }}
+          placeholder="ex. 슈도비 프로젝트 회의"
+        />
       </MenuBox>
       <MenuBox>
         <MenuTitle>세미나실 종류</MenuTitle>
@@ -128,6 +134,7 @@ const NameTimeType = () => {
           />
         </TypeBox>
       </MenuBox>
+
       <MenuBox>
         <MenuTitle>사용 시간</MenuTitle>
         <TimesBox>

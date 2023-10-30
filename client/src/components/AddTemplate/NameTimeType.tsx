@@ -117,14 +117,14 @@ const NameTimeType = () => {
             title="세미나실"
             disabled={false}
             checked={isSeminar}
-            onClick={() => setIsSeminar(!isSeminar)}
+            onClick={() => setIsSeminar(true)}
           />
           <ItemButton
             style={{ marginRight: '8px' }}
             title="&nbsp;&nbsp;&nbsp;개방형 세미나실&nbsp;&nbsp;&nbsp;"
             disabled={false}
             checked={!isSeminar}
-            onClick={() => setIsSeminar(!isSeminar)}
+            onClick={() => setIsSeminar(false)}
           />
         </TypeBox>
       </MenuBox>

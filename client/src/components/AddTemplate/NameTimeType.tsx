@@ -110,6 +110,25 @@ const NameTimeType = () => {
         <TextInput value={title} placeholder="ex. 슈도비 프로젝트 회의" />
       </MenuBox>
       <MenuBox>
+        <MenuTitle>세미나실 종류</MenuTitle>
+        <TypeBox>
+          <ItemButton
+            style={{ marginRight: '8px' }}
+            title="세미나실"
+            disabled={false}
+            checked={isSeminar}
+            onClick={() => setIsSeminar(!isSeminar)}
+          />
+          <ItemButton
+            style={{ marginRight: '8px' }}
+            title="&nbsp;&nbsp;&nbsp;개방형 세미나실&nbsp;&nbsp;&nbsp;"
+            disabled={false}
+            checked={!isSeminar}
+            onClick={() => setIsSeminar(!isSeminar)}
+          />
+        </TypeBox>
+      </MenuBox>
+      <MenuBox>
         <MenuTitle>사용 시간</MenuTitle>
         <TimesBox>
           <ItemButton

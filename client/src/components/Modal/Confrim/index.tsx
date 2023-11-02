@@ -1,5 +1,11 @@
 import { ComponentProps } from 'react';
-import { ModalButton, Message, ModalContent, Title } from '../common';
+import {
+  ModalButton,
+  Message,
+  ModalContent,
+  Title,
+  ModalOverlay,
+} from '../common';
 import { css } from '@emotion/react';
 
 interface ModalProps extends ComponentProps<'button'> {

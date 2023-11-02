@@ -1,4 +1,4 @@
-import { ReserveButtons } from '@/components/Home';
+import { MateList, ReserveButtons } from '@/components/Home';
 import { Title } from '@/components/Layouts';
 import { useAuth } from '@/hooks';
 import { PageContainer, flex } from '@/styles/tokens';
@@ -25,6 +25,8 @@ const Home = () => {
     },
   };
 
+  const test = ['테스트', '테스', '스트'];
+
   return (
     <PageContainer css={pageStyle}>
       <TitleWrapper css={paddingStyle}>
@@ -38,6 +40,7 @@ const Home = () => {
       </TitleWrapper>
       <TitleWrapper css={paddingStyle}>
         <Title {...configs.mate} />
+        <MateList mates={test} />
       </TitleWrapper>
     </PageContainer>
   );

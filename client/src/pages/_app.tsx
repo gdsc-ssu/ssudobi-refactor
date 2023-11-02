@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import { Frame } from '@/components/Layouts';
+import { Frame, ToastProvider } from '@/components/Layouts';
 import useAuth from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { Global, css } from '@emotion/react';
@@ -31,6 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Frame>
+        <ToastProvider />
         <Global styles={[reset, getBgColor(router.pathname)]} />
         <Component {...pageProps} />
       </Frame>

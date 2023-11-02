@@ -10,8 +10,15 @@ const useVh = () => {
     setVh(vh);
   };
 
-  const remToPx = (rem: number) =>
-    parseFloat(getComputedStyle(document.documentElement).fontSize) * rem;
+  const remToPx = (rem: number) => {
+    if (typeof window !== 'undefined') {
+      return (
+        parseFloat(getComputedStyle(document.documentElement).fontSize) * rem
+      );
+    } else {
+      return 10 * rem;
+    }
+  };
 
   const fullPageHeight = useCallback(
     (headerHeight = 0, navigatorHeight = 0) => {

@@ -18,7 +18,7 @@ type FormData = {
 const Login = () => {
   const { setHeader } = useHeader();
   const { fullPageStyle } = useVh();
-  const { handleLogin } = useAuth();
+  const { handleLogin, isWarn } = useAuth();
   const { values, handleChange } = useInput<FormData>({ id: '', password: '' });
 
   useLayoutEffect(() => {
@@ -35,6 +35,7 @@ const Login = () => {
             value={values.id}
             name="id"
             onChange={handleChange}
+            warning={isWarn}
           />
         </InputBox>
         <InputBox>
@@ -45,6 +46,8 @@ const Login = () => {
             value={values.password}
             name="password"
             onChange={handleChange}
+            warning={isWarn}
+            warningCaption="학번 또는 비밀번호가 일치하지 않습니다."
           />
         </InputBox>
       </InputWrapper>

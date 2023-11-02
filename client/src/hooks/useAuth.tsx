@@ -4,12 +4,14 @@ import { getUserInfo, updateUserInfo } from '@/utils/lib/infoHandler';
 import { updateAccessToken } from '@/utils/lib/tokenHandler';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 const useAuth = () => {
   const authApi = new AuthApi();
 
   const router = useRouter();
   const [authInfo, setAuthInfo] = useAtom(authInfoState);
+  const [isWarn, setIsWarn] = useState(false);
 
   /**
    * 로그인 함수
@@ -24,8 +26,10 @@ const useAuth = () => {
       });
       updateAccessToken(data.accessToken);
       updateUserInfo(data.name, data.printMemberNo, id, password);
+      setIsWarn(false);
       router.replace('/');
     } catch (err) {
+      setIsWarn(true);
       console.log(err);
     }
   };
@@ -56,7 +60,7 @@ const useAuth = () => {
     }
   };
 
-  return { authInfo, autoLogin, handleLogin };
+  return { authInfo, autoLogin, handleLogin, isWarn };
 };
 
 export default useAuth;

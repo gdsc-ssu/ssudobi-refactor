@@ -72,19 +72,18 @@ export const PageContainer = styled.div`
   min-height: 100%;
 `;
 
+/** 공통 헤더 높이 */
+export const HEADER_HEIGHT = 6;
+/** 공통 바텀 네비게이션바 높이 */
+export const BOTTOM_HEIGHT = 7;
+
 export const containerStyle = {
   navigator: css`
-    padding-top: 6rem;
-    padding-bottom: 7rem;
-    ${mq[4]} {
-      padding-top: 5rem;
-    }
+    padding-top: ${HEADER_HEIGHT}rem;
+    padding-bottom: ${BOTTOM_HEIGHT}rem;
   `,
   header: css`
-    padding-top: 6rem;
-    ${mq[4]} {
-      padding-top: 5rem;
-    }
+    padding-top: ${HEADER_HEIGHT}rem;
   `,
   skinight: css`
     padding: 0rem;

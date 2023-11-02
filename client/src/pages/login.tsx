@@ -26,7 +26,7 @@ const Login = () => {
   }, []);
 
   return (
-    <Container css={fullPageStyle}>
+    <Container css={fullPageStyle(6)}>
       <InputWrapper>
         <InputBox>
           <Caption>학번</Caption>
@@ -65,7 +65,7 @@ const Login = () => {
 
 const Container = styled.div`
   width: 100%;
-  padding: 12rem 4.5rem;
+  padding: 9rem 4.5rem;
   ${flex('column', 'between', 'center', 5)};
 `;
 

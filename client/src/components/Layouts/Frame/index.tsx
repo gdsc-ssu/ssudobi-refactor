@@ -60,7 +60,7 @@ const Frame = ({ children, ...props }: FrameProps) => {
   return (
     <div css={[backgroundStyle, getBgColor(router.pathname)]} {...props}>
       <FrameHeader />
-      <Container css={getPaddingStyle(router.pathname)}>{children}</Container>
+      <Container css={[getPaddingStyle(router.pathname)]}>{children}</Container>
       <FrameNavigator />
     </div>
   );

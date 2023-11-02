@@ -1,12 +1,7 @@
 import { ComponentProps } from 'react';
-import {
-  ModalButton,
-  Message,
-  ModalContent,
-  Title,
-  ModalOverlay,
-} from '../common';
+import { ModalButton, Message, ModalContent, Title } from '../common';
 import { css } from '@emotion/react';
+import { injectAnimation } from '@/styles/animations';
 
 interface ModalProps extends ComponentProps<'button'> {
   /**
@@ -17,11 +12,22 @@ interface ModalProps extends ComponentProps<'button'> {
    * 모달에 표시할 메시지
    */
   message: string;
+  /**
+   * 모달 꺼질 때
+   */
+  isTransition?: boolean;
 }
 
-const ConfirmModal = ({ title, message, ...props }: ModalProps) => {
+const ConfirmModal = ({
+  title,
+  message,
+  isTransition,
+  ...props
+}: ModalProps) => {
   return (
-    <ModalContent>
+    <ModalContent
+      css={isTransition && injectAnimation('modalDisappear', '1.5s')}
+    >
       <Title>{title}</Title>
       <Message>{message}</Message>
       <ModalButton css={buttonStyle} {...props}>

@@ -1,15 +1,10 @@
 import { ComponentProps } from 'react';
-import {
-  ModalButton,
-  Message,
-  ModalContent,
-  Title,
-  ModalOverlay,
-} from '../common';
+import { ModalButton, Message, ModalContent, Title } from '../common';
 import styled from '@emotion/styled';
 import { flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
 import { COLORS } from '@/styles/colors';
+import { injectAnimation } from '@/styles/animations';
 
 interface ModalProps extends ComponentProps<'button'> {
   /**
@@ -24,11 +19,23 @@ interface ModalProps extends ComponentProps<'button'> {
    * 취소 버튼 눌렀을 때 실행되는 함수
    */
   onCancle: () => void;
+  /**
+   * 모달 꺼질 때
+   */
+  isTransition?: boolean;
 }
 
-const DecisionModal = ({ title, message, onCancle, ...props }: ModalProps) => {
+const DecisionModal = ({
+  title,
+  message,
+  onCancle,
+  isTransition,
+  ...props
+}: ModalProps) => {
   return (
-    <ModalContent>
+    <ModalContent
+      css={isTransition && injectAnimation('modalDisappear', '1.5s')}
+    >
       <Title>{title}</Title>
       <Message>{message}</Message>
       <ButtonsWrapper>

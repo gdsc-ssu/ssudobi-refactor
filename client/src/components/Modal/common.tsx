@@ -1,3 +1,4 @@
+import { injectAnimation } from '@/styles/animations';
 import { COLORS } from '@/styles/colors';
 import { flex, transform, transition } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
@@ -13,6 +14,7 @@ export const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${injectAnimation('modalBackgroundAppear', '1.5s')};
 `;
 
 export const ModalContent = styled.div`
@@ -26,6 +28,8 @@ export const ModalContent = styled.div`
   box-shadow:
     rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  position: relative;
+  ${injectAnimation('modalAppear', '1.5s')};
 `;
 
 export const ModalButton = styled.button`

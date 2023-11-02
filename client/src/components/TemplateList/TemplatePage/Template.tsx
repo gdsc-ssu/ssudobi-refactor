@@ -1,23 +1,57 @@
-import * as styles from './Template.styles';
+import { TemplateProps } from '../TemplateProps';
+import * as styles from '../Common.styles';
+import { COLORS } from '@/styles/colors';
+import styled from '@emotion/styled';
+import RemoveBtn from '@/assets/svg/x-button.svg';
 
-const Template = () => {
+const Template = ({
+  title,
+  beginTime,
+  endTime,
+  place,
+  memo,
+  friends,
+}: TemplateProps) => {
   return (
     <styles.Container>
-      <styles.InfoBox>
-        <styles.TitleBox>캡스톤 정기 회의</styles.TitleBox>
-        <styles.DateBox>목요일 13시 - 15시 30분</styles.DateBox>
-        <styles.PlaceBox>세미나룸 102호</styles.PlaceBox>
-        <styles.NoteBox>
-          캡스톤 정기 회의 잊지말자 제발!! 준비물 챙기기
-        </styles.NoteBox>
+      <InfoBox>
+        <styles.TitleBox>
+          <div>{title}</div>
+          <RemoveBox>
+            <RemoveBtn />
+          </RemoveBox>
+        </styles.TitleBox>
+        <styles.DateBox>
+          {beginTime} {endTime}
+        </styles.DateBox>
+        <styles.PlaceBox>{place}</styles.PlaceBox>
+        <styles.NoteBox>{memo}</styles.NoteBox>
         <styles.PeopleBox>
-          <styles.PersonInfo>최상원 / 20181234</styles.PersonInfo>
-          <styles.PersonInfo>정명진 / 20181234</styles.PersonInfo>
+          {friends.map((el) => {
+            return <styles.PersonInfo key={el}>{el}</styles.PersonInfo>;
+          })}
         </styles.PeopleBox>
-      </styles.InfoBox>
-      <styles.SideLine />
+      </InfoBox>
+      <SideLine />
     </styles.Container>
   );
 };
+
+const RemoveBox = styled.div`
+  margin-left: auto;
+`;
+
+const InfoBox = styled.div`
+  width: 329px;
+  background-color: ${COLORS.grey7};
+  padding: 15px 15px 15px 20px;
+  border-radius: 10px 0 0 10px;
+`;
+
+const SideLine = styled.div`
+  background-color: ${COLORS.primary};
+  border-radius: 0 10px 10px 0;
+  width: 5px;
+`;
 
 export default Template;

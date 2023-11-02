@@ -29,7 +29,10 @@ const Modal = ({
 }: Props) => {
   return (
     <ModalOverlay
-      css={isTransition && injectAnimation('modalBackgroundDisappear')}
+      css={
+        isTransition &&
+        injectAnimation('modalBackgroundDisappear', '0.3s', 'ease')
+      }
     >
       {modalType === 'confirm' && (
         <ConfirmModal title={title} message={message} {...props} />

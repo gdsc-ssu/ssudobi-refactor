@@ -8,13 +8,14 @@ export const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 999;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
   align-items: center;
-  ${injectAnimation('modalBackgroundAppear', '1.5s')};
+  ${injectAnimation('modalBackgroundAppear', '0.5s', 'ease')};
 `;
 
 export const ModalContent = styled.div`
@@ -29,7 +30,7 @@ export const ModalContent = styled.div`
     rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   position: relative;
-  ${injectAnimation('modalAppear', '1.5s')};
+  ${injectAnimation('modalAppear', '0.5s', 'ease')};
 `;
 
 export const ModalButton = styled.button`

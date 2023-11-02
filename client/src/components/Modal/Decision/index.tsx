@@ -34,7 +34,7 @@ const DecisionModal = ({
 }: ModalProps) => {
   return (
     <ModalContent
-      css={isTransition && injectAnimation('modalDisappear', '1.5s')}
+      css={isTransition && injectAnimation('modalDisappear', '0.3s', 'ease')}
     >
       <Title>{title}</Title>
       <Message>{message}</Message>

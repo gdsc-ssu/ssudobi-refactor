@@ -1,17 +1,27 @@
+import Modal from '@/components/Modal';
 import { MenuBox, ProfileBox } from '@/components/Profile';
-import { useAuth, useHeader } from '@/hooks';
+import { useAuth, useHeader, useTransition } from '@/hooks';
 import { COLORS } from '@/styles/colors';
 import { PageContainer, flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
+
+const config = {
+  title: '',
+  message: '',
+  onClick: () => {},
+  handleClose: () => {},
+};
 
 /**
  * 마이페이지
  */
 const Mypage = () => {
   const { setHeader } = useHeader();
-  const { authInfo } = useAuth();
+  const { authInfo, handleLogout } = useAuth();
+  const { handleOpen, handleClose, isTransition, isMount } = useTransition(300);
+  const [modalConfig, setModalCofig] = useState(config);
 
   const policyMenus = [
     {
@@ -42,7 +52,15 @@ const Mypage = () => {
     },
     {
       title: '로그아웃',
-      onClick: () => {},
+      onClick: () => {
+        setModalCofig({
+          title: '로그아웃 하시겠습니까?',
+          message: '언제든 다시 돌아와주세요!',
+          onClick: handleLogout,
+          handleClose,
+        });
+        handleOpen();
+      },
     },
   ];
 
@@ -63,6 +81,13 @@ const Mypage = () => {
       {infoMenus.map(MenuBox)}
       <Line />
       {authMenus.map(MenuBox)}
+      {isMount && (
+        <Modal
+          {...modalConfig}
+          modalType="decision"
+          isTransition={isTransition}
+        />
+      )}
     </PageContainer>
   );
 };

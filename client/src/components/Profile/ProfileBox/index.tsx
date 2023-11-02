@@ -3,7 +3,7 @@ import { TYPO } from '@/styles/typo';
 import { companionIconGetter } from '@/utils/func/companionIconGetter';
 import { css } from '@emotion/react';
 import { flex } from '@/styles/tokens';
-import { ComponentProps } from 'react';
+import { ComponentProps, useMemo } from 'react';
 
 interface ModalProps extends ComponentProps<'div'> {
   /**
@@ -17,7 +17,9 @@ interface ModalProps extends ComponentProps<'div'> {
 }
 
 const Profile = ({ name, memberNo, ...props }: ModalProps) => {
-  const ProfileIcon = companionIconGetter();
+  const ProfileIcon = useMemo(() => {
+    return companionIconGetter();
+  }, []);
 
   return (
     <Container {...props}>

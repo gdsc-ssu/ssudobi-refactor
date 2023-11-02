@@ -16,5 +16,6 @@ export const COLORS = {
   white: '#FEFFFF',
   primaryWhite: '#fcfdff',
   primaryWeak: '#D7EAFC',
+  primaryDeep: '#1a80c5',
   disabled: '#B5B5B5',
 };

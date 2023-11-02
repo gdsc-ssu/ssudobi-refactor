@@ -59,7 +59,7 @@ const ToastThemeLine = styled.div`
 
 const toastStyles = {
   positive: css`
-    background-color: ${COLORS.primary};
+    background-color: ${COLORS.primaryDeep};
   `,
   negative: css`
     background-color: ${COLORS.negative};

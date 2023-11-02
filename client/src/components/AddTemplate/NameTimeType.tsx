@@ -11,6 +11,8 @@ import Link from 'next/link';
 import { useAtom, useSetAtom } from 'jotai';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { templateAtom } from '.';
+import { TYPO } from '@/styles/typo';
+import { COLORS } from '@/styles/colors';
 
 type CheckedButtons = {
   '1시간': boolean;
@@ -82,27 +84,10 @@ const NameTimeType = () => {
         />
       </MenuBox>
       <MenuBox>
-        <MenuTitle>세미나실 종류</MenuTitle>
-        <TypeBox>
-          <ItemButton
-            style={{ marginRight: '8px' }}
-            title="세미나실"
-            disabled={false}
-            checked={isSeminar}
-            onClick={() => setIsSeminar(true)}
-          />
-          <ItemButton
-            style={{ marginRight: '8px' }}
-            title="&nbsp;&nbsp;&nbsp;개방형 세미나실&nbsp;&nbsp;&nbsp;"
-            disabled={false}
-            checked={!isSeminar}
-            onClick={() => setIsSeminar(false)}
-          />
-        </TypeBox>
+        <MenuTitle>사용 시간과 용도를 선택해 주세요.</MenuTitle>
       </MenuBox>
-
-      <MenuBox>
-        <MenuTitle>사용 시간</MenuTitle>
+      <SmallMenuBox>
+        <SmallTitleBox>사용 시간</SmallTitleBox>
         <TimesBox>
           <ItemButton
             style={{ marginRight: '8px' }}
@@ -126,11 +111,35 @@ const NameTimeType = () => {
             onClick={() => handleButtonClick('3시간')}
           />
         </TimesBox>
-      </MenuBox>
-      <MenuBox>
-        <MenuTitle>사용 용도를 선택해 주세요.</MenuTitle>
+      </SmallMenuBox>
+      <SmallMenuBox>
+        <SmallTitleBox>사용 용도를 선택해 주세요.</SmallTitleBox>
         {/** TODO: 사용용도 컴포넌트 추가하기 */}
+      </SmallMenuBox>
+
+      <MenuBox>
+        <MenuTitle>장소 종류</MenuTitle>
+        <DescriptionBox>
+          개방형 세미나실은 3명만 이용할 수 있어요.
+        </DescriptionBox>
+        <TypeBox>
+          <ItemButton
+            style={{ marginRight: '8px' }}
+            title="세미나실"
+            disabled={false}
+            checked={isSeminar}
+            onClick={() => setIsSeminar(true)}
+          />
+          <ItemButton
+            style={{ marginRight: '8px' }}
+            title="&nbsp;&nbsp;&nbsp;개방형 세미나실&nbsp;&nbsp;&nbsp;"
+            disabled={false}
+            checked={!isSeminar}
+            onClick={() => setIsSeminar(false)}
+          />
+        </TypeBox>
       </MenuBox>
+
       <NextFixedBox>
         <NextWidthBox>
           <Link href={'/template/2'}>
@@ -149,6 +158,15 @@ const NameTimeType = () => {
 
 const TitleBox = styled.div`
   margin-top: 77px;
+`;
+
+const SmallTitleBox = styled.div`
+  ${TYPO.title3.Reg};
+  margin-bottom: 15px;
+`;
+
+const SmallMenuBox = styled.div`
+  margin-top: 20px;
 `;
 
 const MenuBox = styled.div`
@@ -178,6 +196,13 @@ const NextWidthBox = styled.div`
   display: flex;
   justify-content: center;
   margin: auto;
+`;
+
+const DescriptionBox = styled.div`
+  ${TYPO.text2.Reg};
+  color: ${COLORS.grey3};
+  margin-top: -10px;
+  margin-bottom: 10px;
 `;
 
 export default NameTimeType;

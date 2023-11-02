@@ -33,6 +33,8 @@ const HeaderWrapper = styled.div`
   top: 0px;
   left: 50%;
   ${transform('translate(-50%, 0%)')};
+  background-color: ${COLORS.white};
+  z-index: 10;
 
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
 

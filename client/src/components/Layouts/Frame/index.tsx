@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import FrameNavigator from './FrameNavigator';
 import { COLORS } from '@/styles/colors';
 import { useRouter } from 'next/router';
+import { containerStyle } from '@/styles/tokens';
 
 interface FrameProps extends ComponentProps<'div'> {
   children: React.ReactNode;
@@ -42,10 +43,24 @@ const Frame = ({ children, ...props }: FrameProps) => {
     }
   };
 
+  const getPaddingStyle = (pathname: string) => {
+    switch (pathname) {
+      case '/landing':
+        return containerStyle.skinight;
+      case '/':
+      case '/template':
+      case '/mate':
+      case '/schedule':
+        return containerStyle.navigator;
+      default:
+        return containerStyle.header;
+    }
+  };
+
   return (
     <div css={[backgroundStyle, getBgColor(router.pathname)]} {...props}>
       <FrameHeader />
-      <Container>{children}</Container>
+      <Container css={getPaddingStyle(router.pathname)}>{children}</Container>
       <FrameNavigator />
     </div>
   );

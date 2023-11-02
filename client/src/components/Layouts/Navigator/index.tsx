@@ -66,6 +66,8 @@ const NavigatorWrapper = styled.div`
   min-width: 25rem;
   height: 7rem;
   ${flex('row', 'center', 'center', 0)};
+  background-color: ${COLORS.white};
+  z-index: 10;
 
   position: fixed;
   bottom: 0px;

@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mq } from './breakpoints';
 
 type Direction = 'row' | 'column';
 type JustifyContent =
@@ -68,5 +69,24 @@ export const transition = (duration: string, animationType = 'linear') => {
 
 export const PageContainer = styled.div`
   width: 100%;
-  padding: 1rem 2.7rem;
+  min-height: 100%;
 `;
+
+export const containerStyle = {
+  navigator: css`
+    padding-top: 6rem;
+    padding-bottom: 7rem;
+    ${mq[4]} {
+      padding-top: 5rem;
+    }
+  `,
+  header: css`
+    padding-top: 6rem;
+    ${mq[4]} {
+      padding-top: 5rem;
+    }
+  `,
+  skinight: css`
+    padding: 0rem;
+  `,
+};

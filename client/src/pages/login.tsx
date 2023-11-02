@@ -2,7 +2,7 @@ import { RoundButton } from '@/components/Buttons';
 import { TextInput } from '@/components/Field';
 import { useAuth, useHeader, useInput, useVh } from '@/hooks';
 import { COLORS } from '@/styles/colors';
-import { flex } from '@/styles/tokens';
+import { HEADER_HEIGHT, flex } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
 import { useLayoutEffect } from 'react';
@@ -26,7 +26,7 @@ const Login = () => {
   }, []);
 
   return (
-    <Container css={fullPageStyle(6)}>
+    <Container css={fullPageStyle(HEADER_HEIGHT)}>
       <InputWrapper>
         <InputBox>
           <Caption>학번</Caption>

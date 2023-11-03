@@ -90,6 +90,12 @@ const Template = ({
 
 const RemoveBox = styled.div`
   margin-left: auto;
+  display: flex;
+`;
+
+const ImgBox = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const InfoBox = styled.div`

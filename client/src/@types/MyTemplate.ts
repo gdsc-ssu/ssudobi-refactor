@@ -13,6 +13,6 @@ export interface MyTemplate {
   finishTime: string;
   people: Array<Companion>;
   seminarType: '개방형' | '세미나';
-  semina: number;
+  semina: number[];
   type: string;
 }

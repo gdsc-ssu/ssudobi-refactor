@@ -2,8 +2,7 @@
  * 액세스 토큰 가져오기
  */
 export const getAccessToken = () => {
-  const token = localStorage.getItem('ACCESS_TOKEN');
-  return token || undefined;
+  return localStorage.getItem('ACCESS_TOKEN') || undefined;;
 };
 
 /**
@@ -17,5 +16,5 @@ export const updateAccessToken = (token: string) => {
  * 토큰 삭제 (로그아웃)
  */
 export const removeAccessToken = () => {
-  localStorage.removeItem('ACESS_TOKEN');
+  localStorage.removeItem('ACCESS_TOKEN');
 };

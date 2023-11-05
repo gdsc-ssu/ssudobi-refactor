@@ -1,9 +1,9 @@
 import type { StoryObj } from '@storybook/react';
-import ConfirmModal from '.';
+import Usage from '.';
 
 const meta = {
-  title: 'Modal/Confirm',
-  component: ConfirmModal,
+  title: 'Buttons/Usage',
+  component: Usage,
   tags: ['autodocs'],
 };
 
@@ -13,8 +13,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    title: '모달 제목입니다',
-    message: '모달 내용입니다',
-    onClick: () => {},
+    title: '수업',
+    checked: false,
+  },
+};
+
+export const Checked: Story = {
+  args: {
+    title: '수업',
+    checked: true,
   },
 };

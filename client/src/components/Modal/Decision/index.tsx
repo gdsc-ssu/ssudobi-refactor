@@ -1,5 +1,11 @@
 import { ComponentProps } from 'react';
-import { ModalButton, Message, ModalContent, Title } from '../common';
+import {
+  ModalButton,
+  Message,
+  ModalContent,
+  Title,
+  ModalOverlay,
+} from '../common';
 import styled from '@emotion/styled';
 import { flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
@@ -22,18 +28,20 @@ interface ModalProps extends ComponentProps<'button'> {
 
 const DecisionModal = ({ title, message, onCancle, ...props }: ModalProps) => {
   return (
-    <ModalContent>
-      <Title>{title}</Title>
-      <Message>{message}</Message>
-      <ButtonsWrapper>
-        <ModalButton css={[closeStyle, commonStyle]} onClick={onCancle}>
-          닫기
-        </ModalButton>
-        <ModalButton css={commonStyle} {...props}>
-          확인
-        </ModalButton>
-      </ButtonsWrapper>
-    </ModalContent>
+    <ModalOverlay>
+      <ModalContent>
+        <Title>{title}</Title>
+        <Message>{message}</Message>
+        <ButtonsWrapper>
+          <ModalButton css={[closeStyle, commonStyle]} onClick={onCancle}>
+            닫기
+          </ModalButton>
+          <ModalButton css={commonStyle} {...props}>
+            확인
+          </ModalButton>
+        </ButtonsWrapper>
+      </ModalContent>
+    </ModalOverlay>
   );
 };
 

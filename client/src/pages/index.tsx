@@ -1,4 +1,4 @@
-import { MateList, ReserveButtons } from '@/components/Home';
+import { MateList, ReserveButtons, TemplateList } from '@/components/Home';
 import { Title } from '@/components/Layouts';
 import { useAuth } from '@/hooks';
 import { PageContainer, flex } from '@/styles/tokens';
@@ -37,6 +37,7 @@ const Home = () => {
         <div css={paddingStyle}>
           <Title {...configs.template} />
         </div>
+        <TemplateList />
       </TitleWrapper>
       <TitleWrapper css={paddingStyle}>
         <Title {...configs.mate} />

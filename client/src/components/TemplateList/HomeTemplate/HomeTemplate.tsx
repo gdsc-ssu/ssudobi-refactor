@@ -1,7 +1,7 @@
-import { TemplateProps } from '../TemplateProps';
 import * as styles from '../Common.styles';
 import styled from '@emotion/styled';
 import { COLORS } from '@/styles/colors';
+import { TemplateInfo } from 'Template';
 
 const HomeTemplate = ({
   title,
@@ -10,41 +10,40 @@ const HomeTemplate = ({
   place,
   memo,
   friends,
-}: TemplateProps) => {
+}: TemplateInfo) => {
   return (
-    <styles.Container>
-      <InfoBox>
-        <styles.TitleBox>{title}</styles.TitleBox>
-        <styles.DateBox>
-          {beginTime} {endTime}
-        </styles.DateBox>
-        <styles.PlaceBox>{place}</styles.PlaceBox>
-        <styles.NoteBox>{memo}</styles.NoteBox>
-        <styles.PeopleBox>
-          {friends.map((el) => {
-            return <styles.PersonInfo key={el}>{el}</styles.PersonInfo>;
-          })}
-        </styles.PeopleBox>
-      </InfoBox>
-      <styles.PlusBox>+</styles.PlusBox>
-    </styles.Container>
+    <InfoBox>
+      <styles.TitleBox>{title}</styles.TitleBox>
+      <styles.DateBox>
+        {beginTime} {endTime}
+      </styles.DateBox>
+      <styles.PlaceBox>{place}</styles.PlaceBox>
+      <styles.NoteBox>{memo}</styles.NoteBox>
+      <styles.PeopleBox>
+        {friends.map((el) => {
+          return <styles.PersonInfo key={el}>{el}</styles.PersonInfo>;
+        })}
+      </styles.PeopleBox>
+    </InfoBox>
   );
 };
 
 const InfoBox = styled.div`
-  width: 250px;
+  width: 100%;
   background-color: ${COLORS.grey7};
-  padding: 15px 20px;
-  border-radius: 10px;
-  margin-right: 12px;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  margin-right: 1.2rem;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  cursor: pointer;
 `;
 
 export const PlusBox = styled.button`
-  width: 50px;
+  width: 5rem;
   background-color: ${COLORS.primary};
-  border-radius: 10px;
+  border-radius: 1rem;
   color: white;
-  font-size: 30px;
+  font-size: 3rem;
   border: none;
 `;
 

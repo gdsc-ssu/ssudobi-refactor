@@ -10,6 +10,7 @@ import styled from '@emotion/styled';
 import { flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
 import { COLORS } from '@/styles/colors';
+import { injectAnimation } from '@/styles/animations';
 
 interface ModalProps extends ComponentProps<'button'> {
   /**
@@ -24,24 +25,34 @@ interface ModalProps extends ComponentProps<'button'> {
    * 취소 버튼 눌렀을 때 실행되는 함수
    */
   onCancle: () => void;
+  /**
+   * 모달 꺼질 때
+   */
+  isTransition?: boolean;
 }
 
-const DecisionModal = ({ title, message, onCancle, ...props }: ModalProps) => {
+const DecisionModal = ({
+  title,
+  message,
+  onCancle,
+  isTransition,
+  ...props
+}: ModalProps) => {
   return (
-    <ModalOverlay>
-      <ModalContent>
-        <Title>{title}</Title>
-        <Message>{message}</Message>
-        <ButtonsWrapper>
-          <ModalButton css={[closeStyle, commonStyle]} onClick={onCancle}>
-            닫기
-          </ModalButton>
-          <ModalButton css={commonStyle} {...props}>
-            확인
-          </ModalButton>
-        </ButtonsWrapper>
-      </ModalContent>
-    </ModalOverlay>
+    <ModalContent
+      css={isTransition && injectAnimation('modalDisappear', '0.3s', 'ease')}
+    >
+      <Title>{title}</Title>
+      <Message>{message}</Message>
+      <ButtonsWrapper>
+        <ModalButton css={[closeStyle, commonStyle]} onClick={onCancle}>
+          닫기
+        </ModalButton>
+        <ModalButton css={commonStyle} {...props}>
+          확인
+        </ModalButton>
+      </ButtonsWrapper>
+    </ModalContent>
   );
 };
 

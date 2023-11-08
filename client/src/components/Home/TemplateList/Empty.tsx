@@ -4,11 +4,14 @@ import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
 import { faMarker } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/router';
 
 const Empty = () => {
+  const router = useRouter();
+
   return (
     <Container>
-      <Button>
+      <Button onClick={() => router.push('/create/template')}>
         <Content>템플릿 제작하기</Content>
         <FontAwesomeIcon icon={faMarker} />
       </Button>

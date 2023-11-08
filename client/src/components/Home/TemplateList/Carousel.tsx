@@ -7,6 +7,7 @@ import { faAnglesRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TemplateInfo } from 'Template';
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 type PropType = {
@@ -18,6 +19,7 @@ const Carousel = ({ templates, options }: PropType) => {
   const [isMax, setIsMax] = useState(false);
   const [slides, setSlides] = useState<TemplateInfo[]>([]);
   const [emblaRef] = useEmblaCarousel(options);
+  const router = useRouter();
 
   const calculTemplates = () => {
     if (templates.length > 5) {
@@ -44,11 +46,17 @@ const Carousel = ({ templates, options }: PropType) => {
           ))}
           <ButtonsWrapper>
             {isMax && (
-              <Box css={boxStyles.more}>
+              <Box
+                css={boxStyles.more}
+                onClick={() => router.push('/template')}
+              >
                 <FontAwesomeIcon icon={faAnglesRight} />
               </Box>
             )}
-            <Box css={boxStyles.plus}>
+            <Box
+              css={boxStyles.plus}
+              onClick={() => router.push('/create/template')}
+            >
               <FontAwesomeIcon icon={faPlusCircle} />
             </Box>
           </ButtonsWrapper>

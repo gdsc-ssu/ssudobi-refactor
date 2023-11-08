@@ -21,7 +21,7 @@ const Landing = () => {
   };
 
   return (
-    <Container css={fullPageStyle}>
+    <Container css={fullPageStyle()}>
       <TitleWrapper>
         <span css={TYPO.title1.Eb}>SSUDOBI</span>
         <span css={TYPO.title2.Reg}>숭실대학교 도서관 비대면 예약 시스템</span>

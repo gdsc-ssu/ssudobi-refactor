@@ -2,7 +2,7 @@ import { RoundButton } from '@/components/Buttons';
 import { TextInput } from '@/components/Field';
 import { useAuth, useHeader, useInput, useVh } from '@/hooks';
 import { COLORS } from '@/styles/colors';
-import { flex } from '@/styles/tokens';
+import { HEADER_HEIGHT, flex } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
 import { useLayoutEffect } from 'react';
@@ -18,7 +18,7 @@ type FormData = {
 const Login = () => {
   const { setHeader } = useHeader();
   const { fullPageStyle } = useVh();
-  const { handleLogin } = useAuth();
+  const { handleLogin, isWarn } = useAuth();
   const { values, handleChange } = useInput<FormData>({ id: '', password: '' });
 
   useLayoutEffect(() => {
@@ -26,7 +26,7 @@ const Login = () => {
   }, []);
 
   return (
-    <Container css={fullPageStyle}>
+    <Container css={fullPageStyle(HEADER_HEIGHT)}>
       <InputWrapper>
         <InputBox>
           <Caption>학번</Caption>
@@ -35,6 +35,7 @@ const Login = () => {
             value={values.id}
             name="id"
             onChange={handleChange}
+            warning={isWarn}
           />
         </InputBox>
         <InputBox>
@@ -45,6 +46,8 @@ const Login = () => {
             value={values.password}
             name="password"
             onChange={handleChange}
+            warning={isWarn}
+            warningCaption="학번 또는 비밀번호가 일치하지 않습니다."
           />
         </InputBox>
       </InputWrapper>
@@ -62,7 +65,7 @@ const Login = () => {
 
 const Container = styled.div`
   width: 100%;
-  padding: 12rem 4.5rem;
+  padding: 9rem 4.5rem;
   ${flex('column', 'between', 'center', 5)};
 `;
 

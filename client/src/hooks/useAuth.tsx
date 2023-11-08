@@ -4,12 +4,16 @@ import { getUserInfo, updateUserInfo } from '@/utils/lib/infoHandler';
 import { updateAccessToken } from '@/utils/lib/tokenHandler';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useToast } from '.';
 
 const useAuth = () => {
   const authApi = new AuthApi();
+  const { showToast } = useToast();
 
   const router = useRouter();
   const [authInfo, setAuthInfo] = useAtom(authInfoState);
+  const [isWarn, setIsWarn] = useState(false);
 
   /**
    * 로그인 함수
@@ -24,8 +28,12 @@ const useAuth = () => {
       });
       updateAccessToken(data.accessToken);
       updateUserInfo(data.name, data.printMemberNo, id, password);
+      setIsWarn(false);
+      showToast('positive', '로그인에 성공하였습니다.');
       router.replace('/');
     } catch (err) {
+      setIsWarn(true);
+      showToast('negative', '로그인에 실패하였습니다.\n다시 시도해주세요!');
       console.log(err);
     }
   };
@@ -56,7 +64,7 @@ const useAuth = () => {
     }
   };
 
-  return { authInfo, autoLogin, handleLogin };
+  return { authInfo, autoLogin, handleLogin, isWarn };
 };
 
 export default useAuth;

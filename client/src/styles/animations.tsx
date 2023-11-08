@@ -123,6 +123,29 @@ const loginButtonPopup = keyframes`
   }
 `;
 
+const toastAnimations = {
+  open: keyframes`
+    0%{
+      opacity: 0;
+      ${transform('translate(-50%, -20%)')};
+    }
+    100%{
+      opacity: 1;
+      ${transform('translate(-50%, 0%)')};
+    }
+  `,
+  close: keyframes`
+    0%{
+      opacity: 1;
+      ${transform('translate(-50%, 0%)')};
+    }
+    100%{
+      opacity: 0;
+      ${transform('translate(-50%, -20%)')};
+    }
+  `,
+};
+
 const animations = {
   fadeInTopDown,
   fadeInTopDownTranslate,
@@ -131,6 +154,8 @@ const animations = {
   circleMovingBottom: circleMoving.bottom,
   loginTitlePopup,
   loginButtonPopup,
+  toastOpen: toastAnimations.open,
+  toastClose: toastAnimations.close,
   usageMovingTop: usageMoving.top,
   usageMovingBottom: usageMoving.bottom,
 };

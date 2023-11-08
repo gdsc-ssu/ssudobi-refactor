@@ -5,13 +5,14 @@ import { HTMLMotionProps, motion } from 'framer-motion';
 import AddMateBox from './AddMateBox';
 import { useMate } from '@/hooks';
 import MateLine from './MateLine';
+import { MateItemType } from 'Mate';
 
 export type KitType = 'selectable' | 'removable';
 
 interface Props extends HTMLMotionProps<'ul'> {
   kitType: KitType;
-  selectedList?: string[];
-  handleSelect?: (idx: number) => void;
+  selectedList?: MateItemType[];
+  handleSelect?: (idx: MateItemType) => void;
 }
 
 /**
@@ -29,7 +30,13 @@ const MateManageKit = ({
   handleSelect,
   ...props
 }: Props) => {
-  const { mateList, isErr, saveMateList, removeMate } = useMate();
+  const { mateList, isErr, saveMateList, removeMate, isSelected } = useMate();
+
+  const handleClick = (info: MateItemType) => {
+    if (kitType === 'removable' || !handleSelect) return;
+    handleSelect(info);
+  };
+
   return (
     <Container layout {...props}>
       <AddMateBox isErr={isErr} saveMateList={saveMateList} />
@@ -39,6 +46,8 @@ const MateManageKit = ({
           key={info.id}
           kitType={kitType}
           removeMate={removeMate}
+          onClick={() => handleClick(info)}
+          selected={isSelected(selectedList, info)}
         />
       ))}
     </Container>

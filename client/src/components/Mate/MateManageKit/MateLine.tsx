@@ -17,9 +17,10 @@ interface Props extends ComponentProps<'div'> {
   info: MateItemType;
   kitType: KitType;
   removeMate: (info: MateItemType) => void;
+  selected?: boolean;
 }
 
-const MateLine = ({ info, kitType, removeMate, ...props }: Props) => {
+const MateLine = ({ info, kitType, removeMate, selected, ...props }: Props) => {
   const ProfileIcon = useMemo(() => {
     return companionIconGetter();
   }, []);
@@ -34,7 +35,12 @@ const MateLine = ({ info, kitType, removeMate, ...props }: Props) => {
 
   return (
     <MateBox
-      css={[lineStyles.both, boxStyle.mate, boxStyle[kitType]]}
+      css={[
+        lineStyles.both,
+        boxStyle.mate,
+        boxStyle[kitType],
+        selected && boxStyle.selected,
+      ]}
       {...props}
     >
       <ProfileIcon css={logoStyle} />

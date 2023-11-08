@@ -1,5 +1,5 @@
 import { COLORS } from '@/styles/colors';
-import { flex } from '@/styles/tokens';
+import { flex, transition } from '@/styles/tokens';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -8,6 +8,7 @@ export const MateBox = styled.div`
   padding: 1.5rem 3rem;
   ${flex('row', 'start', 'center', 1.5)};
   cursor: pointer;
+  ${transition('0.3s', 'ease')};
 `;
 
 export const boxStyle = {
@@ -19,6 +20,9 @@ export const boxStyle = {
   `,
   removable: css`
     cursor: default;
+  `,
+  selected: css`
+    background-color: ${COLORS.primaryWeak};
   `,
 };
 

@@ -64,10 +64,22 @@ const useMate = () => {
   };
 
   /**
+   * 선택된 아이템인지 체크
+   */
+  const isSelected = (list: MateItemType[] | undefined, item: MateItemType) => {
+    if (!list) return false;
+    const res = list.some((el) => el.id === item.id);
+    return res;
+  };
+
+  /**
    * selectable) 메이트 선택
    */
   const handleSelect = (info: MateItemType) => {
-    setSelectedList((prev) => [...prev, info]);
+    const selected = isSelected(selectedList, info);
+    if (selected)
+      setSelectedList((prev) => prev.filter((el) => el.id !== info.id));
+    else setSelectedList((prev) => [...prev, info]);
   };
 
   useEffect(() => {
@@ -82,6 +94,7 @@ const useMate = () => {
     isErr,
     selectedList,
     handleSelect,
+    isSelected,
   };
 };
 

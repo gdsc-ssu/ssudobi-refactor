@@ -1,5 +1,5 @@
 import { Title } from '@/components/Layouts';
-import MateManageKit from '@/components/Mate/MateManageKit';
+import { MateManageKit } from '@/components/Mate';
 import { useAuth } from '@/hooks';
 import { injectAnimation } from '@/styles/animations';
 import { PageContainer, flex } from '@/styles/tokens';

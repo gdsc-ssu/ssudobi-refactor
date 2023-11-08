@@ -1,7 +1,16 @@
 declare module 'Template' {
+  export type WeekdayShort =
+    | 'Sun'
+    | 'Mon'
+    | 'Tue'
+    | 'Wed'
+    | 'Thu'
+    | 'Fri'
+    | 'Sat';
   export type TemplateInfo = {
     // template 제목
     title: string;
+    day: WeekdayShort;
     // template 시작 시간, 끝나는 시간
     beginTime: string;
     endTime: string;

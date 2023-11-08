@@ -2,9 +2,11 @@ import * as styles from '../Common.styles';
 import styled from '@emotion/styled';
 import { COLORS } from '@/styles/colors';
 import { TemplateInfo } from 'Template';
+import { formatSchedule } from '@/utils/func/templateTimeConverter';
 
 const HomeTemplate = ({
   title,
+  day,
   beginTime,
   endTime,
   place,
@@ -14,10 +16,8 @@ const HomeTemplate = ({
   return (
     <InfoBox>
       <styles.TitleBox>{title}</styles.TitleBox>
-      <styles.DateBox>
-        {beginTime} {endTime}
-      </styles.DateBox>
-      <styles.PlaceBox>{place}</styles.PlaceBox>
+      <styles.DateBox>{formatSchedule(day, beginTime, endTime)}</styles.DateBox>
+      <styles.PlaceBox>{`세미나룸 ${place}`}</styles.PlaceBox>
       <styles.NoteBox>{memo}</styles.NoteBox>
       <styles.PeopleBox>
         {friends.map((el) => {

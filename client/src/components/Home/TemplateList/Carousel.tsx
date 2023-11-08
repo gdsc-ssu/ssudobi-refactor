@@ -1,5 +1,4 @@
 import HomeTemplate from '@/components/TemplateList/HomeTemplate/HomeTemplate';
-import { flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { TemplateInfo } from 'Template';

@@ -10,6 +10,18 @@ export const MateBox = styled.div`
   cursor: pointer;
 `;
 
+export const boxStyle = {
+  mate: css`
+    background-color: ${COLORS.grey8};
+  `,
+  selectable: css`
+    cursor: pointer;
+  `,
+  removable: css`
+    cursor: default;
+  `,
+};
+
 export const lineStyles = {
   bottom: css`
     border-bottom: 1px solid ${COLORS.grey45};
@@ -19,3 +31,8 @@ export const lineStyles = {
     border-bottom: 1px solid ${COLORS.grey45};
   `,
 };
+
+export const logoStyle = css`
+  width: 4rem;
+  height: 4rem;
+`;

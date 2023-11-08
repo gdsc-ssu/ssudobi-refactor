@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { HTMLMotionProps, motion } from 'framer-motion';
 import AddMateBox from './AddMateBox';
 import { useMate } from '@/hooks';
+import MateLine from './MateLine';
 
 export type KitType = 'selectable' | 'removable';
 
@@ -28,10 +29,18 @@ const MateManageKit = ({
   handleSelect,
   ...props
 }: Props) => {
-  const { isErr, saveMateList } = useMate();
+  const { mateList, isErr, saveMateList, removeMate } = useMate();
   return (
     <Container layout {...props}>
       <AddMateBox isErr={isErr} saveMateList={saveMateList} />
+      {mateList.map((info) => (
+        <MateLine
+          info={info}
+          key={info.id}
+          kitType={kitType}
+          removeMate={removeMate}
+        />
+      ))}
     </Container>
   );
 };

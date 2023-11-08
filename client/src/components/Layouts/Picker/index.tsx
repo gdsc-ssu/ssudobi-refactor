@@ -35,6 +35,10 @@ interface Props extends ComponentProps<'div'> {
    * 선택 완료시 set 해줄 함수
    */
   itemSetter: (item: string[]) => void;
+  /**
+   * 초기 선택된 아이템들
+   */
+  initialSelectedItems?: string[];
 }
 
 const DatePicker = ({
@@ -43,9 +47,12 @@ const DatePicker = ({
   contents,
   isMultiple,
   itemSetter,
+  initialSelectedItems,
   ...props
 }: Props) => {
-  const [selectedItem, setSelectedItem] = useState<string[]>([]);
+  const [selectedItem, setSelectedItem] = useState<string[]>(
+    initialSelectedItems ? initialSelectedItems : [],
+  );
 
   /** 존재하는지 찾ㅈ기 */
   const isHavingItem = (item: string) => {

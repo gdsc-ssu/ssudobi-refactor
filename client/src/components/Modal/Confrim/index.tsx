@@ -1,5 +1,12 @@
 import { ComponentProps } from 'react';
-import { ModalButton, Message, ModalContent, Title } from '../common';
+import {
+  ModalButton,
+  Message,
+  ModalContent,
+  Title,
+  Modal,
+  ModalView,
+} from '../common';
 import { css } from '@emotion/react';
 import { injectAnimation } from '@/styles/animations';
 
@@ -34,8 +41,7 @@ const ConfirmModal = ({
         확인
       </ModalButton>
     </ModalContent>
-  );
-};
+}
 
 const buttonStyle = css`
   width: 20rem;

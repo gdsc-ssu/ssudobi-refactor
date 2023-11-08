@@ -1,5 +1,5 @@
 import * as styles from './Filter.styles';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import SlideDown from '@/assets/svg/SlideDown.svg';
 import SlideTop from '@/assets/svg/SlideTop.svg';
@@ -7,11 +7,11 @@ import SlideTop from '@/assets/svg/SlideTop.svg';
 interface FProps {
   time: string;
   place: string;
+  child: ReactNode;
 }
 
-export default function Filter({ time, place }: FProps) {
+export default function Filter({ time, place, child }: FProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-
   const handleButtonClick = () => {
     setIsExpanded(!isExpanded);
   };
@@ -32,16 +32,16 @@ export default function Filter({ time, place }: FProps) {
 
           {isExpanded && (
             <>
-              <styles.FilterDiv></styles.FilterDiv>
+              <styles.FilterDiv>{child}</styles.FilterDiv>
             </>
           )}
           <styles.FilterFlexBox>
             <styles.FilterButton expanded={isExpanded}>
-              <Image
-                src={isExpanded ? SlideTop : SlideDown}
-                alt="ArrowButton"
-                onClick={handleButtonClick}
-              />
+              {isExpanded ? (
+                <SlideTop onClick={handleButtonClick} />
+              ) : (
+                <SlideDown onClick={handleButtonClick} />
+              )}
             </styles.FilterButton>
           </styles.FilterFlexBox>
         </styles.FilterBox>

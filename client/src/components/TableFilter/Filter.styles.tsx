@@ -6,12 +6,14 @@ interface FilterBoxProps {
 }
 
 export const FilterBox = styled.div<FilterBoxProps>`
+  position: absolute;
   display: flex;
   flex-direction: column;
   background-color: white;
-  height: ${(props) => (props.expanded ? '342px' : '46px')};
-  width: 100vw;
-  transition: height 0.5s ease;
+  height: ${(props) => (props.expanded ? '200px' : '46px')};
+  width: 100%;
+  transition: height 0.1s ease;
+
   border-bottom: ${(props) => (props.expanded ? 'solid 1px #ececec' : 'none')};
 `;
 
@@ -22,8 +24,8 @@ export const FilterFlexBox = styled.div`
 
 export const FilterButton = styled.div<FilterBoxProps>`
   margin: 0 auto;
-  margin-top: ${(props) => (props.expanded ? '290px' : '-12px')};
-  transition: margin 0.5s ease;
+  margin-top: ${(props) => (props.expanded ? '-10px' : '-12px')};
+  transition: margin 0.1s ease;
   cursor: pointer;
 `;
 

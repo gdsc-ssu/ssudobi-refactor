@@ -7,6 +7,10 @@ declare module 'Template' {
     | 'Thu'
     | 'Fri'
     | 'Sat';
+  export type Patron = {
+    name: string;
+    sId: string;
+  };
   export type TemplateInfo = {
     // template 제목
     title: string;
@@ -19,6 +23,6 @@ declare module 'Template' {
     // template 메모
     memo: string;
     // template 동반이용자
-    friends: Array<string>;
+    friends: Array<Patron>;
   };
 }

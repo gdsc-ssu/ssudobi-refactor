@@ -42,19 +42,16 @@ const Carousel = ({ templates, options }: PropType) => {
               <HomeTemplate {...slide} />
             </Slide>
           ))}
-          <div
-            key={99}
-            css={[moreStyle, isMax ? wrapperStyle.max : wrapperStyle.default]}
-          >
+          <ButtonsWrapper>
             {isMax && (
-              <MoreBox>
+              <Box css={boxStyles.more}>
                 <FontAwesomeIcon icon={faAnglesRight} />
-              </MoreBox>
+              </Box>
             )}
-            <PlusBox>
+            <Box css={boxStyles.plus}>
               <FontAwesomeIcon icon={faPlusCircle} />
-            </PlusBox>
-          </div>
+            </Box>
+          </ButtonsWrapper>
         </Container>
       </Viewport>
     </Embla>
@@ -86,17 +83,10 @@ const paddingStyle = {
   `,
 };
 
-const wrapperStyle = {
-  default: css`
-    flex: 0 0 28rem;
-  `,
-  max: css`
-    flex: 0 0 40rem;
-  `,
-};
-
-const moreStyle = css`
+const ButtonsWrapper = styled.div`
   ${flex('row', 'start', 'center', 1)};
+  margin-left: 1rem;
+  flex: 0 0 20rem;
 `;
 
 const Slide = styled.div<{ idx: number }>`
@@ -107,10 +97,9 @@ const Slide = styled.div<{ idx: number }>`
   ${(props) => props.idx === 0 && paddingStyle.first};
 `;
 
-const PlusBox = styled.div`
+const Box = styled.div`
   width: 7rem;
   height: 100%;
-  background-color: ${COLORS.primary};
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
   cursor: pointer;
@@ -119,16 +108,13 @@ const PlusBox = styled.div`
   color: ${COLORS.primaryWhite};
 `;
 
-const MoreBox = styled.div`
-  width: 7rem;
-  height: 100%;
-  background-color: ${COLORS.grey3};
-  border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-  cursor: pointer;
-  ${flex('column', 'center', 'center', 0)};
-  font-size: 2.4rem;
-  color: ${COLORS.primaryWhite};
-`;
+const boxStyles = {
+  plus: css`
+    background-color: ${COLORS.primary};
+  `,
+  more: css`
+    background-color: ${COLORS.grey3};
+  `,
+};
 
 export default Carousel;

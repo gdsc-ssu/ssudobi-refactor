@@ -1,6 +1,7 @@
 import { Title } from '@/components/Layouts';
 import MateManageKit from '@/components/Mate/MateManageKit';
 import { useAuth } from '@/hooks';
+import { injectAnimation } from '@/styles/animations';
 import { PageContainer, flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -18,7 +19,10 @@ const Mate = () => {
       <TitleWrapper css={paddingStyle}>
         <Title {...config} />
       </TitleWrapper>
-      <MateManageKit kitType="removable" />
+      <MateManageKit
+        kitType="removable"
+        css={injectAnimation('fadeInTopDown', '0.5s')}
+      />
     </PageContainer>
   );
 };

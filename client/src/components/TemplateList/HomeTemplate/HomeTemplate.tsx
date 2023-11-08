@@ -1,23 +1,51 @@
-import * as styles from './HomeTemplate.styles';
+import { TemplateProps } from '../TemplateProps';
+import * as styles from '../Common.styles';
+import styled from '@emotion/styled';
+import { COLORS } from '@/styles/colors';
 
-const HomeTemplate = () => {
+const HomeTemplate = ({
+  title,
+  beginTime,
+  endTime,
+  place,
+  memo,
+  friends,
+}: TemplateProps) => {
   return (
     <styles.Container>
-      <styles.InfoBox>
-        <styles.TitleBox>캡스톤 정기 회의</styles.TitleBox>
-        <styles.DateBox>목요일 13시 - 15시 30분</styles.DateBox>
-        <styles.PlaceBox>세미나룸 102호</styles.PlaceBox>
-        <styles.NoteBox>
-          캡스톤 정기 회의 잊지말자 제발!! 준비물 챙기기
-        </styles.NoteBox>
+      <InfoBox>
+        <styles.TitleBox>{title}</styles.TitleBox>
+        <styles.DateBox>
+          {beginTime} {endTime}
+        </styles.DateBox>
+        <styles.PlaceBox>{place}</styles.PlaceBox>
+        <styles.NoteBox>{memo}</styles.NoteBox>
         <styles.PeopleBox>
-          <styles.PersonInfo>최상원 / 20181234</styles.PersonInfo>
-          <styles.PersonInfo>정명진 / 20181234</styles.PersonInfo>
+          {friends.map((el) => {
+            return <styles.PersonInfo key={el}>{el}</styles.PersonInfo>;
+          })}
         </styles.PeopleBox>
-      </styles.InfoBox>
+      </InfoBox>
       <styles.PlusBox>+</styles.PlusBox>
     </styles.Container>
   );
 };
+
+const InfoBox = styled.div`
+  width: 250px;
+  background-color: ${COLORS.grey7};
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-right: 12px;
+`;
+
+export const PlusBox = styled.button`
+  width: 50px;
+  background-color: ${COLORS.primary};
+  border-radius: 10px;
+  color: white;
+  font-size: 30px;
+  border: none;
+`;
 
 export default HomeTemplate;

@@ -3,6 +3,7 @@ import * as styles from '../Common.styles';
 import { COLORS } from '@/styles/colors';
 import styled from '@emotion/styled';
 import RemoveBtn from '@/assets/svg/x-button.svg';
+import EditBtn from '@/assets/svg/Edit.svg';
 import { getDayOfWeek } from '@/utils/func/getDayOfWeek';
 import { getAccessToken } from '@/utils/lib/tokenHandler';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -47,8 +48,17 @@ const Template = ({
         <InfoBox>
           <styles.TitleBox>
             <div>{title}</div>
-            <RemoveBox onClick={handleOnClickRemoveBtn}>
-              <RemoveBtn />
+            <RemoveBox>
+              {type === 'TEMPLATE' ? (
+                <ImgBox>
+                  <EditBtn />
+                </ImgBox>
+              ) : (
+                ''
+              )}
+              <ImgBox style={{ marginLeft: '10px' }}>
+                <RemoveBtn onClick={handleOnClickRemoveBtn} />
+              </ImgBox>
             </RemoveBox>
           </styles.TitleBox>
           <styles.DateBox>
@@ -104,6 +114,11 @@ const SideLine = styled.div`
   background-color: ${COLORS.primary};
   border-radius: 0 10px 10px 0;
   width: 5px;
+`;
+
+const ImgBox = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export default Template;

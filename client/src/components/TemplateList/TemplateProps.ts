@@ -1,3 +1,5 @@
+import { PatronInfo } from '@/@types/ReservationList';
+
 export interface TemplateProps {
   // template 제목
   title: string;
@@ -9,5 +11,11 @@ export interface TemplateProps {
   // template 메모
   memo: string;
   // template 동반이용자
-  friends: Array<string>;
+  friends: PatronInfo[];
+
+  // 보여지는 페이지가 예약페이지인지 템플릿 페이지 인지
+  type?: 'RESERVE' | 'TEMPLATE';
+
+  // 예약 번호
+  reserveId?: number;
 }

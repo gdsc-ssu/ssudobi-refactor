@@ -18,4 +18,7 @@ export interface TemplateProps {
 
   // 예약 번호
   reserveId?: number;
+  idx: number;
+  // onClick 함수
+  onClick: (idx: number) => void;
 }

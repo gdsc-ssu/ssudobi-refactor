@@ -7,6 +7,9 @@ import Template from '../TemplateList/TemplatePage/Template';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { MyTemplate } from '@/@types/MyTemplate';
+import { getAccessToken } from '@/utils/lib/tokenHandler';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { postReservation } from '@/apis/TemplateReserve';
 
 export const templateAtom = atom<MyTemplate>({
   title: '',
@@ -32,7 +35,10 @@ const AddTemplate = () => {
       usePerson: 3,
       startTime: '14:00',
       finishTime: '15:00',
-      people: ['김수진', '이준규'],
+      people: [
+        { name: '정명진', memberNo: '1993939' },
+        { name: '최상원', memberNo: '2343432' },
+      ],
     },
     {
       title: '슈도비',
@@ -41,9 +47,23 @@ const AddTemplate = () => {
       usePerson: 3,
       startTime: '14:00',
       finishTime: '15:00',
-      people: ['정명진', '최상원'],
+      people: [
+        { name: '정명진', memberNo: '1993939' },
+        { name: '최상원', memberNo: '2343432' },
+      ],
     },
   ];
+  const queryClient = useQueryClient();
+
+  const handleOnClickReserve = () => {
+    const AccessToken = getAccessToken();
+
+    const MakeReserve = useMutation(() => postReservation(data, AccessToken), {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['reserveCancel']);
+      },
+    });
+  };
 
   return (
     <Container>
@@ -70,6 +90,8 @@ const AddTemplate = () => {
                   place={el.place}
                   memo="memo"
                   friends={el.people}
+                  idx={idx}
+                  onClick={handleOnClickReserve(idx)}
                 />
               </ListBox>
             ))

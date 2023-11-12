@@ -1,6 +1,8 @@
+import { ComponentProps } from 'react';
 import * as styles from './Circle.styles';
+import { css } from '@emotion/react';
 
-interface FCProps {
+interface FCProps extends ComponentProps<'div'> {
   /**
    * 이름
    */
@@ -11,12 +13,16 @@ interface FCProps {
   type: 'friend' | 'plus';
 }
 
-const FriendCircle = ({ name, type }: FCProps) => {
+const FriendCircle = ({ name, type, ...props }: FCProps) => {
   return (
-    <styles.CircleContainer style={{ marginLeft: '-12px' }} type={type}>
+    <styles.CircleContainer css={leftStyle} type={type} {...props}>
       {name}
     </styles.CircleContainer>
   );
 };
+
+const leftStyle = css`
+  margin-left: -1.2rem;
+`;
 
 export default FriendCircle;

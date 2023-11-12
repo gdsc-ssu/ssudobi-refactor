@@ -1,7 +1,7 @@
-import CompanionsRoom from '@/components/AddTemplate/CompanionsRoom';
+import CompanionsSelect from '@/components/AddTemplate/CompanionsSelect';
 
 const Second = () => {
-  return <CompanionsRoom />;
+  return <CompanionsSelect />;
 };
 
 export default Second;

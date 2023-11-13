@@ -55,7 +55,7 @@ const AddTemplate = () => {
   ];
   const queryClient = useQueryClient();
 
-  const handleOnClickReserve = () => {
+  const handleOnClickReserve = (idx: number) => {
     const AccessToken = getAccessToken();
 
     const MakeReserve = useMutation(() => postReservation(data, AccessToken), {
@@ -91,7 +91,8 @@ const AddTemplate = () => {
                   memo="memo"
                   friends={el.people}
                   idx={idx}
-                  onClick={handleOnClickReserve(idx)}
+                  type="TEMPLATE"
+                  onClick={() => handleOnClickReserve(idx)}
                 />
               </ListBox>
             ))
@@ -104,7 +105,7 @@ const AddTemplate = () => {
 const Container = styled.div``;
 
 const TitleBox = styled.div`
-  margin-top: 77px;
+  margin-top: 23px;
   padding: 0 28px;
 `;
 

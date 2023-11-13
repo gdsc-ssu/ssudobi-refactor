@@ -7,10 +7,25 @@ import RoundButton from '../Buttons/Round';
 import Link from 'next/link';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
+import { MyTemplate } from '@/@types/MyTemplate';
+import { useAtom, useSetAtom } from 'jotai';
+import { templateAtom } from '.';
 
 const CompanionsSelect = () => {
   const { selectedList, handleSelect } = useMate();
-  console.log('seleclist', selectedList);
+
+  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const setAtomTemplate = useSetAtom(templateAtom);
+
+  const hanldeOnClickReserve = () => {
+    const updatedTemplate = {
+      ...template,
+      people: selectedList,
+      usePerson: selectedList.length,
+    };
+    setAtomTemplate(updatedTemplate);
+  };
+
   return (
     <>
       <PageContainer>
@@ -29,16 +44,23 @@ const CompanionsSelect = () => {
           selectedList={selectedList}
         />
         <NextBox>
-          <WarningBox display={selectedList.length >= 8}>
-            {selectedList.length >= 8 ? '최대 8명까지 선택 가능합니다.' : '.'}
-          </WarningBox>
+          {template.seminarType === '개방형' ? (
+            <WarningBox display={true}>
+              최대 2명까지 선택 가능합니다.
+            </WarningBox>
+          ) : (
+            <WarningBox display={selectedList.length >= 8}>
+              {selectedList.length >= 8 ? '최대 8명까지 선택 가능합니다.' : '.'}
+            </WarningBox>
+          )}
           <NextWidthBox>
             <Link href={'/template/3'}>
               <RoundButton
                 style={{ width: '322px' }}
-                title="다음 단계로"
+                title="예약 가능 시간 탐색하기"
                 theme="primary"
-                disabled={true}
+                disabled={selectedList.length < 2}
+                onClick={hanldeOnClickReserve}
               />
             </Link>
           </NextWidthBox>
@@ -49,7 +71,6 @@ const CompanionsSelect = () => {
 };
 
 const Container = styled.div`
-  height: 659px;
   display: flex;
   flex-direction: column;
 `;
@@ -68,7 +89,7 @@ const NextBox = styled.div`
 const NextWidthBox = styled.div`
   display: flex;
   justify-content: center;
-  margin: auto;
+  margin-bottom: 30px;
 `;
 
 const WarningBox = styled.div<{ display: boolean }>`

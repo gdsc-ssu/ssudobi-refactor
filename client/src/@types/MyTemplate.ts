@@ -1,7 +1,4 @@
-interface Companion {
-  name: string;
-  studentId: string;
-}
+import { MateItemType } from 'Mate';
 
 export interface MyTemplate {
   title: string;
@@ -11,7 +8,7 @@ export interface MyTemplate {
   usePerson: number;
   startTime: string;
   finishTime: string;
-  people: Array<Companion>;
+  people: Array<MateItemType>;
   seminarType: '개방형' | '세미나';
   semina: number[];
   type: string;

@@ -11,7 +11,7 @@ export interface TemplateProps {
   // template 장소
   place?: string;
   // template 동반이용자
-  friends: PatronInfo[] | Array<MateItemType>;
+  friends: PatronInfo[] | Array<MateItemType> | Patron[];
 
   // 보여지는 페이지가 예약페이지인지 템플릿 페이지 인지
   type: 'RESERVE' | 'TEMPLATE';

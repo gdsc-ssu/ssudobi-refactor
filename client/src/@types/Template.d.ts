@@ -10,6 +10,11 @@ declare module 'Template' {
   export type Patron = {
     name: string;
     sId: string;
+    memberNo?: string;
+    info?: {
+      name: string;
+      sId: string;
+    };
   };
   export type TemplateInfo = {
     // template 제목

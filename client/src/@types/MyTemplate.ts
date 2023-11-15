@@ -1,4 +1,3 @@
-import { MateItemType } from 'Mate';
 import { Patron } from 'Template';
 
 export interface MyTemplate {

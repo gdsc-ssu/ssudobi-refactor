@@ -13,10 +13,10 @@ import DecisionModal from '@/components/Modal/Decision';
 
 const Template = ({
   title,
+  day,
   beginTime,
   endTime,
   place,
-  memo,
   friends,
   type,
   reserveId,
@@ -68,18 +68,25 @@ const Template = ({
                 '시 -' +
                 endTime.slice(10, 13) +
                 '시'
-              : endTime}
+              : day + ' ' + beginTime + ' ~ ' + endTime}
           </styles.DateBox>
           <styles.PlaceBox>{place}</styles.PlaceBox>
-          <styles.NoteBox>{memo}</styles.NoteBox>
           <styles.PeopleBox>
-            {friends.map((el, idx) => {
-              return (
-                <styles.PersonInfo key={idx}>
-                  {el.name} / {el.memberNo}
-                </styles.PersonInfo>
-              );
-            })}
+            {type === 'RESERVE'
+              ? friends.map((el, idx) => {
+                  return (
+                    <styles.PersonInfo key={idx}>
+                      {el.name} / {el.memberNo}
+                    </styles.PersonInfo>
+                  );
+                })
+              : friends.map((el, idx) => {
+                  return (
+                    <styles.PersonInfo key={idx}>
+                      {el.info?.name} / {el.info?.sId}
+                    </styles.PersonInfo>
+                  );
+                })}
           </styles.PeopleBox>
         </InfoBox>
         <SideLine />

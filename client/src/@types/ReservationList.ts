@@ -34,6 +34,10 @@ interface RoomReservationState {
 export interface PatronInfo {
   name: string;
   memberNo: string;
+  info?: {
+    name: string;
+    sId: string;
+  };
 }
 
 interface RoomUseSection {

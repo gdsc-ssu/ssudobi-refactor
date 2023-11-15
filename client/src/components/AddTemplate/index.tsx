@@ -5,15 +5,14 @@ import { Title } from '../Layouts';
 import { SquareButton } from '../Buttons';
 import Template from '../TemplateList/TemplatePage/Template';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { getAccessToken } from '@/utils/lib/tokenHandler';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postReservation } from '@/apis/TemplateReserve';
+import { useEffect, useState } from 'react';
 
 export const templateAtom = atom<MyTemplate>({
   title: '',
-  place: '',
   day: '',
   time: 0,
   usePerson: 0,
@@ -26,33 +25,17 @@ export const templateAtom = atom<MyTemplate>({
 
 const AddTemplate = () => {
   const authInfo = useAtomValue(authInfoState);
+  const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
 
-  const dummyData = [
-    {
-      title: '캡스톤',
-      place: '세미나 1실',
-      day: '2023-12-03',
-      usePerson: 3,
-      startTime: '14:00',
-      finishTime: '15:00',
-      people: [
-        { name: '정명진', memberNo: '1993939' },
-        { name: '최상원', memberNo: '2343432' },
-      ],
-    },
-    {
-      title: '슈도비',
-      place: '세미나 1실',
-      day: '2023-12-03',
-      usePerson: 3,
-      startTime: '14:00',
-      finishTime: '15:00',
-      people: [
-        { name: '정명진', memberNo: '1993939' },
-        { name: '최상원', memberNo: '2343432' },
-      ],
-    },
-  ];
+  useEffect(() => {
+    // 처음 렌더링 시 로컬 스토리지에서 데이터 가져오기
+    const storedCompanionMember = localStorage.getItem('templateArr');
+    if (storedCompanionMember) {
+      setTemplateArr(JSON.parse(storedCompanionMember));
+    }
+    console.log('indxTemp', templateArr);
+  }, []); // 빈 배열을 전달하여 처음 렌더링 시에만 실행되도록 함
+
   const queryClient = useQueryClient();
 
   const handleOnClickReserve = (idx: number) => {
@@ -80,16 +63,16 @@ const AddTemplate = () => {
         </Link>
       </ButtonBox>
       <ReservationListsBox>
-        {dummyData !== undefined
-          ? dummyData.map((el, idx) => (
+        {templateArr !== undefined
+          ? templateArr.map((el, idx) => (
               <ListBox key={idx}>
                 <Template
-                  title="템플릿 제목"
+                  title={el.title}
+                  day={el.day}
                   beginTime={el.startTime}
                   endTime={el.finishTime}
-                  place={el.place}
-                  memo="memo"
                   friends={el.people}
+                  place={el.seminarType + ' ' + el.semina}
                   idx={idx}
                   type="TEMPLATE"
                   onClick={() => handleOnClickReserve(idx)}

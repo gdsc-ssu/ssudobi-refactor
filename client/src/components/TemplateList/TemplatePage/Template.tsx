@@ -8,8 +8,9 @@ import { getDayOfWeek } from '@/utils/func/getDayOfWeek';
 import { getAccessToken } from '@/utils/lib/tokenHandler';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postReservationCancel } from '@/apis/ReserveData';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DecisionModal from '@/components/Modal/Decision';
+import { MyTemplate } from '@/@types/MyTemplate';
 
 const Template = ({
   title,
@@ -21,7 +22,17 @@ const Template = ({
   type,
   reserveId,
 }: TemplateProps) => {
+  const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
+  useEffect(() => {
+    const storedCompanionMember = localStorage.getItem('templateArr');
+    if (storedCompanionMember) {
+      setTemplateArr(JSON.parse(storedCompanionMember));
+    }
+    console.log('templateArr', templateArr);
+  }, []);
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isTemplateModal, setIsTemplateModal] = useState<boolean>(false);
   const AccessToken = getAccessToken();
   const queryClient = useQueryClient();
 
@@ -41,6 +52,17 @@ const Template = ({
     CancelReserve.mutate();
     setIsModalOpen(false);
   };
+  const handleTemplateRemove = () => {
+    setIsTemplateModal(!isTemplateModal);
+  };
+
+  const handleOpenRemoveModal = (e: any) => {
+    e.stopPropagation();
+    if (templateArr === undefined || setTemplateArr === undefined) return;
+    const curArr = templateArr.filter((e) => e.title !== title);
+    localStorage.setItem('templateArr', JSON.stringify(curArr));
+    location.reload();
+  };
 
   return (
     <>
@@ -57,7 +79,15 @@ const Template = ({
                 ''
               )}
               <ImgBox style={{ marginLeft: '10px' }}>
-                <RemoveBtn onClick={handleOnClickRemoveBtn} />
+                <RemoveBtn
+                  onClick={() => {
+                    if (type === 'RESERVE') {
+                      handleOnClickRemoveBtn();
+                    } else {
+                      handleTemplateRemove();
+                    }
+                  }}
+                />
               </ImgBox>
             </RemoveBox>
           </styles.TitleBox>
@@ -97,6 +127,18 @@ const Template = ({
           message="예약을 정말 취소할까요?"
           onCancle={() => setIsModalOpen(!isModalOpen)}
           onClick={handleRemove}
+        />
+      ) : (
+        ''
+      )}
+      {isTemplateModal ? (
+        <DecisionModal
+          title={title}
+          message="템플릿을 정말 삭제할까요?"
+          onCancle={() => setIsTemplateModal(false)}
+          onClick={(e) => {
+            handleOpenRemoveModal(e);
+          }}
         />
       ) : (
         ''

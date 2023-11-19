@@ -200,11 +200,11 @@ const Timetable = () => {
       <HeaderDiv>
         <HeaderEachDiv>
           <HeaderDivBoldText>사용시간</HeaderDivBoldText>
-          <HeaderDivText>120분</HeaderDivText>
+          <HeaderDivText>{time}분</HeaderDivText>
         </HeaderEachDiv>
         <HeaderEachDiv>
           <HeaderDivBoldText>인원</HeaderDivBoldText>
-          <HeaderDivText>6명</HeaderDivText>
+          <HeaderDivText>{personCount}명</HeaderDivText>
         </HeaderEachDiv>
         <HeaderEachDiv>
           <HeaderDivBoldText>장소종류</HeaderDivBoldText>

@@ -49,16 +49,7 @@ const SelectSeminarRoomModal = ({
   setSeminaRoom,
   setIsSeminaRoomSelected,
 }: SelectSeminarRoomModalProps) => {
-  console.log(
-    slotDay,
-    day,
-    startTime,
-    endTime,
-    seminaRoomContents,
-    seminaRoom,
-    setSeminaRoom,
-    setIsSeminaRoomSelected,
-  );
+  console.log(slotDay, day, startTime, endTime, seminaRoomContents, seminaRoom);
   return (
     <>
       <ModalMainStyle>
@@ -89,7 +80,7 @@ const SelectSeminarRoomModal = ({
             {calculateEndTimeWithMinutes(
               endTime.slice(0, 2) + endTime.slice(3),
               -30,
-            )}
+            )}{' '}
             퇴실 권장
           </ReservationRightText>
         </ReservationBox>
@@ -110,6 +101,9 @@ const SelectSeminarRoomModal = ({
       <ReservationButton
         isChecked={!(seminaRoom.length === 0)}
         onClick={() => {
+          if (seminaRoom.length === 0) {
+            return;
+          }
           setIsSeminaRoomSelected(true);
         }}
       >
@@ -153,10 +147,7 @@ const ReservationTime = styled.div`
   color: #000;
   text-align: left;
   font-family: Pretendard;
-  font-size: 22px;
-  font-style: normal;
-  font-weight: 600;
-  padding-top: 10px;
+  ${TYPO.caption.Md}
   border-right: 1px solid #cccccc;
 `;
 

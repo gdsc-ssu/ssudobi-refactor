@@ -4,12 +4,8 @@ import {
   Message,
   ModalContent,
   Title,
-<<<<<<< Updated upstream
-  ModalOverlay,
-=======
   Modal,
   ModalView,
->>>>>>> Stashed changes
 } from '../common';
 import { css } from '@emotion/react';
 
@@ -30,17 +26,6 @@ interface ModalProps extends ComponentProps<'button'> {
 
 const ConfirmModal = ({ title, message, onClick, ...props }: ModalProps) => {
   return (
-<<<<<<< Updated upstream
-    <ModalOverlay>
-      <ModalContent>
-        <Title>{title}</Title>
-        <Message>{message}</Message>
-        <ModalButton css={buttonStyle} {...props}>
-          확인
-        </ModalButton>
-      </ModalContent>
-    </ModalOverlay>
-=======
     <Modal>
       <ModalView
         onClick={(e) => {
@@ -56,7 +41,6 @@ const ConfirmModal = ({ title, message, onClick, ...props }: ModalProps) => {
         </ModalContent>
       </ModalView>
     </Modal>
->>>>>>> Stashed changes
   );
 };
 

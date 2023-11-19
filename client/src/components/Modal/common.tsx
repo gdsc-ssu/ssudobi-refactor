@@ -3,22 +3,12 @@ import { flex, transform, transition } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
 
-<<<<<<< Updated upstream
-export const ModalOverlay = styled.div`
-=======
 export const Backdrop = styled.div`
->>>>>>> Stashed changes
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-<<<<<<< Updated upstream
-  background-color: rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-=======
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
 `;
@@ -39,7 +29,6 @@ export const ModalView = styled.div`
   max-width: 50rem;
 
   transition: height 0.5s ease;
->>>>>>> Stashed changes
 `;
 
 export const ModalContent = styled.div`

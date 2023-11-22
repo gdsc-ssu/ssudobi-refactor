@@ -123,6 +123,68 @@ const loginButtonPopup = keyframes`
   }
 `;
 
+const toastAnimations = {
+  open: keyframes`
+    0%{
+      opacity: 0;
+      ${transform('translate(-50%, -20%)')};
+    }
+    100%{
+      opacity: 1;
+      ${transform('translate(-50%, 0%)')};
+    }
+  `,
+  close: keyframes`
+    0%{
+      opacity: 1;
+      ${transform('translate(-50%, 0%)')};
+    }
+    100%{
+      opacity: 0;
+      ${transform('translate(-50%, -20%)')};
+    }
+  `,
+};
+
+const modalAnimations = {
+  appearBg: keyframes`
+    0%{
+      opacity: 0;
+    }
+    100%{
+      opacity: 1;
+    }
+  `,
+  disappearBg: keyframes`
+    0%{
+      opacity: 1;
+    }
+    100%{
+      opacity: 0;
+    }
+  `,
+  appearModal: keyframes`
+    0%{
+      opacity: 0;
+      ${transform('translate(0px, 1rem)')}
+    }
+    100%{
+      opacity: 1;
+      ${transform('translate(0px, 0rem)')}
+    }
+  `,
+  disappearModal: keyframes`
+    0%{
+      opacity: 1;
+      ${transform('translate(0px, 0rem)')}
+    }
+    100%{
+      opacity: 0;
+      ${transform('translate(0px, 1rem)')}
+    }
+  `,
+};
+
 const animations = {
   fadeInTopDown,
   fadeInTopDownTranslate,
@@ -131,8 +193,14 @@ const animations = {
   circleMovingBottom: circleMoving.bottom,
   loginTitlePopup,
   loginButtonPopup,
+  toastOpen: toastAnimations.open,
+  toastClose: toastAnimations.close,
   usageMovingTop: usageMoving.top,
   usageMovingBottom: usageMoving.bottom,
+  modalBackgroundAppear: modalAnimations.appearBg,
+  modalBackgroundDisappear: modalAnimations.disappearBg,
+  modalAppear: modalAnimations.appearModal,
+  modalDisappear: modalAnimations.disappearModal,
 };
 
 export const injectAnimation = (

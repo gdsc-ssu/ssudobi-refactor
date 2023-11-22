@@ -1,4 +1,5 @@
 import { COLORS } from '@/styles/colors';
+import { flex } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
 
@@ -24,11 +25,14 @@ export const PlaceBox = styled.div`
 
 export const NoteBox = styled.div`
   ${TYPO.text3.Lg};
-  margin-top: 10px;
+  margin-top: 1rem;
 `;
 
 export const PeopleBox = styled.div`
   display: flex;
+  ${flex('row', 'start', 'end', 0.5)};
+  flex-wrap: wrap;
+  margin-top: 1rem;
 `;
 
 export const PersonInfo = styled.div`
@@ -37,8 +41,6 @@ export const PersonInfo = styled.div`
   color: ${COLORS.grey3};
   background-color: #ececec;
   padding: 2px 5px;
-  margin-right: 5px;
-  margin-top: 10px;
 `;
 
 export const PlusBox = styled.button`

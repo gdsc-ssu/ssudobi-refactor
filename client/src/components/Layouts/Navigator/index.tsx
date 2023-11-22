@@ -1,5 +1,5 @@
 import { COLORS } from '@/styles/colors';
-import { flex, transform } from '@/styles/tokens';
+import { BOTTOM_HEIGHT, flex, transform } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -64,8 +64,10 @@ const Navigator = ({ curRoute, handleRoute }: Props) => {
 const NavigatorWrapper = styled.div`
   width: 100%;
   min-width: 25rem;
-  height: 7rem;
+  height: ${BOTTOM_HEIGHT}rem;
   ${flex('row', 'center', 'center', 0)};
+  background-color: ${COLORS.white};
+  z-index: 10;
 
   position: fixed;
   bottom: 0px;

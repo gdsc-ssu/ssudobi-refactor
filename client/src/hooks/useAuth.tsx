@@ -1,15 +1,23 @@
 import AuthApi from '@/apis/auth';
 import { authInfoState } from '@/atoms/authInfoState';
-import { getUserInfo, updateUserInfo } from '@/utils/lib/infoHandler';
-import { updateAccessToken } from '@/utils/lib/tokenHandler';
+import {
+  getUserInfo,
+  removeUserInfo,
+  updateUserInfo,
+} from '@/utils/lib/infoHandler';
+import { removeAccessToken, updateAccessToken } from '@/utils/lib/tokenHandler';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useToast } from '.';
 
 const useAuth = () => {
   const authApi = new AuthApi();
+  const { showToast } = useToast();
 
   const router = useRouter();
   const [authInfo, setAuthInfo] = useAtom(authInfoState);
+  const [isWarn, setIsWarn] = useState(false);
 
   /**
    * 로그인 함수
@@ -24,8 +32,12 @@ const useAuth = () => {
       });
       updateAccessToken(data.accessToken);
       updateUserInfo(data.name, data.printMemberNo, id, password);
+      setIsWarn(false);
+      showToast('positive', '로그인에 성공하였습니다.');
       router.replace('/');
     } catch (err) {
+      setIsWarn(true);
+      showToast('negative', '로그인에 실패하였습니다.\n다시 시도해주세요!');
       console.log(err);
     }
   };
@@ -38,7 +50,7 @@ const useAuth = () => {
       const userInfo = getUserInfo();
       if (!userInfo) throw new Error('Empty user info');
       const data = await authApi.login(userInfo.loginId, userInfo.password);
-      console.log(data);
+
       setAuthInfo({
         name: data.name,
         sId: data.printMemberNo,
@@ -56,7 +68,23 @@ const useAuth = () => {
     }
   };
 
-  return { authInfo, autoLogin, handleLogin };
+  /**
+   * 로그인 함수
+   */
+  const handleLogout = async () => {
+    try {
+      setAuthInfo({ name: '', sId: '' });
+      removeAccessToken();
+      removeUserInfo();
+      showToast('positive', '로그아웃에 성공하였습니다.');
+      router.replace('/landing');
+    } catch (err) {
+      showToast('negative', '로그아웃에 실패하였습니다.\n다시 시도해주세요!');
+      console.log(err);
+    }
+  };
+
+  return { authInfo, autoLogin, handleLogin, isWarn, handleLogout };
 };
 
 export default useAuth;

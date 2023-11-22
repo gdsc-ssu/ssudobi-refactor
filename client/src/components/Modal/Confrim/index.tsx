@@ -8,6 +8,7 @@ import {
   ModalView,
 } from '../common';
 import { css } from '@emotion/react';
+import { injectAnimation } from '@/styles/animations';
 
 interface ModalProps extends ComponentProps<'button'> {
   /**
@@ -18,13 +19,18 @@ interface ModalProps extends ComponentProps<'button'> {
    * 모달에 표시할 메시지
    */
   message: string;
-  /*
-   * 버튼 클릭시 실행할 함수
+  /**
+   * 모달 꺼질 때
    */
-  onClick: () => void;
+  isTransition?: boolean;
 }
 
-const ConfirmModal = ({ title, message, onClick, ...props }: ModalProps) => {
+const ConfirmModal = ({
+  title,
+  message,
+  isTransition,
+  ...props
+}: ModalProps) => {
   return (
     <Modal>
       <ModalView
@@ -32,7 +38,9 @@ const ConfirmModal = ({ title, message, onClick, ...props }: ModalProps) => {
           e.stopPropagation();
         }}
       >
-        <ModalContent>
+        <ModalContent
+          css={isTransition && injectAnimation('modalDisappear', '0.3s', 'ease')}
+          >
           <Title>{title}</Title>
           <Message>{message}</Message>
           <ModalButton css={buttonStyle} {...props} onClick={onClick}>

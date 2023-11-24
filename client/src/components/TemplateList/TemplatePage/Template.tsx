@@ -11,6 +11,7 @@ import { postReservationCancel } from '@/apis/ReserveData';
 import { useEffect, useState } from 'react';
 import DecisionModal from '@/components/Modal/Decision';
 import { MyTemplate } from '@/@types/MyTemplate';
+import ConfirmReservationModal from '@/components/BottomModal/ConfirmReservationModal';
 
 const Template = ({
   title,
@@ -33,6 +34,7 @@ const Template = ({
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isTemplateModal, setIsTemplateModal] = useState<boolean>(false);
+  const [isBottomModal, setIsBottomModal] = useState<boolean>(false);
   const AccessToken = getAccessToken();
   const queryClient = useQueryClient();
 
@@ -64,12 +66,38 @@ const Template = ({
     location.reload();
   };
 
+  // 템플릿으로 예약하기
+  const handleOnClickReserve = (e: any) => {
+    e.stopPropagation();
+    const ReserveArr = templateArr.filter((e) => e.title == title);
+    console.log('Resere', ReserveArr);
+  };
+
+  function transformData(
+    inputData: { info: { name: string; sId: string }; id: number }[],
+  ): CompanionProps[] {
+    return inputData.map((item) => ({
+      name: item.info.name,
+      memberNo: item.info.sId,
+      id: item.id.toString(),
+      alternativeId: item.id.toString(),
+    }));
+  }
+
   return (
     <>
       <styles.Container>
         <InfoBox>
           <styles.TitleBox>
-            <div>{title}</div>
+            <div
+              onClick={(e) => {
+                if (type === 'TEMPLATE') {
+                  handleOnClickReserve(e);
+                }
+              }}
+            >
+              {title}
+            </div>
             <RemoveBox>
               {type === 'TEMPLATE' ? (
                 <ImgBox>
@@ -91,33 +119,41 @@ const Template = ({
               </ImgBox>
             </RemoveBox>
           </styles.TitleBox>
-          <styles.DateBox>
-            {type === 'RESERVE'
-              ? getDayOfWeek(beginTime) +
-                beginTime.slice(10, 13) +
-                '시 -' +
-                endTime.slice(10, 13) +
-                '시'
-              : day + ' ' + beginTime + ' ~ ' + endTime}
-          </styles.DateBox>
-          <styles.PlaceBox>{place}</styles.PlaceBox>
-          <styles.PeopleBox>
-            {type === 'RESERVE'
-              ? friends.map((el, idx) => {
-                  return (
-                    <styles.PersonInfo key={idx}>
-                      {el.name} / {el.memberNo}
-                    </styles.PersonInfo>
-                  );
-                })
-              : friends.map((el, idx) => {
-                  return (
-                    <styles.PersonInfo key={idx}>
-                      {el.info?.name} / {el.info?.sId}
-                    </styles.PersonInfo>
-                  );
-                })}
-          </styles.PeopleBox>
+          <div
+            onClick={(e) => {
+              if (type === 'TEMPLATE') {
+                handleOnClickReserve(e);
+              }
+            }}
+          >
+            <styles.DateBox>
+              {type === 'RESERVE'
+                ? getDayOfWeek(beginTime) +
+                  beginTime.slice(10, 13) +
+                  '시 -' +
+                  endTime.slice(10, 13) +
+                  '시'
+                : day + ' ' + beginTime + ' ~ ' + endTime}
+            </styles.DateBox>
+            <styles.PlaceBox>{place}</styles.PlaceBox>
+            <styles.PeopleBox>
+              {type === 'RESERVE'
+                ? friends.map((el, idx) => {
+                    return (
+                      <styles.PersonInfo key={idx}>
+                        {el.name} / {el.memberNo}
+                      </styles.PersonInfo>
+                    );
+                  })
+                : friends.map((el, idx) => {
+                    return (
+                      <styles.PersonInfo key={idx}>
+                        {el.info?.name} / {el.info?.sId}
+                      </styles.PersonInfo>
+                    );
+                  })}
+            </styles.PeopleBox>
+          </div>
         </InfoBox>
         <SideLine />
       </styles.Container>
@@ -143,6 +179,21 @@ const Template = ({
       ) : (
         ''
       )}
+      {isBottomModal
+        ? ''
+        : // <ConfirmReservationModal
+          //   slotDay={}
+          //   day={}
+          //   startTime={beginTime}
+          //   endTime={endTime}
+          //   companions={friends}
+          //   seminaRoom={}
+          //   type={}
+          //   data={}
+          //   setIsSuccess={}
+          //   setIsError={}
+          // />
+          ''}
     </>
   );
 };

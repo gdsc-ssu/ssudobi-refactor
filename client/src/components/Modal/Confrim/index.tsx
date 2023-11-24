@@ -1,5 +1,12 @@
 import { ComponentProps } from 'react';
-import { ModalButton, Message, ModalContent, Title } from '../common';
+import {
+  ModalButton,
+  Message,
+  ModalContent,
+  Title,
+  Modal,
+  ModalView,
+} from '../common';
 import { css } from '@emotion/react';
 import { injectAnimation } from '@/styles/animations';
 
@@ -25,15 +32,23 @@ const ConfirmModal = ({
   ...props
 }: ModalProps) => {
   return (
-    <ModalContent
-      css={isTransition && injectAnimation('modalDisappear', '0.3s', 'ease')}
-    >
-      <Title>{title}</Title>
-      <Message>{message}</Message>
-      <ModalButton css={buttonStyle} {...props}>
-        확인
-      </ModalButton>
-    </ModalContent>
+    <Modal>
+      <ModalView
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <ModalContent
+          css={isTransition && injectAnimation('modalDisappear', '0.3s', 'ease')}
+          >
+          <Title>{title}</Title>
+          <Message>{message}</Message>
+          <ModalButton css={buttonStyle} {...props} onClick={onClick}>
+            확인
+          </ModalButton>
+        </ModalContent>
+      </ModalView>
+    </Modal>
   );
 };
 

@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import DecisionModal from '@/components/Modal/Decision';
 import { MyTemplate } from '@/@types/MyTemplate';
 import ConfirmReservationModal from '@/components/BottomModal/ConfirmReservationModal';
+import { CompanionProps } from '@/utils/types/Companion';
 
 const Template = ({
   title,
@@ -58,7 +59,7 @@ const Template = ({
     setIsTemplateModal(!isTemplateModal);
   };
 
-  const handleOpenRemoveModal = (e: any) => {
+  const handleOpenRemoveModal = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (templateArr === undefined || setTemplateArr === undefined) return;
     const curArr = templateArr.filter((e) => e.title !== title);
@@ -67,7 +68,7 @@ const Template = ({
   };
 
   // 템플릿으로 예약하기
-  const handleOnClickReserve = (e: any) => {
+  const handleOnClickReserve = (e: React.MouseEvent) => {
     e.stopPropagation();
     const ReserveArr = templateArr.filter((e) => e.title == title);
     console.log('Resere', ReserveArr);

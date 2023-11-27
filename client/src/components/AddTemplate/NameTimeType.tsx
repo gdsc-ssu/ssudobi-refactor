@@ -91,7 +91,7 @@ const NameTimeType = () => {
       title: title,
       type: SelectUsage(),
       time: parseInt(AvailableTime()?.slice(0, 1), 10),
-      seminarType: isSeminar ? '세미나' : '개방형',
+      seminarType: isSeminar ? '세미나실' : '개방형 세미나실',
     };
     setAtomTemplate(updatedTemplate);
   };

@@ -8,7 +8,7 @@ export interface MyTemplate {
   startTime: string;
   finishTime: string;
   people: Array<Patron>;
-  seminarType: '개방형' | '세미나';
+  seminarType: '개방형 세미나실' | '세미나실';
   semina: number[];
   type: string;
 }

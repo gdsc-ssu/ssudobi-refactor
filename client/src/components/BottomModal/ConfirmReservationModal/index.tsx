@@ -49,6 +49,8 @@ interface ConfirmReservationModalProps {
    * 실패 시 플래그 상태변환 함수
    */
   setIsError: Dispatch<SetStateAction<ReserveError>>;
+  // 템플릿용인지 예약용인지
+  createType: 'template' | 'reserve';
 }
 
 const ConfirmReservationModal = ({
@@ -62,6 +64,7 @@ const ConfirmReservationModal = ({
   date,
   setIsSuccess,
   setIsError,
+  createType,
 }: ConfirmReservationModalProps) => {
   return (
     <>
@@ -71,7 +74,7 @@ const ConfirmReservationModal = ({
         <BodyText>만약 방문이 어렵다면, 꼭 예약을 취소해주세요!</BodyText>
         <ReservationBox>
           <ReservationDay>
-            {slotDay} ({day})
+            {slotDay} {createType === 'reserve' && day}
             <div
               style={{
                 width: '80%',

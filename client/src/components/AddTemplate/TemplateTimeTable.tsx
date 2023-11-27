@@ -5,13 +5,16 @@ import { MyTemplate } from '@/@types/MyTemplate';
 import { useAtom } from 'jotai';
 import { templateAtom } from '.';
 import Schedule from '../Timetable';
-import { WeeklyData } from '../Timetable/getTimeTable';
+import { RoomData, WeeklyData } from '../Timetable/getTimeTable';
 import { RESERVE_TIME } from '@/constants/reserveTime';
 import { useRouter } from 'next/router';
 import { EmptyDate } from '@/utils/EmptyDate';
 import styled from '@emotion/styled';
 import { COLORS } from '@/styles/colors';
 import { TYPO } from '@/styles/typo';
+import ReserveConfirmBottomModal from '../BottomModal/ReserveConfirm';
+import { ROOM_USE_SECTION } from '@/constants/roomUseSection';
+import { CompanionProps } from '@/utils/types/Companion';
 
 const TemplateTimeTable = () => {
   const { setHeader } = useHeader();
@@ -21,8 +24,25 @@ const TemplateTimeTable = () => {
 
   const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
   const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const Companions: CompanionProps[] = template.people.map((item) => {
+    const { sId, info } = item;
 
-  console.log('tem', template);
+    if (!info || !sId) {
+      return {
+        name: '',
+        memberNo: '',
+        id: '',
+        alternativeId: '',
+      };
+    }
+
+    return {
+      name: info.name,
+      memberNo: info.sId,
+      id: sId.toString(),
+      alternativeId: info.sId,
+    };
+  });
 
   useEffect(() => {
     const storedCompanionMember = localStorage.getItem('templateArr');
@@ -65,12 +85,31 @@ const TemplateTimeTable = () => {
 
   const [processData, setProcessData] = useState<WeeklyData[]>(EmptyDate);
   const [curProcessDataIdx, setCurProcessDataIdx] = useState<number>(0);
-  const [isSelected, setIsSelected] = useState<boolean>(true);
+  const [isSelected, setIsSelected] = useState<boolean>(false);
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [roomData, setRoomData] = useState<RoomData>();
+  const [seminaRoom, setSeminaRoom] = useState<string[]>([]);
+
+  const [isError, setIsError] = useState<ReserveError>({
+    isError: false,
+    errorMessage: '',
+  });
+
   const time = isKeyOfReserveTime(timeQuery)
     ? RESERVE_TIME[timeQuery]
     : undefined;
   const [dates, setDates] = useState<string[]>([]);
+
+  const roomMapping: { [key: number]: string[] } = {
+    3: ['1', '2', '3', '4', '5', '6', '7'],
+    4: ['1', '2', '3', '4', '5', '6', '7', '9'],
+    5: ['1', '3', '4', '5', '6', '7', '9'],
+    6: ['1', '3', '5', '6', '7', '9'],
+    7: ['1', '7', '9'],
+    8: ['1', '7', '9'],
+  };
+
   return (
     <>
       <PageContainer>
@@ -95,17 +134,28 @@ const TemplateTimeTable = () => {
             <Schedule
               processData={processData}
               isOpenSeminar={template.seminarType === '개방형 세미나실'}
-              curProcessDataIdx={curProcessDataIdx}
+              curProcessDataIdx={0}
               isSelected={isSelected}
               setIsSelected={setIsSelected}
               selectedSlots={selectedSlots}
               setSelectedSlots={setSelectedSlots}
-              curTime={time as string}
+              curTime={String(template.time * 60)}
               dates={dates}
             />
           </TableContainBox>
         </CenterBox>
       </PageContainer>
+      {isSelected && (
+        <ReserveConfirmBottomModal
+          type={ROOM_USE_SECTION[template.type]}
+          setIsSuccess={setIsSuccess}
+          setIsError={setIsError}
+          semina={roomMapping[template.usePerson + 1]}
+          setIsOpen={setIsSelected}
+          selectedSlots={selectedSlots}
+          companions={Companions}
+        />
+      )}
     </>
   );
 };

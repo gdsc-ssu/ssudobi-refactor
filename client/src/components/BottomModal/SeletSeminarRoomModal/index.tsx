@@ -38,6 +38,8 @@ interface SelectSeminarRoomModalProps {
    * 다음 페이지로 넘어가기 위한 플래그 함수
    */
   setIsSeminaRoomSelected: Dispatch<SetStateAction<boolean>>;
+  // 템플릿용인지 예약용인지
+  type: 'template' | 'reserve';
 }
 const SelectSeminarRoomModal = ({
   slotDay,
@@ -48,6 +50,7 @@ const SelectSeminarRoomModal = ({
   seminaRoom,
   setSeminaRoom,
   setIsSeminaRoomSelected,
+  type,
 }: SelectSeminarRoomModalProps) => {
   console.log(slotDay, day, startTime, endTime, seminaRoomContents, seminaRoom);
   return (
@@ -56,7 +59,7 @@ const SelectSeminarRoomModal = ({
         <ModalHeader>아래 시간으로 예약을 진행할게요</ModalHeader>
         <ReservationBox>
           <ReservationDay>
-            {slotDay} ({day})
+            {slotDay} {type === 'reserve' && day}
             <div
               style={{
                 width: '80%',

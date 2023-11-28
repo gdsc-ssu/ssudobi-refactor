@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { COLORS } from '@/styles/colors';
 import { TYPO } from '@/styles/typo';
@@ -7,6 +7,9 @@ import Companion from '@/components/CompanionsList/Companion';
 import AuthApi from '@/apis/auth';
 import { CompanionProps } from '@/utils/types/Companion';
 import { ReserveError } from '@/utils/types/ReserveError';
+import { useAtom, useSetAtom } from 'jotai';
+import { templateAtom } from '@/components/AddTemplate';
+import { MyTemplate } from '@/@types/MyTemplate';
 
 interface ConfirmReservationModalProps {
   /**
@@ -66,6 +69,29 @@ const ConfirmReservationModal = ({
   setIsError,
   createType,
 }: ConfirmReservationModalProps) => {
+  const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
+  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const setAtomTemplate = useSetAtom(templateAtom);
+
+  useEffect(() => {
+    // templateArr가 변경될 때마다 로컬 스토리지에 업데이트
+    localStorage.setItem('templateArr', JSON.stringify(templateArr));
+    console.log(templateArr);
+  }, [templateArr]);
+
+  useEffect(() => {
+    if (createType === 'template') {
+      const updateTemplate = {
+        ...template,
+        startTime: startTime,
+        finishTime: endTime,
+        semina: seminaRoom,
+      };
+      setAtomTemplate(updateTemplate);
+      console.log('updateTemplate', updateTemplate);
+    }
+  }, [seminaRoom]);
+
   return (
     <>
       <ModalMainStyle>
@@ -127,25 +153,29 @@ const ConfirmReservationModal = ({
       <ReservationButton
         curScreen="confirm"
         onClick={() => {
-          const authApi = new AuthApi();
-          authApi
-            .reservation(
-              seminaRoom[0].replace(/[^0-9]/g, ''),
-              type,
-              `${date} ${startTime}`,
-              `${date} ${endTime}`,
-              companions.map((res) => res.alternativeId),
-            )
-            .then((res) => {
-              if (res.success) {
-                setIsSuccess(true);
-              } else {
-                setIsError({ isError: true, errorMessage: res.message });
-              }
-            });
+          if (createType === 'reserve') {
+            const authApi = new AuthApi();
+            authApi
+              .reservation(
+                seminaRoom[0].replace(/[^0-9]/g, ''),
+                type,
+                `${date} ${startTime}`,
+                `${date} ${endTime}`,
+                companions.map((res) => res.alternativeId),
+              )
+              .then((res) => {
+                if (res.success) {
+                  setIsSuccess(true);
+                } else {
+                  setIsError({ isError: true, errorMessage: res.message });
+                }
+              });
+          } else {
+            setTemplateArr((res) => [...res, template]);
+          }
         }}
       >
-        예약하기
+        {createType === 'reserve' ? '예약하기' : ' 템플릿 저장하기'}
       </ReservationButton>
     </>
   );

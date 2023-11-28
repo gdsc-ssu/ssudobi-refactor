@@ -91,7 +91,7 @@ const ReserveConfirmBottomModal = ({
         throw new Error('Invalid day number.');
     }
   };
-
+  console.log('companions, mobda', companions);
   if (!isSeminaRoomSelected) {
     return (
       <Modal onClick={handleCloseModal}>

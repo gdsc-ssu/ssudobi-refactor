@@ -24,25 +24,14 @@ const TemplateTimeTable = () => {
 
   const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
   const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
-  const Companions: CompanionProps[] = template.people.map((item) => {
-    const { sId, info } = item;
-
-    if (!info || !sId) {
-      return {
-        name: '',
-        memberNo: '',
-        id: '',
-        alternativeId: '',
-      };
-    }
-
-    return {
-      name: info.name,
-      memberNo: info.sId,
-      id: sId.toString(),
-      alternativeId: info.sId,
-    };
-  });
+  const [companions, setCompanions] = useState<CompanionProps[]>([
+    {
+      name: '',
+      memberNo: '',
+      id: '',
+      alternativeId: '',
+    },
+  ]);
 
   useEffect(() => {
     const storedCompanionMember = localStorage.getItem('templateArr');
@@ -50,6 +39,31 @@ const TemplateTimeTable = () => {
       setTemplateArr(JSON.parse(storedCompanionMember));
     }
   }, []);
+
+  useEffect(() => {
+    console.log('Temap', template.people);
+    setCompanions(
+      template.people.map((item) => {
+        const { id, info } = item;
+        console.log('sid, info', id, info);
+        if (!info || !id) {
+          return {
+            name: '',
+            memberNo: '',
+            id: '',
+            alternativeId: '',
+          };
+        }
+
+        return {
+          name: info.name,
+          memberNo: info.sId,
+          id: id.toString(),
+          alternativeId: info.sId,
+        };
+      }),
+    );
+  }, [template.people]);
 
   useEffect(() => {
     // templateArr가 변경될 때마다 로컬 스토리지에 업데이트
@@ -153,7 +167,7 @@ const TemplateTimeTable = () => {
           semina={roomMapping[template.usePerson + 1]}
           setIsOpen={setIsSelected}
           selectedSlots={selectedSlots}
-          companions={Companions}
+          companions={companions}
         />
       )}
     </>

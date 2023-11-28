@@ -69,9 +69,16 @@ const ConfirmReservationModal = ({
   return (
     <>
       <ModalMainStyle>
-        <ModalHeader>세미나룸 예약을 확정하시겠어요?</ModalHeader>
-        <BodyText>슈도비에서 언제든지 예약을 취소할 수 있어요.</BodyText>
-        <BodyText>만약 방문이 어렵다면, 꼭 예약을 취소해주세요!</BodyText>
+        <ModalHeader>
+          세미나룸 {createType === 'reserve' ? ' 예약을 ' : ' 템플릿 저장을 '}
+          확정하시겠어요?
+        </ModalHeader>
+        {createType === 'reserve' && (
+          <>
+            <BodyText>슈도비에서 언제든지 예약을 취소할 수 있어요.</BodyText>
+            <BodyText>만약 방문이 어렵다면, 꼭 예약을 취소해주세요!</BodyText>
+          </>
+        )}
         <ReservationBox>
           <ReservationDay>
             {slotDay} {createType === 'reserve' && day}

@@ -56,7 +56,11 @@ const SelectSeminarRoomModal = ({
   return (
     <>
       <ModalMainStyle>
-        <ModalHeader>아래 시간으로 예약을 진행할게요</ModalHeader>
+        <ModalHeader>
+          아래 시간으로
+          {type === 'reserve' ? ' 예약을 ' : ' 템플릿 저장을 '}
+          진행할게요
+        </ModalHeader>
         <ReservationBox>
           <ReservationDay>
             {slotDay} {type === 'reserve' && day}

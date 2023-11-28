@@ -76,7 +76,6 @@ const ConfirmReservationModal = ({
   useEffect(() => {
     // templateArr가 변경될 때마다 로컬 스토리지에 업데이트
     localStorage.setItem('templateArr', JSON.stringify(templateArr));
-    console.log(templateArr);
   }, [templateArr]);
 
   useEffect(() => {
@@ -88,7 +87,6 @@ const ConfirmReservationModal = ({
         semina: seminaRoom,
       };
       setAtomTemplate(updateTemplate);
-      console.log('updateTemplate', updateTemplate);
     }
   }, [seminaRoom]);
 

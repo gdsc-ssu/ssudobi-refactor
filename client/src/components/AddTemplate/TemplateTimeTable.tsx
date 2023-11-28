@@ -5,7 +5,7 @@ import { MyTemplate } from '@/@types/MyTemplate';
 import { useAtom } from 'jotai';
 import { templateAtom } from '.';
 import Schedule from '../Timetable';
-import { RoomData, WeeklyData } from '../Timetable/getTimeTable';
+import { WeeklyData } from '../Timetable/getTimeTable';
 import { RESERVE_TIME } from '@/constants/reserveTime';
 import { useRouter } from 'next/router';
 import { EmptyDate } from '@/utils/EmptyDate';
@@ -41,11 +41,9 @@ const TemplateTimeTable = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Temap', template.people);
     setCompanions(
       template.people.map((item) => {
         const { id, info } = item;
-        console.log('sid, info', id, info);
         if (!info || !id) {
           return {
             name: '',
@@ -68,26 +66,8 @@ const TemplateTimeTable = () => {
   useEffect(() => {
     // templateArr가 변경될 때마다 로컬 스토리지에 업데이트
     localStorage.setItem('templateArr', JSON.stringify(templateArr));
-    console.log(templateArr);
   }, [templateArr]);
 
-  const handleSaveTemplate = () => {
-    const newTemplate = {
-      title: template.title,
-      seminarType: template.seminarType,
-      day: '목요일', // template.day,
-      startTime: '13:00',
-      finishTime: '14:00',
-      people: template.people,
-      semina: [1, 3, 4],
-      usePerson: template.usePerson,
-      type: template.type,
-      time: template.time,
-    };
-    console.log(newTemplate);
-    setTemplateArr((res) => [...res, newTemplate]);
-    console.log('temparr', templateArr);
-  };
   const isKeyOfReserveTime = (
     key: string,
   ): key is keyof typeof RESERVE_TIME => {
@@ -98,21 +78,13 @@ const TemplateTimeTable = () => {
   const timeQuery = route.query.time as string;
 
   const [processData, setProcessData] = useState<WeeklyData[]>(EmptyDate);
-  const [curProcessDataIdx, setCurProcessDataIdx] = useState<number>(0);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [roomData, setRoomData] = useState<RoomData>();
-  const [seminaRoom, setSeminaRoom] = useState<string[]>([]);
-
   const [isError, setIsError] = useState<ReserveError>({
     isError: false,
     errorMessage: '',
   });
-
-  const time = isKeyOfReserveTime(timeQuery)
-    ? RESERVE_TIME[timeQuery]
-    : undefined;
   const [dates, setDates] = useState<string[]>([]);
 
   const roomMapping: { [key: number]: string[] } = {
@@ -127,7 +99,6 @@ const TemplateTimeTable = () => {
   return (
     <>
       <PageContainer>
-        {/* TODO: 시간표 + 바텀모달 추가하기 */}
         <HeaderDiv>
           <HeaderEachDiv>
             <HeaderDivBoldText>사용시간</HeaderDivBoldText>
@@ -142,7 +113,6 @@ const TemplateTimeTable = () => {
             <HeaderDivText>{template.seminarType}</HeaderDivText>
           </HeaderEachDiv>
         </HeaderDiv>
-
         <CenterBox>
           <TableContainBox>
             <Schedule

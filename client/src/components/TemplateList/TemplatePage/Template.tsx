@@ -11,7 +11,6 @@ import { postReservationCancel } from '@/apis/ReserveData';
 import { useEffect, useState } from 'react';
 import DecisionModal from '@/components/Modal/Decision';
 import { MyTemplate } from '@/@types/MyTemplate';
-import ConfirmReservationModal from '@/components/BottomModal/ConfirmReservationModal';
 import { CompanionProps } from '@/utils/types/Companion';
 
 const Template = ({
@@ -30,7 +29,6 @@ const Template = ({
     if (storedCompanionMember) {
       setTemplateArr(JSON.parse(storedCompanionMember));
     }
-    console.log('templateArr', templateArr);
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -71,7 +69,6 @@ const Template = ({
   const handleOnClickReserve = (e: React.MouseEvent) => {
     e.stopPropagation();
     const ReserveArr = templateArr.filter((e) => e.title == title);
-    console.log('Resere', ReserveArr);
   };
 
   function transformData(

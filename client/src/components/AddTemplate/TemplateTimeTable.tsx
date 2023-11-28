@@ -15,6 +15,7 @@ import { TYPO } from '@/styles/typo';
 import ReserveConfirmBottomModal from '../BottomModal/ReserveConfirm';
 import { ROOM_USE_SECTION } from '@/constants/roomUseSection';
 import { CompanionProps } from '@/utils/types/Companion';
+import ConfirmModal from '../Modal/Confrim';
 
 const TemplateTimeTable = () => {
   const { setHeader } = useHeader();
@@ -74,9 +75,6 @@ const TemplateTimeTable = () => {
     return key in RESERVE_TIME;
   };
   const route = useRouter();
-
-  const timeQuery = route.query.time as string;
-
   const [processData, setProcessData] = useState<WeeklyData[]>(EmptyDate);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
@@ -94,6 +92,15 @@ const TemplateTimeTable = () => {
     6: ['1', '3', '5', '6', '7', '9'],
     7: ['1', '7', '9'],
     8: ['1', '7', '9'],
+  };
+  const handleTemplateError = () => {
+    setIsError({ isError: false, errorMessage: '' });
+    setIsSelected(false);
+  };
+
+  const handleTemplateSuccess = () => {
+    setIsSuccess(false);
+    route.push('/template');
   };
 
   return (
@@ -138,6 +145,20 @@ const TemplateTimeTable = () => {
           setIsOpen={setIsSelected}
           selectedSlots={selectedSlots}
           companions={companions}
+        />
+      )}
+      {isSuccess && (
+        <ConfirmModal
+          onClick={handleTemplateSuccess}
+          title="템플릿이 추가되었습니다."
+          message="템플릿 정보는 템플릿 탭에서 확인하세요!"
+        />
+      )}
+      {isError.isError && (
+        <ConfirmModal
+          onClick={handleTemplateError}
+          title="예약에 실패하였습니다."
+          message={isError.errorMessage}
         />
       )}
     </>

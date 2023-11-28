@@ -169,6 +169,8 @@ const ConfirmReservationModal = ({
                 }
               });
           } else {
+            setIsSuccess(true);
+
             setTemplateArr((res) => [...res, template]);
           }
         }}

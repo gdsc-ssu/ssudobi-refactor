@@ -74,6 +74,13 @@ const ConfirmReservationModal = ({
   const setAtomTemplate = useSetAtom(templateAtom);
 
   useEffect(() => {
+    const storedCompanionMember = localStorage.getItem('templateArr');
+    if (storedCompanionMember) {
+      setTemplateArr(JSON.parse(storedCompanionMember));
+    }
+  }, []);
+
+  useEffect(() => {
     // templateArr가 변경될 때마다 로컬 스토리지에 업데이트
     localStorage.setItem('templateArr', JSON.stringify(templateArr));
   }, [templateArr]);
@@ -170,7 +177,6 @@ const ConfirmReservationModal = ({
               });
           } else {
             setIsSuccess(true);
-
             setTemplateArr((res) => [...res, template]);
           }
         }}

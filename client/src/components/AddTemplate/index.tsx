@@ -19,8 +19,9 @@ export const templateAtom = atom<MyTemplate>({
   startTime: '',
   finishTime: '',
   people: [],
-  semina: 0,
-  type: '',
+  semina: [],
+  type: '회의',
+  seminarType: '세미나실',
 });
 
 const AddTemplate = () => {
@@ -40,11 +41,11 @@ const AddTemplate = () => {
   const handleOnClickReserve = (idx: number) => {
     const AccessToken = getAccessToken();
 
-    const MakeReserve = useMutation(() => postReservation(data, AccessToken), {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['reserveCancel']);
-      },
-    });
+    // const MakeReserve = useMutation(() => postReservation(data, AccessToken), {
+    //   onSuccess: () => {
+    //     queryClient.invalidateQueries(['reserveCancel']);
+    //   },
+    // });
   };
 
   return (

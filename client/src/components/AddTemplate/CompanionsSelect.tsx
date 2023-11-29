@@ -44,7 +44,7 @@ const CompanionsSelect = () => {
           selectedList={selectedList}
         />
         <NextBox>
-          {template.seminarType === '개방형' ? (
+          {template.seminarType === '개방형 세미나실' ? (
             <WarningBox display={true}>
               최대 2명까지 선택 가능합니다.
             </WarningBox>

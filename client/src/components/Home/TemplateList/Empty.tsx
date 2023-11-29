@@ -11,8 +11,8 @@ const Empty = () => {
 
   return (
     <Container>
-      <Button onClick={() => router.push('/create/template')}>
-        <Content>템플릿 제작하기</Content>
+      <Button onClick={() => router.push('/template/1')}>
+        <Content>템플릿 추가하기</Content>
         <FontAwesomeIcon icon={faMarker} />
       </Button>
     </Container>

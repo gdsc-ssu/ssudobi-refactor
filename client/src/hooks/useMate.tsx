@@ -39,6 +39,7 @@ const useMate = () => {
           info: {
             name,
             sId,
+            alternativeId: newMateId.alternativeId,
           },
           id: newMateId.id,
         },

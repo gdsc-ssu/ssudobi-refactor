@@ -14,6 +14,8 @@ import { templateAtom } from '.';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
 import Usage from '../Buttons/Usage';
+import { css } from '@emotion/react';
+import { injectAnimation } from '@/styles/animations';
 
 type CheckedButtons = {
   '1시간': boolean;
@@ -97,7 +99,7 @@ const NameTimeType = () => {
   };
 
   return (
-    <PageContainer>
+    <PageContainer css={pageStyle}>
       <TitleBox>
         <Title
           title="템플릿을 추가할 거예요"
@@ -215,9 +217,7 @@ const NameTimeType = () => {
   );
 };
 
-const TitleBox = styled.div`
-  margin-top: 77px;
-`;
+const TitleBox = styled.div``;
 
 const SmallTitleBox = styled.div`
   ${TYPO.title3.Reg};
@@ -273,4 +273,13 @@ const UsageMarginBox = styled.div`
   margin-right: 6px;
   width: 100%;
 `;
+
+const pageStyle = css`
+  width: 100%;
+  padding: 3rem 2.7rem;
+  padding-bottom: 20rem;
+  ${injectAnimation('fadeInTopDown', '0.5s', 'ease')};
+  position: relative;
+`;
+
 export default NameTimeType;

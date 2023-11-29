@@ -21,7 +21,7 @@ const Mate = () => {
       </TitleWrapper>
       <MateManageKit
         kitType="removable"
-        css={injectAnimation('fadeInTopDown', '0.5s')}
+        css={injectAnimation('fadeInTopDown', '0.5s', 'ease')}
       />
     </PageContainer>
   );

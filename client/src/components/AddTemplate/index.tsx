@@ -7,7 +7,7 @@ import Template from '../TemplateList/TemplatePage/Template';
 import Link from 'next/link';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { getAccessToken } from '@/utils/lib/tokenHandler';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
@@ -99,7 +99,7 @@ const TitleWrapper = styled.div`
 const ButtonBox = styled.div`
   width: 100%;
   position: relative;
-  ${injectAnimation('fadeInTopDown', '0.5s')};
+  ${injectAnimation('fadeInTopDown', '0.5s', 'ease')};
 `;
 
 const ReservationListsBox = styled.div`

@@ -42,7 +42,7 @@ const ReserveButtons = () => {
 const ButtonsWrapper = styled.div`
   width: 100%;
   ${flex('column', 'start', 'start', 1.2)};
-  ${injectAnimation('fadeInTopDownTranslate', '0.5s')};
+  ${injectAnimation('fadeInTopDownTranslate', '0.5s', 'ease')};
 `;
 
 export default ReserveButtons;

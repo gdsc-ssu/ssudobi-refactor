@@ -10,6 +10,7 @@ import { COLORS } from '@/styles/colors';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { useAtom, useSetAtom } from 'jotai';
 import { templateAtom } from '.';
+import { Patron } from 'Template';
 
 const CompanionsSelect = () => {
   const { selectedList, handleSelect } = useMate();
@@ -17,14 +18,22 @@ const CompanionsSelect = () => {
   const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
   const setAtomTemplate = useSetAtom(templateAtom);
 
-  const hanldeOnClickReserve = () => {
-    const updatedTemplate = {
+  const hanldeOnClickNext = () => {
+    const updatedTemplate: MyTemplate = {
       ...template,
-      people: selectedList,
+      people: selectedList.map((item) => {
+        const { id, ...rest } = item;
+        return {
+          id: typeof id === 'number' ? id.toString() : id,
+          ...rest,
+        } as Patron;
+      }),
       usePerson: selectedList.length,
     };
     setAtomTemplate(updatedTemplate);
   };
+
+  console.log('selectedlist', selectedList);
 
   return (
     <>
@@ -60,7 +69,7 @@ const CompanionsSelect = () => {
                 title="예약 가능 시간 탐색하기"
                 theme="primary"
                 disabled={selectedList.length < 2}
-                onClick={hanldeOnClickReserve}
+                onClick={hanldeOnClickNext}
               />
             </Link>
           </NextWidthBox>

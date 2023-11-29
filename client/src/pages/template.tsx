@@ -1,5 +1,7 @@
+import AddTemplate from '@/components/AddTemplate';
+
 const Template = () => {
-  return <></>;
+  return <AddTemplate />;
 };
 
 export default Template;

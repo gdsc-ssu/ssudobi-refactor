@@ -1,9 +1,13 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Picker from '@/components/Layouts/Picker';
 import { COLORS } from '@/styles/colors';
 import { TYPO } from '@/styles/typo';
 import { calculateEndTimeWithMinutes } from '@/utils/func/calculateEndTimeWithMinutes';
+import { MyTemplate } from '@/@types/MyTemplate';
+import { useAtom, useSetAtom } from 'jotai';
+import { templateAtom } from '@/components/AddTemplate';
+import { start } from 'repl';
 
 interface SelectSeminarRoomModalProps {
   /**
@@ -38,6 +42,8 @@ interface SelectSeminarRoomModalProps {
    * 다음 페이지로 넘어가기 위한 플래그 함수
    */
   setIsSeminaRoomSelected: Dispatch<SetStateAction<boolean>>;
+  // 템플릿용인지 예약용인지
+  type: 'template' | 'reserve';
 }
 const SelectSeminarRoomModal = ({
   slotDay,
@@ -48,15 +54,21 @@ const SelectSeminarRoomModal = ({
   seminaRoom,
   setSeminaRoom,
   setIsSeminaRoomSelected,
+  type,
 }: SelectSeminarRoomModalProps) => {
   console.log(slotDay, day, startTime, endTime, seminaRoomContents, seminaRoom);
+
   return (
     <>
       <ModalMainStyle>
-        <ModalHeader>아래 시간으로 예약을 진행할게요</ModalHeader>
+        <ModalHeader>
+          아래 시간으로
+          {type === 'reserve' ? ' 예약을 ' : ' 템플릿 저장을 '}
+          진행할게요
+        </ModalHeader>
         <ReservationBox>
           <ReservationDay>
-            {slotDay} ({day})
+            {slotDay} {type === 'reserve' && day}
             <div
               style={{
                 width: '80%',

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { COLORS } from '@/styles/colors';
 import { TYPO } from '@/styles/typo';
@@ -7,6 +7,9 @@ import Companion from '@/components/CompanionsList/Companion';
 import AuthApi from '@/apis/auth';
 import { CompanionProps } from '@/utils/types/Companion';
 import { ReserveError } from '@/utils/types/ReserveError';
+import { useAtom, useSetAtom } from 'jotai';
+import { templateAtom } from '@/components/AddTemplate';
+import { MyTemplate } from '@/@types/MyTemplate';
 
 interface ConfirmReservationModalProps {
   /**
@@ -49,6 +52,8 @@ interface ConfirmReservationModalProps {
    * 실패 시 플래그 상태변환 함수
    */
   setIsError: Dispatch<SetStateAction<ReserveError>>;
+  // 템플릿용인지 예약용인지
+  createType: 'template' | 'reserve';
 }
 
 const ConfirmReservationModal = ({
@@ -62,16 +67,52 @@ const ConfirmReservationModal = ({
   date,
   setIsSuccess,
   setIsError,
+  createType,
 }: ConfirmReservationModalProps) => {
+  const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
+  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const setAtomTemplate = useSetAtom(templateAtom);
+
+  useEffect(() => {
+    const storedCompanionMember = localStorage.getItem('templateArr');
+    if (storedCompanionMember) {
+      setTemplateArr(JSON.parse(storedCompanionMember));
+    }
+  }, []);
+
+  useEffect(() => {
+    // templateArr가 변경될 때마다 로컬 스토리지에 업데이트
+    localStorage.setItem('templateArr', JSON.stringify(templateArr));
+  }, [templateArr]);
+
+  useEffect(() => {
+    if (createType === 'template') {
+      const updateTemplate = {
+        ...template,
+        startTime: startTime,
+        finishTime: endTime,
+        semina: seminaRoom,
+      };
+      setAtomTemplate(updateTemplate);
+    }
+  }, [seminaRoom]);
+
   return (
     <>
       <ModalMainStyle>
-        <ModalHeader>세미나룸 예약을 확정하시겠어요?</ModalHeader>
-        <BodyText>슈도비에서 언제든지 예약을 취소할 수 있어요.</BodyText>
-        <BodyText>만약 방문이 어렵다면, 꼭 예약을 취소해주세요!</BodyText>
+        <ModalHeader>
+          세미나룸 {createType === 'reserve' ? ' 예약을 ' : ' 템플릿 저장을 '}
+          확정하시겠어요?
+        </ModalHeader>
+        {createType === 'reserve' && (
+          <>
+            <BodyText>슈도비에서 언제든지 예약을 취소할 수 있어요.</BodyText>
+            <BodyText>만약 방문이 어렵다면, 꼭 예약을 취소해주세요!</BodyText>
+          </>
+        )}
         <ReservationBox>
           <ReservationDay>
-            {slotDay} ({day})
+            {slotDay} {createType === 'reserve' && day}
             <div
               style={{
                 width: '80%',
@@ -117,25 +158,30 @@ const ConfirmReservationModal = ({
       <ReservationButton
         curScreen="confirm"
         onClick={() => {
-          const authApi = new AuthApi();
-          authApi
-            .reservation(
-              seminaRoom[0].replace(/[^0-9]/g, ''),
-              type,
-              `${date} ${startTime}`,
-              `${date} ${endTime}`,
-              companions.map((res) => res.alternativeId),
-            )
-            .then((res) => {
-              if (res.success) {
-                setIsSuccess(true);
-              } else {
-                setIsError({ isError: true, errorMessage: res.message });
-              }
-            });
+          if (createType === 'reserve') {
+            const authApi = new AuthApi();
+            authApi
+              .reservation(
+                seminaRoom[0].replace(/[^0-9]/g, ''),
+                type,
+                `${date} ${startTime}`,
+                `${date} ${endTime}`,
+                companions.map((res) => res.alternativeId),
+              )
+              .then((res) => {
+                if (res.success) {
+                  setIsSuccess(true);
+                } else {
+                  setIsError({ isError: true, errorMessage: res.message });
+                }
+              });
+          } else {
+            setIsSuccess(true);
+            setTemplateArr((res) => [...res, template]);
+          }
         }}
       >
-        예약하기
+        {createType === 'reserve' ? '예약하기' : ' 템플릿 저장하기'}
       </ReservationButton>
     </>
   );

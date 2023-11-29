@@ -35,10 +35,11 @@ const ReservationCheck = () => {
                   beginTime={el.beginTime}
                   endTime={el.endTime}
                   place={el.room.name}
-                  memo="memo"
                   friends={el.patrons}
                   type="RESERVE"
                   reserveId={el.id}
+                  idx={idx}
+                  onClick={() => {}}
                 />
               </ListBox>
             ))

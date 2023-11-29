@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useHeader } from '@/hooks';
-import { PageContainer } from '@/styles/tokens';
+import { PageContainer, flex } from '@/styles/tokens';
 import { useLayoutEffect, useState } from 'react';
 import { Title } from '../Layouts';
 import { MenuTitle } from './common';
@@ -16,6 +16,7 @@ import { COLORS } from '@/styles/colors';
 import Usage from '../Buttons/Usage';
 import { css } from '@emotion/react';
 import { injectAnimation } from '@/styles/animations';
+import { useRouter } from 'next/router';
 
 type CheckedButtons = {
   '1시간': boolean;
@@ -32,6 +33,8 @@ type UsageBtns = {
 
 const NameTimeType = () => {
   const { setHeader } = useHeader();
+  const router = useRouter();
+
   useLayoutEffect(() => {
     setHeader('템플릿 추가하기');
   }, []);
@@ -96,6 +99,7 @@ const NameTimeType = () => {
       seminarType: isSeminar ? '세미나실' : '개방형 세미나실',
     };
     setAtomTemplate(updatedTemplate);
+    router.push('/template/2');
   };
 
   return (
@@ -117,82 +121,76 @@ const NameTimeType = () => {
           placeholder="ex. 슈도비 프로젝트 회의"
         />
       </MenuBox>
-      <MenuBox>
+      <MenuArea
+        css={css`
+          margin-top: 0.6rem;
+        `}
+      >
         <MenuTitle>사용 시간과 용도를 선택해 주세요.</MenuTitle>
-      </MenuBox>
-      <SmallMenuBox>
-        <SmallTitleBox>사용 시간</SmallTitleBox>
-        <TimesBox>
-          <ItemButton
-            style={{ marginRight: '8px' }}
-            title="1시간"
-            disabled={false}
-            checked={checkedButtons['1시간']}
-            onClick={() => handleButtonClick('1시간')}
-          />
-          <ItemButton
-            style={{ marginRight: '8px' }}
-            title="2시간"
-            disabled={false}
-            checked={checkedButtons['2시간']}
-            onClick={() => handleButtonClick('2시간')}
-          />
-          <ItemButton
-            style={{ marginRight: '8px' }}
-            title="3시간"
-            disabled={false}
-            checked={checkedButtons['3시간']}
-            onClick={() => handleButtonClick('3시간')}
-          />
-        </TimesBox>
-      </SmallMenuBox>
-      <SmallMenuBox>
-        <SmallTitleBox>사용 용도를 선택해 주세요.</SmallTitleBox>
-        <FlexBox>
-          <UsageMarginBox>
+        <MenuBox>
+          <SmallTitleBox>사용 시간</SmallTitleBox>
+          <TimesBox>
+            <ItemButton
+              title="1시간"
+              disabled={false}
+              checked={checkedButtons['1시간']}
+              onClick={() => handleButtonClick('1시간')}
+            />
+            <ItemButton
+              title="2시간"
+              disabled={false}
+              checked={checkedButtons['2시간']}
+              onClick={() => handleButtonClick('2시간')}
+            />
+            <ItemButton
+              title="3시간"
+              disabled={false}
+              checked={checkedButtons['3시간']}
+              onClick={() => handleButtonClick('3시간')}
+            />
+          </TimesBox>
+        </MenuBox>
+        <MenuBox>
+          <SmallTitleBox>사용 용도를 선택해 주세요.</SmallTitleBox>
+          <UsageWrapper>
             <Usage
               title="학습"
               checked={usageBtns['학습']}
               onClick={() => handleUsageBtnClick('학습')}
             />
-          </UsageMarginBox>
-          <Usage
-            title="회의"
-            checked={usageBtns['회의']}
-            onClick={() => handleUsageBtnClick('회의')}
-          />
-        </FlexBox>
-        <FlexBox>
-          <UsageMarginBox>
+            <Usage
+              title="회의"
+              checked={usageBtns['회의']}
+              onClick={() => handleUsageBtnClick('회의')}
+            />
             <Usage
               title="수업"
               checked={usageBtns['수업']}
               onClick={() => handleUsageBtnClick('수업')}
             />
-          </UsageMarginBox>
-          <Usage
-            title="기타"
-            checked={usageBtns['기타']}
-            onClick={() => handleUsageBtnClick('기타')}
-          />
-        </FlexBox>
-      </SmallMenuBox>
-
+            <Usage
+              title="기타"
+              checked={usageBtns['기타']}
+              onClick={() => handleUsageBtnClick('기타')}
+            />
+          </UsageWrapper>
+        </MenuBox>
+      </MenuArea>
       <MenuBox>
-        <MenuTitle>장소 종류</MenuTitle>
-        <DescriptionBox>
-          개방형 세미나실은 3명만 이용할 수 있어요.
-        </DescriptionBox>
+        <DescriptionWrapper>
+          <MenuTitle>장소 종류</MenuTitle>
+          <DescriptionBox>
+            개방형 세미나실은 3명만 이용할 수 있어요.
+          </DescriptionBox>
+        </DescriptionWrapper>
         <TypeBox>
           <ItemButton
-            style={{ marginRight: '8px' }}
             title="세미나실"
             disabled={false}
             checked={isSeminar}
             onClick={() => setIsSeminar(true)}
           />
           <ItemButton
-            style={{ marginRight: '8px' }}
             title="&nbsp;&nbsp;&nbsp;개방형 세미나실&nbsp;&nbsp;&nbsp;"
             disabled={false}
             checked={!isSeminar}
@@ -200,19 +198,12 @@ const NameTimeType = () => {
           />
         </TypeBox>
       </MenuBox>
-
-      <NextFixedBox>
-        <NextWidthBox>
-          <Link href={'/template/2'}>
-            <RoundButton
-              style={{ width: '322px' }}
-              title="다음 단계로"
-              theme="primary"
-              onClick={handleOnClickNext}
-            />
-          </Link>
-        </NextWidthBox>
-      </NextFixedBox>
+      <RoundButton
+        title="다음 단계로"
+        theme="primary"
+        onClick={handleOnClickNext}
+        css={buttonStyle}
+      />
     </PageContainer>
   );
 };
@@ -220,66 +211,59 @@ const NameTimeType = () => {
 const TitleBox = styled.div``;
 
 const SmallTitleBox = styled.div`
-  ${TYPO.title3.Reg};
-  margin-bottom: 15px;
+  ${TYPO.text1.Reg};
 `;
 
-const SmallMenuBox = styled.div`
-  margin-top: 20px;
+const MenuArea = styled.div`
+  width: 100%;
+  ${flex('column', 'start', 'start', 2)};
 `;
 
 const MenuBox = styled.div`
-  margin-top: 30px;
+  width: 100%;
+  ${flex('column', 'start', 'start', 1.5)};
 `;
 
 const TimesBox = styled.div`
-  display: flex;
-  width: 241px;
+  width: 70%;
+  ${flex('row', 'start', 'center', 0.8)}
 `;
 
 const TypeBox = styled.div`
-  display: flex;
+  width: 100%;
+  ${flex('row', 'start', 'center', 0.8)}
 `;
 
-const NextFixedBox = styled.div`
-  position: fixed;
-  top: 90%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  margin: auto;
-  display: flex;
-  justify-content: center;
-`;
-
-const NextWidthBox = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: auto;
+const DescriptionWrapper = styled.div`
+  width: 100%;
+  ${flex('column', 'start', 'start', 0.5)}
 `;
 
 const DescriptionBox = styled.div`
   ${TYPO.text2.Reg};
   color: ${COLORS.grey3};
-  margin-top: -10px;
-  margin-bottom: 10px;
 `;
 
-const FlexBox = styled.div`
-  display: flex;
-  margin-bottom: 7px;
-`;
-
-const UsageMarginBox = styled.div`
-  margin-right: 6px;
+const UsageWrapper = styled.div`
   width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 0.6rem;
 `;
 
 const pageStyle = css`
   width: 100%;
   padding: 3rem 2.7rem;
-  padding-bottom: 20rem;
-  ${injectAnimation('fadeInTopDown', '0.5s', 'ease')};
+  padding-bottom: 10rem;
   position: relative;
+  ${flex('column', 'start', 'start', 3)};
+  ${injectAnimation('fadeInTopDown', '0.5s', 'ease')};
+`;
+
+const buttonStyle = css`
+  width: 95%;
+  margin-top: 4rem;
 `;
 
 export default NameTimeType;

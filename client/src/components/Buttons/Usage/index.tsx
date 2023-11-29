@@ -62,7 +62,7 @@ const Circle = (props: ComponentProps<'svg'>) => {
           y2="81"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#AEDDFD" />
+          <stop stop-color="#aeddfd50" />
           <stop offset="1" stop-color="#1D9BF0" stop-opacity="0" />
         </linearGradient>
       </defs>

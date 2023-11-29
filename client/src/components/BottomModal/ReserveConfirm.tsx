@@ -73,6 +73,25 @@ const ReserveConfirmBottomModal = ({
     const date = new Date(dateString);
     return days[date.getUTCDay()];
   }
+  const getTemplateDayOfWeek = (number: string): string => {
+    switch (number) {
+      case '1':
+        return '월요일';
+      case '2':
+        return '화요일';
+      case '3':
+        return '수요일';
+      case '4':
+        return '목요일';
+      case '5':
+        return '금요일';
+      case '6':
+        return '토요일';
+      default:
+        throw new Error('Invalid day number.');
+    }
+  };
+
   if (!isSeminaRoomSelected) {
     return (
       <Modal onClick={handleCloseModal}>
@@ -82,16 +101,31 @@ const ReserveConfirmBottomModal = ({
             e.stopPropagation();
           }}
         >
-          <SelectSeminarRoomModal
-            slotDay={slotDay}
-            day={day}
-            startTime={startTime}
-            endTime={endTime}
-            seminaRoom={seminaRoom}
-            seminaRoomContents={seminaRoomContents}
-            setSeminaRoom={setSeminaRoom}
-            setIsSeminaRoomSelected={setIsSeminaRoomSelected}
-          />
+          {date.slice(8, 10) === '00' ? (
+            <SelectSeminarRoomModal
+              slotDay={getTemplateDayOfWeek(date.slice(6, 7))}
+              day={day}
+              startTime={startTime}
+              endTime={endTime}
+              seminaRoom={seminaRoom}
+              seminaRoomContents={seminaRoomContents}
+              setSeminaRoom={setSeminaRoom}
+              setIsSeminaRoomSelected={setIsSeminaRoomSelected}
+              type="template"
+            />
+          ) : (
+            <SelectSeminarRoomModal
+              slotDay={slotDay}
+              day={day}
+              startTime={startTime}
+              endTime={endTime}
+              seminaRoom={seminaRoom}
+              seminaRoomContents={seminaRoomContents}
+              setSeminaRoom={setSeminaRoom}
+              setIsSeminaRoomSelected={setIsSeminaRoomSelected}
+              type="reserve"
+            />
+          )}
         </ModalView>
       </Modal>
     );
@@ -104,18 +138,35 @@ const ReserveConfirmBottomModal = ({
             e.stopPropagation();
           }}
         >
-          <ConfirmReservationModal
-            slotDay={slotDay}
-            day={day}
-            startTime={startTime}
-            endTime={endTime}
-            seminaRoom={seminaRoom}
-            companions={companions}
-            type={type}
-            date={date}
-            setIsSuccess={setIsSuccess}
-            setIsError={setIsError}
-          />
+          {date.slice(8, 10) === '00' ? (
+            <ConfirmReservationModal
+              slotDay={getTemplateDayOfWeek(date.slice(6, 7))}
+              day={day}
+              startTime={startTime}
+              endTime={endTime}
+              seminaRoom={seminaRoom}
+              companions={companions}
+              type={type}
+              date={date}
+              setIsSuccess={setIsSuccess}
+              setIsError={setIsError}
+              createType="template"
+            />
+          ) : (
+            <ConfirmReservationModal
+              slotDay={slotDay}
+              day={day}
+              startTime={startTime}
+              endTime={endTime}
+              seminaRoom={seminaRoom}
+              companions={companions}
+              type={type}
+              date={date}
+              setIsSuccess={setIsSuccess}
+              setIsError={setIsError}
+              createType="reserve"
+            />
+          )}
         </ModalView>
       </Modal>
     );

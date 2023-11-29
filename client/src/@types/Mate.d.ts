@@ -7,6 +7,8 @@ declare module 'Mate' {
   };
 
   export type MateItemType = {
+    name?: string;
+    memberNo?: string;
     info: {
       name: string;
       sId: string;

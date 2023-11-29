@@ -87,11 +87,11 @@ const ConfirmReservationModal = ({
 
   useEffect(() => {
     if (createType === 'template') {
-      const updateTemplate = {
+      const updateTemplate: MyTemplate = {
         ...template,
         startTime: startTime,
         finishTime: endTime,
-        semina: seminaRoom,
+        semina: seminaRoom.map(Number),
       };
       setAtomTemplate(updateTemplate);
     }

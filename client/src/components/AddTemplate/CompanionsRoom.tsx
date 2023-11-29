@@ -85,18 +85,17 @@ const CompanionsRoom = () => {
   ];
 
   const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
-  const [seminarNum, setSeminarNum] = useState<number[]>([]);
   const setAtomTemplate = useSetAtom(templateAtom);
 
   const handleOnClickNext = () => {
     const selectedNumbers = Object.keys(
-      template.seminarType === '개방형'
+      template.seminarType === '개방형 세미나실'
         ? OpenCheckedButtons
         : seminarCheckedButtons,
     )
       .filter((key) => {
         const isChecked =
-          template.seminarType === '개방형'
+          template.seminarType === '개방형 세미나실'
             ? OpenCheckedButtons[key]
             : seminarCheckedButtons[key];
         return isChecked === true;
@@ -122,12 +121,11 @@ const CompanionsRoom = () => {
           </MenuTitle>
         </MenuBox>
       </PageContainer>
-      {/** TODO: 메이트 추가하기 */}
       <PageContainer>
         <MenuBox style={{ marginTop: '50px' }}>
           <MenuTitle>사용 세미나룸</MenuTitle>
           <RoomNumbersBox>
-            {(template.seminarType === '개방형'
+            {(template.seminarType === '개방형 세미나실'
               ? OpenBtnTitles
               : seminarBtnTitles
             ).map((title, index) => (
@@ -137,12 +135,12 @@ const CompanionsRoom = () => {
                 title={String(title)}
                 disabled={false}
                 checked={
-                  template.seminarType === '개방형'
+                  template.seminarType === '개방형 세미나실'
                     ? OpenCheckedButtons[title]
                     : seminarCheckedButtons[title]
                 }
                 onClick={() => {
-                  template.seminarType === '개방형'
+                  template.seminarType === '개방형 세미나실'
                     ? handleButtonClickOpen(title)
                     : handleButtonClickSeminar(title);
                 }}

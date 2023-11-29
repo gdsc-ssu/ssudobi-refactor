@@ -10,5 +10,5 @@ export interface MyTemplate {
   people: Array<Patron>;
   seminarType: '개방형 세미나실' | '세미나실';
   semina: number[];
-  type: string;
+  type: '학습' | '회의' | '기타' | '수업';
 }

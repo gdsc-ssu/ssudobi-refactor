@@ -6,7 +6,6 @@ import { useAtom } from 'jotai';
 import { templateAtom } from '.';
 import Schedule from '../Timetable';
 import { WeeklyData } from '../Timetable/getTimeTable';
-import { RESERVE_TIME } from '@/constants/reserveTime';
 import { useRouter } from 'next/router';
 import { EmptyDate } from '@/utils/EmptyDate';
 import styled from '@emotion/styled';
@@ -16,6 +15,7 @@ import ReserveConfirmBottomModal from '../BottomModal/ReserveConfirm';
 import { ROOM_USE_SECTION } from '@/constants/roomUseSection';
 import { CompanionProps } from '@/utils/types/Companion';
 import ConfirmModal from '../Modal/Confrim';
+import { ReserveError } from '@/utils/types/ReserveError';
 
 const TemplateTimeTable = () => {
   const { setHeader } = useHeader();
@@ -69,11 +69,6 @@ const TemplateTimeTable = () => {
     localStorage.setItem('templateArr', JSON.stringify(templateArr));
   }, [templateArr]);
 
-  const isKeyOfReserveTime = (
-    key: string,
-  ): key is keyof typeof RESERVE_TIME => {
-    return key in RESERVE_TIME;
-  };
   const route = useRouter();
   const [processData, setProcessData] = useState<WeeklyData[]>(EmptyDate);
   const [isSelected, setIsSelected] = useState<boolean>(false);

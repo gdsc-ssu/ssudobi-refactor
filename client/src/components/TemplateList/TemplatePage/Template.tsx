@@ -11,7 +11,6 @@ import { postReservationCancel } from '@/apis/ReserveData';
 import { useEffect, useState } from 'react';
 import DecisionModal from '@/components/Modal/Decision';
 import { MyTemplate } from '@/@types/MyTemplate';
-import { CompanionProps } from '@/utils/types/Companion';
 import AuthApi from '@/apis/auth';
 import { ReserveError } from '@/utils/types/ReserveError';
 import { formatNextOccurrence } from '@/utils/func/templateTimeConverter';

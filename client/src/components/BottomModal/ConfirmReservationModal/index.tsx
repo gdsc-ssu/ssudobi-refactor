@@ -78,7 +78,6 @@ const ConfirmReservationModal = ({
     if (storedCompanionMember) {
       setTemplateArr(JSON.parse(storedCompanionMember));
     }
-    console.log('day', day);
   }, []);
 
   useEffect(() => {

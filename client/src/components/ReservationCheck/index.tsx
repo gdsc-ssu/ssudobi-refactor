@@ -3,18 +3,19 @@ import { Title } from '../Layouts';
 import Template from '../TemplateList/TemplatePage/Template';
 import { useAtomValue } from 'jotai';
 import { authInfoState } from '@/atoms/authInfoState';
-import { getAccessToken } from '@/utils/lib/tokenHandler';
 import { useQuery } from '@tanstack/react-query';
 import { getReservationData } from '@/apis/ReserveData';
 import { ReservationData } from '@/@types/ReservationList';
+import { useAuth } from '@/hooks';
 
 const ReservationCheck = () => {
   const authInfo = useAtomValue(authInfoState);
-  const AccessToken = getAccessToken();
+  const { token } = useAuth();
+
   const { data: reservationData } = useQuery<ReservationData | undefined>(
-    ['reserveData', AccessToken],
-    () => getReservationData(AccessToken),
-    { enabled: AccessToken !== undefined },
+    ['reserveData', token],
+    () => getReservationData(token),
+    { enabled: token !== undefined },
   );
 
   return (

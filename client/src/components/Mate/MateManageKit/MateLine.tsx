@@ -24,7 +24,7 @@ const MateLine = ({ info, kitType, removeMate, selected, ...props }: Props) => {
   const ProfileIcon = useMemo(() => {
     return companionIconGetter();
   }, []);
-  const { isMount, isTransition, handleOpen, handleClose } = useTransition();
+  const { isMount, isTransition, handleOpen, handleClose } = useTransition(300);
 
   const modalConfig = {
     title: '메이트를 정말 삭제하시겠습니까?',

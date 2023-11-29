@@ -12,6 +12,7 @@ declare module 'Mate' {
     info: {
       name: string;
       sId: string;
+      alternativeId: string;
     };
     id: number;
   };

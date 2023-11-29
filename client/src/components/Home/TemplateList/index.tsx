@@ -13,7 +13,7 @@ const TemplateList = () => {
   };
 
   return (
-    <Container css={injectAnimation('fadeInTopDownTranslate', '0.5s')}>
+    <Container css={injectAnimation('fadeInTopDownTranslate', '0.5s', 'ease')}>
       {templates.length > 0 ? (
         <Carousel templates={templates} options={OPTIONS} />
       ) : (

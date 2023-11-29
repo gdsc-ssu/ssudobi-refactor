@@ -4,10 +4,10 @@ import { StudentIdResponse } from 'Mate';
 
 class StudentApi {
   getStudentId = async (info: Patron): Promise<StudentIdResponse> => {
-    const id = await get<StudentIdResponse>(
+    const res = await get<StudentIdResponse>(
       `/patrons/${info.name}/${info.sId}`,
     );
-    return id;
+    return res;
   };
 }
 

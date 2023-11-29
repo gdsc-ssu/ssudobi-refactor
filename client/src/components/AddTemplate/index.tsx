@@ -7,8 +7,11 @@ import Template from '../TemplateList/TemplatePage/Template';
 import Link from 'next/link';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { getAccessToken } from '@/utils/lib/tokenHandler';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { flex } from '@/styles/tokens';
+import { css } from '@emotion/react';
+import { injectAnimation } from '@/styles/animations';
 
 export const templateAtom = atom<MyTemplate>({
   title: '',
@@ -49,14 +52,14 @@ const AddTemplate = () => {
 
   return (
     <Container>
-      <TitleBox>
+      <TitleWrapper css={paddingStyle}>
         <Title
           title={`${authInfo?.name}님, \n템플릿을 만들고 선택해 보세요.`}
           subtitle="정기적으로 진행되는 미팅을 빠르게 신청할 수 있어요"
-          animated={false}
+          animated={true}
         />
-      </TitleBox>
-      <ButtonBox>
+      </TitleWrapper>
+      <ButtonBox css={paddingStyle}>
         <Link href={'/template/1'}>
           <SquareButton title="템플릿 추가하기" theme="primary" />
         </Link>
@@ -84,15 +87,19 @@ const AddTemplate = () => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  ${flex('column', 'start', 'start', 3)};
+`;
 
-const TitleBox = styled.div`
-  margin-top: 23px;
-  padding: 0 28px;
+const TitleWrapper = styled.div`
+  width: 100%;
 `;
 
 const ButtonBox = styled.div`
-  padding: 30px 28px;
+  width: 100%;
+  position: relative;
+  ${injectAnimation('fadeInTopDown', '0.5s', 'ease')};
 `;
 
 const ReservationListsBox = styled.div`
@@ -106,6 +113,10 @@ const ListBox = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 auto 15px;
+`;
+
+const paddingStyle = css`
+  padding: 0rem 2.7rem;
 `;
 
 export default AddTemplate;

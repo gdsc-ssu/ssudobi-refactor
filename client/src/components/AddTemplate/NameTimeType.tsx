@@ -86,10 +86,10 @@ const NameTimeType = () => {
   };
 
   const handleOnClickNext = () => {
-    const updatedTemplate = {
+    const updatedTemplate: MyTemplate = {
       ...template,
       title: title,
-      type: SelectUsage(),
+      type: SelectUsage() as '학습' | '회의' | '수업' | '기타',
       time: parseInt(AvailableTime()?.slice(0, 1), 10),
       seminarType: isSeminar ? '세미나실' : '개방형 세미나실',
     };

@@ -37,6 +37,8 @@ const Template = ({
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isTemplateModalOpen, setIsTemplateModalOpen] =
+    useState<boolean>(false);
   const [isTemplateModal, setIsTemplateModal] = useState<boolean>(false);
   const [isBottomModal, setIsBottomModal] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -118,7 +120,10 @@ const Template = ({
         .then((res) => {
           if (res.success) {
             setIsSuccess(true);
+            setIsTemplateModalOpen(true);
           } else {
+            setIsTemplateModalOpen(true);
+
             setIsError({ isError: true, errorMessage: res.message });
           }
         });
@@ -220,7 +225,27 @@ const Template = ({
       ) : (
         ''
       )}
-      {isSuccess && <ConfirmModal title="" message="템플릿 예약 성공" />}
+      {isTemplateModalOpen ? (
+        isSuccess ? (
+          <ConfirmModal
+            title=""
+            message="템플릿 예약 성공"
+            onClick={() => {
+              setIsTemplateModalOpen(false);
+            }}
+          />
+        ) : (
+          <ConfirmModal
+            title=""
+            message="템플릿 예약 실패"
+            onClick={() => {
+              setIsTemplateModalOpen(false);
+            }}
+          />
+        )
+      ) : (
+        ''
+      )}
       {isBottomModal
         ? ''
         : // <ConfirmReservationModal

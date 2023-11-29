@@ -113,7 +113,7 @@ const Template = ({
           typeNumber.indexOf(ReserveArr[0].type),
           beginTime,
           endTime,
-          ReserveArr[0].people.map((res) => res.id!),
+          ReserveArr[0].people.map((res) => res.info.alternativeId),
         )
         .then((res) => {
           if (res.success) {

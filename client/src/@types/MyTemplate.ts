@@ -1,4 +1,4 @@
-import { Patron } from 'Template';
+import { MateItemType } from 'Mate';
 
 export interface MyTemplate {
   title: string;
@@ -7,7 +7,7 @@ export interface MyTemplate {
   usePerson: number;
   startTime: string;
   finishTime: string;
-  people: Array<Patron>;
+  people: Array<MateItemType>;
   seminarType: '개방형 세미나실' | '세미나실';
   semina: number[];
   type: '학습' | '회의' | '기타' | '수업';

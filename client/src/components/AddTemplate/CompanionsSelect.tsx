@@ -25,13 +25,7 @@ const CompanionsSelect = () => {
   const hanldeOnClickNext = () => {
     const updatedTemplate: MyTemplate = {
       ...template,
-      people: selectedList.map((item) => {
-        const { id, ...rest } = item;
-        return {
-          id: typeof id === 'number' ? id.toString() : id,
-          ...rest,
-        } as Patron;
-      }),
+      people: selectedList,
       usePerson: selectedList.length,
     };
     setAtomTemplate(updatedTemplate);

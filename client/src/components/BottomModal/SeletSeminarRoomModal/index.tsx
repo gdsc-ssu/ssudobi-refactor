@@ -1,13 +1,9 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import styled from '@emotion/styled';
 import Picker from '@/components/Layouts/Picker';
 import { COLORS } from '@/styles/colors';
 import { TYPO } from '@/styles/typo';
 import { calculateEndTimeWithMinutes } from '@/utils/func/calculateEndTimeWithMinutes';
-import { MyTemplate } from '@/@types/MyTemplate';
-import { useAtom, useSetAtom } from 'jotai';
-import { templateAtom } from '@/components/AddTemplate';
-import { start } from 'repl';
 
 interface SelectSeminarRoomModalProps {
   /**
@@ -56,8 +52,6 @@ const SelectSeminarRoomModal = ({
   setIsSeminaRoomSelected,
   type,
 }: SelectSeminarRoomModalProps) => {
-  console.log(slotDay, day, startTime, endTime, seminaRoomContents, seminaRoom);
-
   return (
     <>
       <ModalMainStyle>

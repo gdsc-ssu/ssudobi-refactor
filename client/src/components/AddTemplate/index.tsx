@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { getAccessToken } from '@/utils/lib/tokenHandler';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postReservation } from '@/apis/TemplateReserve';
 import { useEffect, useState } from 'react';
 
 export const templateAtom = atom<MyTemplate>({

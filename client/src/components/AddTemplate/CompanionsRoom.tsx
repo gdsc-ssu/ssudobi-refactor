@@ -121,7 +121,6 @@ const CompanionsRoom = () => {
           </MenuTitle>
         </MenuBox>
       </PageContainer>
-      {/** TODO: 메이트 추가하기 */}
       <PageContainer>
         <MenuBox style={{ marginTop: '50px' }}>
           <MenuTitle>사용 세미나룸</MenuTitle>

@@ -78,6 +78,7 @@ const ConfirmReservationModal = ({
     if (storedCompanionMember) {
       setTemplateArr(JSON.parse(storedCompanionMember));
     }
+    console.log('day', day);
   }, []);
 
   useEffect(() => {
@@ -89,6 +90,7 @@ const ConfirmReservationModal = ({
     if (createType === 'template') {
       const updateTemplate: MyTemplate = {
         ...template,
+        day: slotDay,
         startTime: startTime,
         finishTime: endTime,
         semina: seminaRoom.map(Number),

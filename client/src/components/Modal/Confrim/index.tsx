@@ -39,11 +39,13 @@ const ConfirmModal = ({
         }}
       >
         <ModalContent
-          css={isTransition && injectAnimation('modalDisappear', '0.3s', 'ease')}
-          >
+          css={
+            isTransition && injectAnimation('modalDisappear', '0.3s', 'ease')
+          }
+        >
           <Title>{title}</Title>
           <Message>{message}</Message>
-          <ModalButton css={buttonStyle} {...props} onClick={onClick}>
+          <ModalButton css={buttonStyle} {...props}>
             확인
           </ModalButton>
         </ModalContent>

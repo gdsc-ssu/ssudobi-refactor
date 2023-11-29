@@ -1,11 +1,5 @@
 import { ComponentProps } from 'react';
-import {
-  ModalButton,
-  Message,
-  ModalContent,
-  Title,
-  ModalOverlay,
-} from '../common';
+import { ModalButton, Message, ModalContent, Title } from '../common';
 import styled from '@emotion/styled';
 import { flex } from '@/styles/tokens';
 import { css } from '@emotion/react';

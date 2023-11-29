@@ -5,10 +5,14 @@ import {
   removeUserInfo,
   updateUserInfo,
 } from '@/utils/lib/infoHandler';
-import { removeAccessToken, updateAccessToken } from '@/utils/lib/tokenHandler';
+import {
+  getAccessToken,
+  removeAccessToken,
+  updateAccessToken,
+} from '@/utils/lib/tokenHandler';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useToast } from '.';
 
 const useAuth = () => {
@@ -18,6 +22,7 @@ const useAuth = () => {
   const router = useRouter();
   const [authInfo, setAuthInfo] = useAtom(authInfoState);
   const [isWarn, setIsWarn] = useState(false);
+  const [token, setToken] = useState<string | undefined>('');
 
   /**
    * 로그인 함수
@@ -84,7 +89,11 @@ const useAuth = () => {
     }
   };
 
-  return { authInfo, autoLogin, handleLogin, isWarn, handleLogout };
+  useEffect(() => {
+    if (typeof window !== undefined) setToken(getAccessToken());
+  }, []);
+
+  return { authInfo, autoLogin, handleLogin, isWarn, handleLogout, token };
 };
 
 export default useAuth;

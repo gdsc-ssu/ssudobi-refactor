@@ -2,7 +2,7 @@ import Carousel from './Carousel';
 import { EmblaOptionsType } from 'embla-carousel-react';
 import styled from '@emotion/styled';
 import { injectAnimation } from '@/styles/animations';
-import { basicTemplates, emptyTemplates, maxTemplates } from './dummy';
+import { emptyTemplates } from './dummy';
 import Empty from './Empty';
 
 const TemplateList = () => {

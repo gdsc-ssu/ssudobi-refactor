@@ -196,6 +196,7 @@ interface ModalViewProps {
 }
 
 const ModalView = styled.div<ModalViewProps>`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

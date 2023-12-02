@@ -24,7 +24,7 @@ const ReserveButtons = () => {
       subtitle: '#회의 #미팅 #강의 #세션',
       assets: assetArray[0],
       buttonStyleType: 'blue',
-      onClick: () => router.push('/'),
+      onClick: () => router.push('/create/reserve'),
     },
     {
       title: '개방형 세미나실',
@@ -35,7 +35,8 @@ const ReserveButtons = () => {
     },
   ];
 
-  //@ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
   return <ButtonsWrapper>{configs.map(ReservationButton)}</ButtonsWrapper>;
 };
 

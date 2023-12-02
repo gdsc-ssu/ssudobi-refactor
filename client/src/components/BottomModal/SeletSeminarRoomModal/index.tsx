@@ -182,8 +182,8 @@ const ReservationButton = styled.div<ReservationButtonProps>`
     props.curScreen === 'confirm'
       ? COLORS.primary
       : props.isChecked
-      ? COLORS.primary
-      : COLORS.grey3};
+        ? COLORS.primary
+        : COLORS.grey3};
   color: #fff;
   display: flex;
   justify-content: center;

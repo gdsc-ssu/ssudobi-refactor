@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 /** transition이 true가 되면 닫는 애니메이션 실행 */
 const useTransition = (delay = 1000) => {

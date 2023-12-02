@@ -1,13 +1,13 @@
-import type React from "react";
-import { useLayoutEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import type React from 'react';
+import { useLayoutEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const createWrapperAndAppendToBody = (wrapperId: string) => {
   if (document.getElementById(wrapperId))
     return document.getElementById(wrapperId) as HTMLDivElement;
   else {
-    const wrapperElement = document.createElement("div");
-    wrapperElement.setAttribute("id", wrapperId);
+    const wrapperElement = document.createElement('div');
+    wrapperElement.setAttribute('id', wrapperId);
     document.body.appendChild(wrapperElement);
     return wrapperElement;
   }
@@ -15,13 +15,13 @@ const createWrapperAndAppendToBody = (wrapperId: string) => {
 
 const ReactPortal = ({
   children,
-  wrapperId = "react-portal-wrapper",
+  wrapperId = 'react-portal-wrapper',
 }: {
   children: React.ReactNode;
   wrapperId: string;
 }) => {
   const [wrapperElement, setWrapperElement] = useState<HTMLDivElement | null>(
-    null
+    null,
   );
   useLayoutEffect(() => {
     setWrapperElement(createWrapperAndAppendToBody(wrapperId));

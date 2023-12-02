@@ -34,7 +34,7 @@ const getNextWeekdayDate = (
   const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(
     day,
   );
-  let date = new Date(currentTime.getTime());
+  const date = new Date(currentTime.getTime());
   date.setDate(date.getDate() + ((7 - date.getDay() + dayOfWeek) % 7 || 7));
   if (date <= currentTime) {
     // 이미 해당 요일이 지났다면 다음 주로 설정

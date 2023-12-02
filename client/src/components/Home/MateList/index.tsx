@@ -10,7 +10,7 @@ interface Props extends ComponentProps<'div'> {
 const MateList = ({ mates, ...props }: Props) => {
   return (
     <MateWrapper {...props}>
-      {mates.map((mate, idx) => (
+      {mates.map((mate) => (
         <FriendCircle name={mate} type={'friend'} key={mate} />
       ))}
       <FriendCircle type="plus" name="+" />

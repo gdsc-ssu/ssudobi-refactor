@@ -43,5 +43,6 @@ export const Default: Story = {
     seminaRoom: [],
     setSeminaRoom: () => {},
     setIsSeminaRoomSelected: () => {},
+    type: 'template',
   },
 };

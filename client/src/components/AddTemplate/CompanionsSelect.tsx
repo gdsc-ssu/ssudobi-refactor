@@ -17,7 +17,7 @@ const CompanionsSelect = () => {
   const { selectedList, handleSelect } = useMate();
   const router = useRouter();
 
-  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const [template] = useAtom<MyTemplate>(templateAtom);
   const setAtomTemplate = useSetAtom(templateAtom);
 
   const hanldeOnClickNext = () => {

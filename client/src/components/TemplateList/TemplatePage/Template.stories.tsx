@@ -17,7 +17,8 @@ export const TemplateComponent: Story = {
     beginTime: '목요일 12시',
     endTime: '15시',
     place: '세미나룸 102호',
-    memo: '슈도비 회의 잊지말기',
-    friends: ['김수진 / 20191234', '이준규 / 20181234'],
+    type: 'RESERVE',
+    idx: 1,
+    friends: [{ name: '정명진', sId: '2080199' }],
   },
 };

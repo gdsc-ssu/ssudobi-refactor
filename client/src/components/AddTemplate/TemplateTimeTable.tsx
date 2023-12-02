@@ -24,7 +24,7 @@ const TemplateTimeTable = () => {
   }, []);
 
   const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
-  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const [template] = useAtom<MyTemplate>(templateAtom);
   const [companions, setCompanions] = useState<CompanionProps[]>([
     {
       name: '',
@@ -70,7 +70,7 @@ const TemplateTimeTable = () => {
   }, [templateArr]);
 
   const route = useRouter();
-  const [processData, setProcessData] = useState<WeeklyData[]>(EmptyDate);
+  const [processData] = useState<WeeklyData[]>(EmptyDate);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -78,7 +78,7 @@ const TemplateTimeTable = () => {
     isError: false,
     errorMessage: '',
   });
-  const [dates, setDates] = useState<string[]>([]);
+  const [dates] = useState<string[]>([]);
 
   const roomMapping: { [key: number]: string[] } = {
     3: ['1', '2', '3', '4', '5', '6', '7'],

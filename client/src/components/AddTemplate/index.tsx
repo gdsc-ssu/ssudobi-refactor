@@ -34,7 +34,7 @@ const AddTemplate = () => {
     if (storedCompanionMember) {
       setTemplateArr(JSON.parse(storedCompanionMember));
     }
-  }, []); // 빈 배열을 전달하여 처음 렌더링 시에만 실행되도록 함
+  }, []); // 빈 배열을  전달하여 처음 렌더링 시에만 실행되도록 함
 
   return (
     <Container>

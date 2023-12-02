@@ -89,6 +89,7 @@ const ConfirmReservationModal = ({
     if (createType === 'template') {
       const updateTemplate: MyTemplate = {
         ...template,
+        day: slotDay,
         startTime: startTime,
         finishTime: endTime,
         semina: seminaRoom.map(Number),

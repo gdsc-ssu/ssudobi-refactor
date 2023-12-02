@@ -6,8 +6,6 @@ import { SquareButton } from '../Buttons';
 import Template from '../TemplateList/TemplatePage/Template';
 import Link from 'next/link';
 import { MyTemplate } from '@/@types/MyTemplate';
-import { getAccessToken } from '@/utils/lib/tokenHandler';
-import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
@@ -38,18 +36,6 @@ const AddTemplate = () => {
     }
   }, []); // 빈 배열을 전달하여 처음 렌더링 시에만 실행되도록 함
 
-  const queryClient = useQueryClient();
-
-  const handleOnClickReserve = (idx: number) => {
-    const AccessToken = getAccessToken();
-
-    // const MakeReserve = useMutation(() => postReservation(data, AccessToken), {
-    //   onSuccess: () => {
-    //     queryClient.invalidateQueries(['reserveCancel']);
-    //   },
-    // });
-  };
-
   return (
     <Container>
       <TitleWrapper css={paddingStyle}>
@@ -77,7 +63,7 @@ const AddTemplate = () => {
                   place={el.seminarType + ' ' + el.semina}
                   idx={idx}
                   type="TEMPLATE"
-                  onClick={() => handleOnClickReserve(idx)}
+                  onClick={() => {}}
                 />
               </ListBox>
             ))

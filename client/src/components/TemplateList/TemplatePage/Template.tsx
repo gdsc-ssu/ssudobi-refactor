@@ -11,7 +11,11 @@ import { postReservationCancel } from '@/apis/ReserveData';
 import { useEffect, useState } from 'react';
 import DecisionModal from '@/components/Modal/Decision';
 import { MyTemplate } from '@/@types/MyTemplate';
-import { CompanionProps } from '@/utils/types/Companion';
+import AuthApi from '@/apis/auth';
+import { ReserveError } from '@/utils/types/ReserveError';
+import { formatNextOccurrence } from '@/utils/func/templateTimeConverter';
+import { WeekdayShort } from 'Template';
+import ConfirmModal from '@/components/Modal/Confrim';
 
 const Template = ({
   title,
@@ -32,8 +36,15 @@ const Template = ({
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isTemplateModalOpen, setIsTemplateModalOpen] =
+    useState<boolean>(false);
   const [isTemplateModal, setIsTemplateModal] = useState<boolean>(false);
   const [isBottomModal, setIsBottomModal] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isError, setIsError] = useState<ReserveError>({
+    isError: false,
+    errorMessage: '',
+  });
   const AccessToken = getAccessToken();
   const queryClient = useQueryClient();
 
@@ -65,22 +76,58 @@ const Template = ({
     location.reload();
   };
 
+  const typeNumber = ['학습', '회의', '수업', '기타'];
+
   // 템플릿으로 예약하기
   const handleOnClickReserve = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const ReserveArr = templateArr.filter((e) => e.title == title);
-  };
+    const ReserveArr: MyTemplate[] = templateArr.filter(
+      (e) => e.title == title,
+    );
+    console.log(ReserveArr);
 
-  function transformData(
-    inputData: { info: { name: string; sId: string }; id: number }[],
-  ): CompanionProps[] {
-    return inputData.map((item) => ({
-      name: item.info.name,
-      memberNo: item.info.sId,
-      id: item.id.toString(),
-      alternativeId: item.id.toString(),
-    }));
-  }
+    const authApi = new AuthApi();
+    const korDay = [
+      '일요일',
+      '월요일',
+      '화요일',
+      '수요일',
+      '목요일',
+      '금요일',
+      '토요일',
+    ];
+    const engDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const { beginTime, endTime } = formatNextOccurrence(
+      engDay[korDay.indexOf(ReserveArr[0].day)] as WeekdayShort,
+      ReserveArr[0].startTime,
+      ReserveArr[0].finishTime,
+    );
+
+    if (ReserveArr[0]?.people[0]?.id !== undefined) {
+      console.log(
+        'comp',
+        ReserveArr[0].people.map((res) => res.id!),
+      );
+      authApi
+        .reservation(
+          String(ReserveArr[0].semina[0]),
+          typeNumber.indexOf(ReserveArr[0].type),
+          beginTime,
+          endTime,
+          ReserveArr[0].people.map((res) => res.info.alternativeId),
+        )
+        .then((res) => {
+          if (res.success) {
+            setIsSuccess(true);
+            setIsTemplateModalOpen(true);
+          } else {
+            setIsTemplateModalOpen(true);
+
+            setIsError({ isError: true, errorMessage: res.message });
+          }
+        });
+    }
+  };
 
   return (
     <>
@@ -174,6 +221,27 @@ const Template = ({
             handleOpenRemoveModal(e);
           }}
         />
+      ) : (
+        ''
+      )}
+      {isTemplateModalOpen ? (
+        isSuccess ? (
+          <ConfirmModal
+            title=""
+            message="템플릿 예약 성공"
+            onClick={() => {
+              setIsTemplateModalOpen(false);
+            }}
+          />
+        ) : (
+          <ConfirmModal
+            title=""
+            message="템플릿 예약 실패"
+            onClick={() => {
+              setIsTemplateModalOpen(false);
+            }}
+          />
+        )
       ) : (
         ''
       )}

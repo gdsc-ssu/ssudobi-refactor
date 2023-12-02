@@ -4,13 +4,11 @@ import styled from '@emotion/styled';
 import { Title } from '../Layouts';
 import { PageContainer, flex } from '@/styles/tokens';
 import RoundButton from '../Buttons/Round';
-import Link from 'next/link';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { useAtom, useSetAtom } from 'jotai';
 import { templateAtom } from '.';
-import { Patron } from 'Template';
 import { css } from '@emotion/react';
 import { injectAnimation } from '@/styles/animations';
 import { useRouter } from 'next/router';
@@ -25,13 +23,7 @@ const CompanionsSelect = () => {
   const hanldeOnClickNext = () => {
     const updatedTemplate: MyTemplate = {
       ...template,
-      people: selectedList.map((item) => {
-        const { id, ...rest } = item;
-        return {
-          id: typeof id === 'number' ? id.toString() : id,
-          ...rest,
-        } as Patron;
-      }),
+      people: selectedList,
       usePerson: selectedList.length,
     };
     setAtomTemplate(updatedTemplate);

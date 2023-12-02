@@ -7,7 +7,7 @@ import Companion from '@/components/CompanionsList/Companion';
 import AuthApi from '@/apis/auth';
 import { CompanionProps } from '@/utils/types/Companion';
 import { ReserveError } from '@/utils/types/ReserveError';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { templateAtom } from '@/components/AddTemplate';
 import { MyTemplate } from '@/@types/MyTemplate';
 
@@ -70,7 +70,7 @@ const ConfirmReservationModal = ({
   createType,
 }: ConfirmReservationModalProps) => {
   const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
-  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const template = useAtomValue<MyTemplate>(templateAtom);
   const setAtomTemplate = useSetAtom(templateAtom);
 
   useEffect(() => {
@@ -209,8 +209,8 @@ const BodyText = styled.div<BodyTextProps>`
     props.color === 'red'
       ? COLORS.negative
       : props.color === 'blue'
-      ? COLORS.primary
-      : '#444'};
+        ? COLORS.primary
+        : '#444'};
   text-align: left;
   ${TYPO.text1.Reg};
 `;
@@ -269,8 +269,8 @@ const ReservationButton = styled.div<ReservationButtonProps>`
     props.curScreen === 'confirm'
       ? COLORS.primary
       : props.isChecked
-      ? COLORS.primary
-      : COLORS.grey3};
+        ? COLORS.primary
+        : COLORS.grey3};
   color: #fff;
   display: flex;
   justify-content: center;

@@ -1,13 +1,20 @@
 // import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useState } from 'react';
+import {
+  ComponentProps,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import SelectSeminarRoomModal from './SeletSeminarRoomModal';
 import { calculateEndTimeWithMinutes } from '@/utils/func/calculateEndTimeWithMinutes';
 import ConfirmReservationModal from './ConfirmReservationModal';
 import { CompanionProps } from '@/utils/types/Companion';
 import { ReserveError } from '@/utils/types/ReserveError';
+import { injectAnimation } from '@/styles/animations';
 
-interface BProps {
+interface BProps extends ComponentProps<'div'> {
   setIsOpen: (isOpen: boolean) => void;
   selectedSlots: string[];
   semina: string[];
@@ -25,20 +32,29 @@ const ReserveConfirmBottomModal = ({
   companions,
   setIsSuccess,
   setIsError,
+  ...props
 }: BProps) => {
+  let timeoutId: NodeJS.Timeout | null = null;
   const date = selectedSlots[0].slice(0, 10);
 
   const [isSeminaRoomSelected, setIsSeminaRoomSelected] =
     useState<boolean>(false);
 
   const [seminaRoom, setSeminaRoom] = useState<string[]>([]);
+  const [isTransition, setIsTransition] = useState<boolean>(false);
 
   const seminaRoomContents = semina.map((res) => {
     return { disabled: false, title: res };
   });
 
-  const handleCloseModal = () => {
-    setIsOpen(false);
+  const handleClose = () => {
+    if (isTransition) return;
+
+    setIsTransition(true);
+    timeoutId = setTimeout(() => {
+      setIsTransition(false);
+      setIsOpen(false);
+    }, 400);
   };
 
   const day = getDayOfWeek(
@@ -92,14 +108,32 @@ const ReserveConfirmBottomModal = ({
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
   if (!isSeminaRoomSelected) {
     return (
-      <Modal onClick={handleCloseModal}>
+      <Modal
+        css={
+          isTransition &&
+          injectAnimation('modalBackgroundDisappear', '0.4s', 'ease')
+        }
+        onClick={handleClose}
+      >
         <ModalView
           height="400px"
           onClick={(e) => {
             e.stopPropagation();
           }}
+          css={
+            isTransition && injectAnimation('modalDisappear', '0.4s', 'ease')
+          }
+          {...props}
         >
           {date.slice(8, 10) === '00' ? (
             <SelectSeminarRoomModal
@@ -131,9 +165,18 @@ const ReserveConfirmBottomModal = ({
     );
   } else {
     return (
-      <Modal onClick={handleCloseModal}>
+      <Modal
+        css={
+          isTransition &&
+          injectAnimation('modalBackgroundDisappear', '0.4s', 'ease')
+        }
+        onClick={handleClose}
+      >
         <ModalView
           height="500px"
+          css={
+            isTransition && injectAnimation('modalDisappear', '0.4s', 'ease')
+          }
           onClick={(e) => {
             e.stopPropagation();
           }}
@@ -183,6 +226,7 @@ const Backdrop = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
+  ${injectAnimation('modalBackgroundAppear', '0.4s', 'ease')};
 `;
 
 const Modal = styled(Backdrop)`
@@ -206,4 +250,5 @@ const ModalView = styled.div<ModalViewProps>`
   width: 100%;
   height: ${(props) => props.height};
   transition: height 0.5s ease;
+  ${injectAnimation('modalAppear', '0.5s', 'ease')};
 `;

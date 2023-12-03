@@ -1,3 +1,4 @@
+import { injectAnimation } from '@/styles/animations';
 import { COLORS } from '@/styles/colors';
 import { flex, transform, transition } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
@@ -33,6 +34,7 @@ export const ModalView = styled.div`
   max-width: 50rem;
 
   transition: height 0.5s ease;
+  ${injectAnimation('modalBackgroundAppear', '0.5s', 'ease')};
 `;
 
 export const ModalContent = styled.div`

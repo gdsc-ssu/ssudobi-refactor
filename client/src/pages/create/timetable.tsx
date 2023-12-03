@@ -1,4 +1,3 @@
-import { NavHeader } from '@/components/Layouts/Header';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -16,11 +15,11 @@ import RightArrow from '@/assets/svg/rightArrow.svg';
 import { RESERVE_TIME } from '@/constants/reserveTime';
 import { ROOM_USE_SECTION } from '@/constants/roomUseSection';
 import { SEMINA_AVAILABLE_PEOPLE } from '@/constants/seminaAvailablePeople';
-import { CompanionProps } from '@/utils/types/Companion';
 import { ReserveError } from '@/utils/types/ReserveError';
 import ConfirmModal from '@/components/Modal/Confrim';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
+import { CompanionProps } from '@/utils/types/Companion';
 
 const Timetable = () => {
   const isKeyOfReserveTime = (
@@ -63,7 +62,6 @@ const Timetable = () => {
     if (roomdata === undefined) return;
     setRoomData(roomdata as RoomData);
     const pr = processAvailabilityData(roomdata, curSemina);
-    console.log(pr);
     setProcessData(pr);
   }
 
@@ -154,15 +152,13 @@ const Timetable = () => {
   };
 
   const handleReserveSuccess = () => {
+    route.replace('/schedule');
     setIsSuccess(false);
   };
 
   useEffect(() => {
     if (roomData === undefined) return;
     if (selectedSlots.length === 0) return;
-    console.log(
-      selectedSlots[selectedSlots.length - 1].split('-')[3].slice(0, 2),
-    );
     const availableRooms = getAvailableSeminarRooms(
       roomData,
       selectedSlots[0].slice(0, 10),
@@ -174,7 +170,6 @@ const Timetable = () => {
       false,
     );
     setSeminaRoom(availableRooms);
-    console.log(availableRooms);
   }, [roomData]);
 
   useEffect(() => {
@@ -196,7 +191,6 @@ const Timetable = () => {
 
   return (
     <Container>
-      <NavHeader title="예약하기" />
       <HeaderDiv>
         <HeaderEachDiv>
           <HeaderDivBoldText>사용시간</HeaderDivBoldText>
@@ -280,7 +274,6 @@ export default Timetable;
 
 const Container = styled.div`
   position: relative;
-  margin: 6rem auto;
 `;
 
 const Main = styled.main`
@@ -312,10 +305,6 @@ const TableContainBox = styled.div`
   max-width: 36rem;
 `;
 
-// const FilterChild = styled.div`
-//   margin-top: 24px;
-//   margin-bottom: 20px;
-// `;
 const ArrowBox = styled.div`
   width: 30px;
   display: flex;

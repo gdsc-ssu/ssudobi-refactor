@@ -11,6 +11,9 @@ import {
 import { ChangeEvent } from 'react';
 import { MateItemType } from 'Mate';
 import { v4 as uuidv4 } from 'uuid';
+import AuthApi from '@/apis/auth';
+import { formatNextOccurrence } from '@/utils/func/templateTimeConverter';
+import { WeekdayShort } from 'Template';
 
 export type RouteType = 'create' | 'edit';
 export type StageType = 'name' | 'companion' | 'time';
@@ -22,7 +25,6 @@ const useTemplate = () => {
   const [templateList, setTemplateList] = useAtom(myTemplateListState);
   const router = useRouter();
   const { setHeader } = useHeader();
-
   /**---------- 템플릿 정보 관리 관련 ----------**/
   const getMyTemplateList = () => {
     const prevTemplates = localStorage.getItem('templateArr');
@@ -185,6 +187,46 @@ const useTemplate = () => {
     setTemplate(initTemplateState);
   };
 
+  /**
+   * 템플릿 제거
+   */
+  const removeTemplate = (uuid: string) => {
+    localStorage.setItem(
+      'templateArr',
+      JSON.stringify(templateList.filter((item) => item.uuid !== uuid)),
+    );
+    getMyTemplateList();
+  };
+
+  /**---------- 템플릿으로 예약하기 관련 ----------**/
+  const handleReserveTemplate = async (selectedTemplate: MyTemplate) => {
+    const authApi = new AuthApi();
+    const korDay = [
+      '일요일',
+      '월요일',
+      '화요일',
+      '수요일',
+      '목요일',
+      '금요일',
+      '토요일',
+    ];
+    const engDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const typeNumber = ['학습', '회의', '수업', '기타'];
+    const { beginTime, endTime } = formatNextOccurrence(
+      engDay[korDay.indexOf(selectedTemplate.day)] as WeekdayShort,
+      selectedTemplate.startTime,
+      selectedTemplate.finishTime,
+    );
+    const res = await authApi.reservation(
+      String(selectedTemplate.semina[0]),
+      typeNumber.indexOf(selectedTemplate.type),
+      beginTime,
+      endTime,
+      selectedTemplate.people.map((res) => res.info.alternativeId),
+    );
+    return res;
+  };
+
   return {
     settingHeader,
     settingTitle,
@@ -196,6 +238,8 @@ const useTemplate = () => {
     handleRouteTemplate,
     handleNextStage,
     getMyTemplateList,
+    removeTemplate,
+    handleReserveTemplate,
     template,
     editing,
     templateList,

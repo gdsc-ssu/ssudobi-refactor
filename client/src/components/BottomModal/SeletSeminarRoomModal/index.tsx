@@ -4,6 +4,7 @@ import Picker from '@/components/Layouts/Picker';
 import { COLORS } from '@/styles/colors';
 import { TYPO } from '@/styles/typo';
 import { calculateEndTimeWithMinutes } from '@/utils/func/calculateEndTimeWithMinutes';
+import { useTemplate } from '@/hooks';
 
 interface SelectSeminarRoomModalProps {
   /**
@@ -52,14 +53,20 @@ const SelectSeminarRoomModal = ({
   setIsSeminaRoomSelected,
   type,
 }: SelectSeminarRoomModalProps) => {
+  const { editing } = useTemplate();
+
+  const getTitle = () => {
+    if (type === 'reserve') return '아래 시간으로 예약을 진행할게요';
+    else {
+      if (editing) return `아래 시간으로 템플릿 수정을 진행할게요`;
+      else return `아래 시간으로 템플릿 저장을 진행할게요`;
+    }
+  };
+
   return (
     <>
       <ModalMainStyle>
-        <ModalHeader>
-          아래 시간으로
-          {type === 'reserve' ? ' 예약을 ' : ' 템플릿 저장을 '}
-          진행할게요
-        </ModalHeader>
+        <ModalHeader>{getTitle()}</ModalHeader>
         <ReservationBox>
           <ReservationDay>
             {slotDay} {type === 'reserve' && day}

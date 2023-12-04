@@ -27,7 +27,13 @@ const NameTimeType = () => {
     settingTime,
     settingUsage,
     handleNextStage,
+    editing,
   } = useTemplate();
+
+  const getTitle = () => {
+    if (editing) return '템플릿을 수정할 거예요';
+    else return '템플릿을 추가할 거예요';
+  };
 
   useLayoutEffect(() => {
     settingHeader();
@@ -37,7 +43,7 @@ const NameTimeType = () => {
     <PageContainer css={pageStyle}>
       <TitleBox>
         <Title
-          title="템플릿을 추가할 거예요"
+          title={getTitle()}
           subtitle="자주 만나는 모임의 정보를 입력해 주세요!"
           animated={false}
         />
@@ -169,6 +175,7 @@ const pageStyle = css`
 const buttonStyle = css`
   width: 95%;
   margin-top: 4rem;
+  align-self: center;
 `;
 
 export default NameTimeType;

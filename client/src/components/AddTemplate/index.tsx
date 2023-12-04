@@ -39,6 +39,8 @@ const AddTemplate = () => {
             ? templateList.map((el, idx) => (
                 <ListBox key={idx}>
                   <Template
+                    selectedTemplate={el}
+                    uuid={el.uuid}
                     title={el.title}
                     day={el.day}
                     beginTime={el.startTime}
@@ -46,7 +48,6 @@ const AddTemplate = () => {
                     friends={el.people}
                     place={el.seminarType + ' ' + el.semina}
                     idx={idx}
-                    type="TEMPLATE"
                     semina={el.semina}
                     onClick={() => {}}
                   />

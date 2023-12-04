@@ -15,7 +15,7 @@ import ConfirmModal from '../Modal/Confrim';
 import { ReserveError } from '@/utils/types/ReserveError';
 
 const TemplateTimeTable = () => {
-  const { settingHeader, template, handleNextStage } = useTemplate();
+  const { settingHeader, template, handleNextStage, editing } = useTemplate();
   const [companions, setCompanions] = useState<CompanionProps[]>([
     {
       name: '',
@@ -55,6 +55,11 @@ const TemplateTimeTable = () => {
     route.push('/template');
   };
 
+  const getTitle = () => {
+    if (editing) return '템플릿이 수정되었습니다.';
+    else return '템플릿이 추가되었습니다.';
+  };
+
   useEffect(() => {
     if (isSuccess) handleNextStage('time');
   }, [isSuccess]);
@@ -85,8 +90,6 @@ const TemplateTimeTable = () => {
   useLayoutEffect(() => {
     settingHeader();
   }, []);
-
-  console.log(roomMapping[template.usePerson + 1]);
 
   return (
     <>
@@ -135,7 +138,7 @@ const TemplateTimeTable = () => {
       {isSuccess && (
         <ConfirmModal
           onClick={handleTemplateSuccess}
-          title="템플릿이 추가되었습니다."
+          title={getTitle()}
           message="템플릿 정보는 템플릿 탭에서 확인하세요!"
         />
       )}

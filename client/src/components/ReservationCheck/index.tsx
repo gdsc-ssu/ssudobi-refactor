@@ -28,10 +28,11 @@ const ReservationCheck = () => {
         />
       </TitleBox>
       <ReservationListsBox>
-        {reservationData?.data?.totalCount !== undefined
+        {/* {reservationData?.data?.totalCount !== undefined
           ? reservationData?.data?.list.map((el, idx) => (
               <ListBox key={idx}>
                 <Template
+
                   title="외부 예약"
                   beginTime={el.beginTime}
                   endTime={el.endTime}
@@ -44,7 +45,7 @@ const ReservationCheck = () => {
                 />
               </ListBox>
             ))
-          : '예약 없음'}
+          : '예약 없음'} */}
       </ReservationListsBox>
     </Container>
   );

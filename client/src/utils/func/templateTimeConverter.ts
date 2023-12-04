@@ -65,3 +65,32 @@ export const formatNextOccurrence = (
 
   return { beginTime, endTime };
 };
+
+export const formatDateRange = (dateStart: string, dateEnd: string): string => {
+  const startDate = new Date(dateStart);
+  const endDate = new Date(dateEnd);
+
+  const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+
+  const startYear = startDate.getFullYear();
+  const startMonth = startDate.getMonth() + 1;
+  const startDay = startDate.getDate();
+  const startDayOfWeek = daysOfWeek[startDate.getDay()];
+  const startHour = startDate.getHours();
+  const startMinute = startDate.getMinutes();
+
+  const endHour = endDate.getHours();
+  const endMinute = endDate.getMinutes();
+
+  const startTime = `${startHour.toString().padStart(2, '0')}시 ${startMinute
+    .toString()
+    .padStart(2, '0')}분`;
+  const endTime = `${endHour.toString().padStart(2, '0')}시 ${endMinute
+    .toString()
+    .padStart(2, '0')}분`;
+
+  const formattedString = `${startYear}년 ${startMonth}월 ${startDay}일 ${startDayOfWeek}요일`;
+  const timeRange = `${startTime} - ${endTime}`;
+
+  return `${formattedString} ${timeRange}`;
+};

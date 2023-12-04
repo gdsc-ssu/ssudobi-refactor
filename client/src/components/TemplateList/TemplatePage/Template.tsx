@@ -129,26 +129,27 @@ const Template = ({
   };
 
   useEffect(() => {
-    setCompanions(
-      selectedTemplate.people.map((item) => {
-        const { id, info } = item;
-        if (!info || !id) {
-          return {
-            name: '',
-            memberNo: '',
-            id: '',
-            alternativeId: '',
-          };
-        }
+    if (selectedTemplate)
+      setCompanions(
+        selectedTemplate.people.map((item) => {
+          const { id, info } = item;
+          if (!info || !id) {
+            return {
+              name: '',
+              memberNo: '',
+              id: '',
+              alternativeId: '',
+            };
+          }
 
-        return {
-          name: info.name,
-          memberNo: info.sId,
-          id: id.toString(),
-          alternativeId: info.sId,
-        };
-      }),
-    );
+          return {
+            name: info.name,
+            memberNo: info.sId,
+            id: id.toString(),
+            alternativeId: info.sId,
+          };
+        }),
+      );
   }, [friends]);
 
   return (

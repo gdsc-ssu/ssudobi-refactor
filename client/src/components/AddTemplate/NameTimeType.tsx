@@ -1,109 +1,37 @@
 import styled from '@emotion/styled';
-import { useHeader } from '@/hooks';
+import { useTemplate } from '@/hooks';
 import { PageContainer, flex } from '@/styles/tokens';
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect } from 'react';
 import { Title } from '../Layouts';
 import { MenuTitle } from './common';
 import { TextInput } from '../Field';
 import { ItemButton } from '../Buttons';
 import RoundButton from '../Buttons/Round';
-import Link from 'next/link';
-import { useAtom, useSetAtom } from 'jotai';
-import { MyTemplate } from '@/@types/MyTemplate';
-import { templateAtom } from '.';
+import { Seminartype, UsageType } from '@/@types/MyTemplate';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
 import Usage from '../Buttons/Usage';
 import { css } from '@emotion/react';
 import { injectAnimation } from '@/styles/animations';
-import { useRouter } from 'next/router';
-import { editingState } from '@/atoms/editingState';
 
-type CheckedButtons = {
-  '1시간': boolean;
-  '2시간': boolean;
-  '3시간': boolean;
-};
-
-type UsageBtns = {
-  학습: boolean;
-  회의: boolean;
-  수업: boolean;
-  기타: boolean;
-};
+const TIMES: number[] = [1, 2, 3];
+const USAGES: UsageType[] = ['학습', '회의', '수업', '기타'];
+const ROOMS: Seminartype[] = ['세미나실', '개방형 세미나실'];
 
 const NameTimeType = () => {
-  const { setHeader } = useHeader();
-  const router = useRouter();
-  const [editing, setEditing] = useAtom(editingState);
+  const {
+    settingHeader,
+    template,
+    settingTitle,
+    settingSeminarType,
+    settingTime,
+    settingUsage,
+    handleNextStage,
+  } = useTemplate();
 
   useLayoutEffect(() => {
-    if (editing) setHeader('템플릿 수정하기');
-    else setHeader('템플릿 추가하기');
+    settingHeader();
   }, []);
-
-  const [title, setTitle] = useState<string>('');
-  const [isSeminar, setIsSeminar] = useState<boolean>(true);
-  const [checkedButtons, setCheckedButtons] = useState<CheckedButtons>({
-    '1시간': true,
-    '2시간': false,
-    '3시간': false,
-  });
-  const handleButtonClick = (buttonTitle: keyof typeof checkedButtons) => {
-    const newCheckedButtons = {
-      '1시간': false,
-      '2시간': false,
-      '3시간': false,
-    };
-    newCheckedButtons[buttonTitle] = true;
-    setCheckedButtons(newCheckedButtons);
-  };
-
-  const [usageBtns, setUsageBtns] = useState<UsageBtns>({
-    학습: true,
-    회의: false,
-    수업: false,
-    기타: false,
-  });
-  const handleUsageBtnClick = (usageTitle: keyof typeof usageBtns) => {
-    const newUsageBtns = {
-      학습: false,
-      회의: false,
-      수업: false,
-      기타: false,
-    };
-    newUsageBtns[usageTitle] = true;
-    setUsageBtns(newUsageBtns);
-  };
-
-  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
-  const setAtomTemplate = useSetAtom(templateAtom);
-
-  const AvailableTime = () => {
-    const selectedHour = Object.keys(checkedButtons).find(
-      (key) => checkedButtons[key as keyof CheckedButtons] === true,
-    );
-    return selectedHour || '';
-  };
-
-  const SelectUsage = () => {
-    const selectUsg = Object.keys(usageBtns).find(
-      (key) => usageBtns[key as keyof UsageBtns] === true,
-    );
-    return selectUsg || '';
-  };
-
-  const handleOnClickNext = () => {
-    const updatedTemplate: MyTemplate = {
-      ...template,
-      title: title,
-      type: SelectUsage() as '학습' | '회의' | '수업' | '기타',
-      time: parseInt(AvailableTime()?.slice(0, 1), 10),
-      seminarType: isSeminar ? '세미나실' : '개방형 세미나실',
-    };
-    setAtomTemplate(updatedTemplate);
-    router.push('/template/2');
-  };
 
   return (
     <PageContainer css={pageStyle}>
@@ -117,10 +45,8 @@ const NameTimeType = () => {
       <MenuBox>
         <MenuTitle>템플릿 이름</MenuTitle>
         <TextInput
-          value={title}
-          onChange={(e) => {
-            setTitle(e.currentTarget.value);
-          }}
+          value={template.title}
+          onChange={settingTitle}
           placeholder="ex. 슈도비 프로젝트 회의"
         />
       </MenuBox>
@@ -133,49 +59,28 @@ const NameTimeType = () => {
         <MenuBox>
           <SmallTitleBox>사용 시간</SmallTitleBox>
           <TimesBox>
-            <ItemButton
-              title="1시간"
-              disabled={false}
-              checked={checkedButtons['1시간']}
-              onClick={() => handleButtonClick('1시간')}
-            />
-            <ItemButton
-              title="2시간"
-              disabled={false}
-              checked={checkedButtons['2시간']}
-              onClick={() => handleButtonClick('2시간')}
-            />
-            <ItemButton
-              title="3시간"
-              disabled={false}
-              checked={checkedButtons['3시간']}
-              onClick={() => handleButtonClick('3시간')}
-            />
+            {TIMES.map((item) => (
+              <ItemButton
+                disabled={false}
+                title={`${item}시간`}
+                checked={template.time === item}
+                onClick={() => settingTime(item)}
+                key={item}
+              />
+            ))}
           </TimesBox>
         </MenuBox>
         <MenuBox>
           <SmallTitleBox>사용 용도를 선택해 주세요.</SmallTitleBox>
           <UsageWrapper>
-            <Usage
-              title="학습"
-              checked={usageBtns['학습']}
-              onClick={() => handleUsageBtnClick('학습')}
-            />
-            <Usage
-              title="회의"
-              checked={usageBtns['회의']}
-              onClick={() => handleUsageBtnClick('회의')}
-            />
-            <Usage
-              title="수업"
-              checked={usageBtns['수업']}
-              onClick={() => handleUsageBtnClick('수업')}
-            />
-            <Usage
-              title="기타"
-              checked={usageBtns['기타']}
-              onClick={() => handleUsageBtnClick('기타')}
-            />
+            {USAGES.map((item) => (
+              <Usage
+                title={item}
+                checked={template.type === item}
+                onClick={() => settingUsage(item)}
+                key={item}
+              />
+            ))}
           </UsageWrapper>
         </MenuBox>
       </MenuArea>
@@ -187,24 +92,21 @@ const NameTimeType = () => {
           </DescriptionBox>
         </DescriptionWrapper>
         <TypeBox>
-          <ItemButton
-            title="세미나실"
-            disabled={false}
-            checked={isSeminar}
-            onClick={() => setIsSeminar(true)}
-          />
-          <ItemButton
-            title="&nbsp;&nbsp;&nbsp;개방형 세미나실&nbsp;&nbsp;&nbsp;"
-            disabled={false}
-            checked={!isSeminar}
-            onClick={() => setIsSeminar(false)}
-          />
+          {ROOMS.map((item) => (
+            <ItemButton
+              title={item}
+              disabled={false}
+              checked={template.seminarType === item}
+              onClick={() => settingSeminarType(item)}
+              key={item}
+            />
+          ))}
         </TypeBox>
       </MenuBox>
       <RoundButton
         title="다음 단계로"
         theme="primary"
-        onClick={handleOnClickNext}
+        onClick={() => handleNextStage('name')}
         css={buttonStyle}
       />
     </PageContainer>

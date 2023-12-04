@@ -4,6 +4,7 @@ import {
   ComponentProps,
   Dispatch,
   SetStateAction,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -43,9 +44,13 @@ const ReserveConfirmBottomModal = ({
   const [seminaRoom, setSeminaRoom] = useState<string[]>([]);
   const [isTransition, setIsTransition] = useState<boolean>(false);
 
-  const seminaRoomContents = semina.map((res) => {
-    return { disabled: false, title: res };
-  });
+  const seminaRoomContents = useCallback(() => {
+    if (semina)
+      return semina.map((res) => {
+        return { disabled: false, title: res };
+      });
+    else return [];
+  }, [semina]);
 
   const handleClose = () => {
     if (isTransition) return;
@@ -142,7 +147,7 @@ const ReserveConfirmBottomModal = ({
               startTime={startTime}
               endTime={endTime}
               seminaRoom={seminaRoom}
-              seminaRoomContents={seminaRoomContents}
+              seminaRoomContents={seminaRoomContents()}
               setSeminaRoom={setSeminaRoom}
               setIsSeminaRoomSelected={setIsSeminaRoomSelected}
               type="template"
@@ -154,7 +159,7 @@ const ReserveConfirmBottomModal = ({
               startTime={startTime}
               endTime={endTime}
               seminaRoom={seminaRoom}
-              seminaRoomContents={seminaRoomContents}
+              seminaRoomContents={seminaRoomContents()}
               setSeminaRoom={setSeminaRoom}
               setIsSeminaRoomSelected={setIsSeminaRoomSelected}
               type="reserve"

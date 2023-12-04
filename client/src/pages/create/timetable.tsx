@@ -11,7 +11,6 @@ import Schedule from '@/components/Timetable';
 import ReserveConfirmBottomModal from '@/components/BottomModal/ReserveConfirm';
 import LeftArrow from '@/assets/svg/leftArrow.svg';
 import RightArrow from '@/assets/svg/rightArrow.svg';
-
 import { RESERVE_TIME } from '@/constants/reserveTime';
 import { ROOM_USE_SECTION } from '@/constants/roomUseSection';
 import { SEMINA_AVAILABLE_PEOPLE } from '@/constants/seminaAvailablePeople';

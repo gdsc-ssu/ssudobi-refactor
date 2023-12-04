@@ -166,6 +166,8 @@ const Template = ({
     }
   };
 
+  const handleRouteEdit = () => {};
+
   return (
     <>
       <styles.Container css={injectAnimation('fadeInTopDown', '0.5s', 'ease')}>
@@ -237,16 +239,6 @@ const Template = ({
         </InfoBox>
         <SideLine />
       </styles.Container>
-      {isModalOpen ? (
-        <DecisionModal
-          title={title}
-          message="예약을 정말 취소할까요?"
-          onCancle={() => setIsModalOpen(!isModalOpen)}
-          onClick={handleRemove}
-        />
-      ) : (
-        ''
-      )}
       {isTemplateModal ? (
         <DecisionModal
           title={title}
@@ -259,31 +251,6 @@ const Template = ({
       ) : (
         ''
       )}
-      {/* {isTemplateModalOpen ? (
-        isSuccess ? (
-          // <ConfirmModal
-          //   title=""
-          //   message="템플릿 예약 성공"
-          //   onClick={() => {
-          //     setIsTemplateModalOpen(false);
-          //   }}
-          // />
-          <Modal modalType='confirm' title='' message="템플릿 예약 성공"
-          onClick={() => {
-            setIsTemplateModalOpen(false);
-          }}/>
-        ) : (
-          <ConfirmModal
-            title=""
-            message="템플릿 예약 실패"
-            onClick={() => {
-              setIsTemplateModalOpen(false);
-            }}
-          />
-        )
-      ) : (
-        ''
-      )} */}
     </>
   );
 };

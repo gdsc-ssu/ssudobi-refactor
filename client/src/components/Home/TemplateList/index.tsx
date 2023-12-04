@@ -2,20 +2,25 @@ import Carousel from './Carousel';
 import { EmblaOptionsType } from 'embla-carousel-react';
 import styled from '@emotion/styled';
 import { injectAnimation } from '@/styles/animations';
-import { emptyTemplates } from './dummy';
 import Empty from './Empty';
+import { useTemplate } from '@/hooks';
+import { useEffect } from 'react';
 
 const TemplateList = () => {
-  const templates = emptyTemplates;
+  const { templateList, getMyTemplateList } = useTemplate();
   const OPTIONS: EmblaOptionsType = {
     dragFree: true,
     containScroll: 'trimSnaps',
   };
 
+  useEffect(() => {
+    getMyTemplateList();
+  }, []);
+
   return (
     <Container css={injectAnimation('fadeInTopDownTranslate', '0.5s', 'ease')}>
-      {templates.length > 0 ? (
-        <Carousel templates={templates} options={OPTIONS} />
+      {templateList.length > 0 ? (
+        <Carousel templates={templateList} options={OPTIONS} />
       ) : (
         <Empty />
       )}

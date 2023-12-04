@@ -13,7 +13,8 @@ import { useEffect } from 'react';
 
 const AddTemplate = () => {
   const authInfo = useAtomValue(authInfoState);
-  const { templateList, getMyTemplateList } = useTemplate();
+  const { templateList, getMyTemplateList, handleRouteTemplate } =
+    useTemplate();
 
   useEffect(() => {
     getMyTemplateList();
@@ -29,10 +30,8 @@ const AddTemplate = () => {
         />
       </TitleWrapper>
       <UnderWrapper css={paddingStyle}>
-        <ButtonBox>
-          <Link href={'/template/1'}>
-            <SquareButton title="템플릿 추가하기" theme="primary" />
-          </Link>
+        <ButtonBox onClick={() => handleRouteTemplate('create')}>
+          <SquareButton title="템플릿 추가하기" theme="primary" />
         </ButtonBox>
         <ReservationListsBox>
           {templateList !== undefined

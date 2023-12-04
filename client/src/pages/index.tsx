@@ -1,12 +1,13 @@
 import { MateList, ReserveButtons, TemplateList } from '@/components/Home';
 import { Title } from '@/components/Layouts';
-import { useAuth } from '@/hooks';
+import { useAuth, useMate } from '@/hooks';
 import { PageContainer, flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 const Home = () => {
   const { authInfo } = useAuth();
+  const { mateList } = useMate();
   const configs = {
     reserve: {
       title: `${authInfo?.name || ''}님,\n지금 바로 예약해보세요.`,
@@ -25,8 +26,6 @@ const Home = () => {
     },
   };
 
-  const test = ['테스트', '테스', '스트'];
-
   return (
     <PageContainer css={pageStyle}>
       <TitleWrapper css={paddingStyle}>
@@ -41,7 +40,7 @@ const Home = () => {
       </TitleWrapper>
       <TitleWrapper css={paddingStyle}>
         <Title {...configs.mate} />
-        <MateList mates={test} />
+        <MateList mates={mateList.map((item) => item.info.name)} />
       </TitleWrapper>
     </PageContainer>
   );

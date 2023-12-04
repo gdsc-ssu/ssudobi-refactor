@@ -1,37 +1,38 @@
 import * as styles from '../Common.styles';
 import styled from '@emotion/styled';
 import { COLORS } from '@/styles/colors';
-import { Patron, TemplateInfo } from 'Template';
+import { Patron, TemplateInfo, WeekdayShort } from 'Template';
 import { formatSchedule } from '@/utils/func/templateTimeConverter';
 import { useEffect, useState } from 'react';
+import { MyTemplate } from '@/@types/MyTemplate';
+import { MateItemType } from 'Mate';
 
 const HomeTemplate = ({
   title,
   day,
-  beginTime,
-  endTime,
-  place,
-  memo,
-  friends,
-}: TemplateInfo) => {
+  startTime,
+  finishTime,
+  seminarType,
+  people,
+}: MyTemplate) => {
   const [isMax, setIsMax] = useState(false);
   const [patrons, setPatrons] = useState<string[]>([]);
 
-  const organizePatron = (patron: Patron) => {
-    return `${patron.sId} ${patron.name}`;
+  const organizePatron = (patron: MateItemType) => {
+    return `${patron.info.sId} ${patron.info.name}`;
   };
 
   const calculPatrons = () => {
-    if (friends.length > 2) {
+    if (people.length > 2) {
       setIsMax(true);
-      setPatrons(friends.slice(0, 2).map((el) => organizePatron(el)));
+      setPatrons(people.slice(0, 2).map((el) => organizePatron(el)));
     } else {
       setIsMax(false);
-      setPatrons(friends.map((el) => organizePatron(el)));
+      setPatrons(people.map((el) => organizePatron(el)));
     }
   };
 
-  const getRestPatrons = (patrons: Patron[]) => {
+  const getRestPatrons = (patrons: MateItemType[]) => {
     return `외 ${patrons.length - 2}명`;
   };
 
@@ -42,15 +43,14 @@ const HomeTemplate = ({
   return (
     <InfoBox>
       <styles.TitleBox>{title}</styles.TitleBox>
-      <styles.DateBox>{formatSchedule(day, beginTime, endTime)}</styles.DateBox>
-      <styles.PlaceBox>{`세미나룸 ${place}`}</styles.PlaceBox>
-      <styles.NoteBox>{memo}</styles.NoteBox>
+      <styles.DateBox>{`${day} ${startTime}-${finishTime}`}</styles.DateBox>
+      <styles.PlaceBox>{`${seminarType}`}</styles.PlaceBox>
       <styles.PeopleBox>
         {patrons.map((el) => {
           return <styles.PersonInfo key={el}>{el}</styles.PersonInfo>;
         })}
         {isMax && (
-          <styles.PersonInfo>{getRestPatrons(friends)}</styles.PersonInfo>
+          <styles.PersonInfo>{getRestPatrons(people)}</styles.PersonInfo>
         )}
       </styles.PeopleBox>
     </InfoBox>

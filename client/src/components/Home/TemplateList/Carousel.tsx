@@ -1,4 +1,6 @@
+import { MyTemplate } from '@/@types/MyTemplate';
 import HomeTemplate from '@/components/TemplateList/HomeTemplate/HomeTemplate';
+import { useTemplate } from '@/hooks';
 import { COLORS } from '@/styles/colors';
 import { flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
@@ -11,15 +13,16 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 type PropType = {
-  templates: TemplateInfo[];
+  templates: MyTemplate[];
   options?: EmblaOptionsType;
 };
 
 const Carousel = ({ templates, options }: PropType) => {
   const [isMax, setIsMax] = useState(false);
-  const [slides, setSlides] = useState<TemplateInfo[]>([]);
+  const [slides, setSlides] = useState<MyTemplate[]>([]);
   const [emblaRef] = useEmblaCarousel(options);
   const router = useRouter();
+  const { handleRouteTemplate } = useTemplate();
 
   const calculTemplates = () => {
     if (templates.length > 5) {
@@ -55,7 +58,7 @@ const Carousel = ({ templates, options }: PropType) => {
             )}
             <Box
               css={boxStyles.plus}
-              onClick={() => router.push('/create/template')}
+              onClick={() => handleRouteTemplate('create')}
             >
               <FontAwesomeIcon icon={faPlusCircle} />
             </Box>

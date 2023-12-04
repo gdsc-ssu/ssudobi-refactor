@@ -17,6 +17,7 @@ import Usage from '../Buttons/Usage';
 import { css } from '@emotion/react';
 import { injectAnimation } from '@/styles/animations';
 import { useRouter } from 'next/router';
+import { editingState } from '@/atoms/editingState';
 
 type CheckedButtons = {
   '1시간': boolean;
@@ -34,9 +35,11 @@ type UsageBtns = {
 const NameTimeType = () => {
   const { setHeader } = useHeader();
   const router = useRouter();
+  const [editing, setEditing] = useAtom(editingState);
 
   useLayoutEffect(() => {
-    setHeader('템플릿 추가하기');
+    if (editing) setHeader('템플릿 수정하기');
+    else setHeader('템플릿 추가하기');
   }, []);
 
   const [title, setTitle] = useState<string>('');

@@ -20,7 +20,6 @@ import { css } from '@emotion/react';
 import { flex } from '@/styles/tokens';
 import Modal from '@/components/Modal';
 import { injectAnimation } from '@/styles/animations';
-import ConfirmReservationModal from '@/components/BottomModal/ConfirmReservationModal';
 
 const Template = ({
   title,
@@ -34,6 +33,7 @@ const Template = ({
   semina,
 }: TemplateProps) => {
   const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
+
   useEffect(() => {
     const storedCompanionMember = localStorage.getItem('templateArr');
     if (storedCompanionMember) {

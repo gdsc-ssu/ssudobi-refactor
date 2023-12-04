@@ -50,7 +50,7 @@ const AddTemplate = () => {
           <SquareButton title="템플릿 추가하기" theme="primary" />
         </Link>
       </ButtonBox>
-      <ReservationListsBox>
+      <ReservationListsBox css={paddingStyle}>
         {templateArr !== undefined
           ? templateArr.map((el, idx) => (
               <ListBox key={idx}>
@@ -63,6 +63,7 @@ const AddTemplate = () => {
                   place={el.seminarType + ' ' + el.semina}
                   idx={idx}
                   type="TEMPLATE"
+                  semina={el.semina}
                   onClick={() => {}}
                 />
               </ListBox>
@@ -96,6 +97,7 @@ const ReservationListsBox = styled.div`
 `;
 
 const ListBox = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   margin: 0 auto 15px;

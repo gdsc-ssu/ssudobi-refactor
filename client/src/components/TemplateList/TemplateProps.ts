@@ -21,4 +21,5 @@ export interface TemplateProps {
   idx: number;
   // onClick 함수
   onClick: (idx: number) => void;
+  semina?: number[];
 }

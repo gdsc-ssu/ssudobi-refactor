@@ -2,8 +2,6 @@ import { TemplateProps } from '../TemplateProps';
 import * as styles from '../Common.styles';
 import { COLORS } from '@/styles/colors';
 import styled from '@emotion/styled';
-import RemoveBtn from '@/assets/svg/x-button.svg';
-import EditBtn from '@/assets/svg/Edit.svg';
 import { getDayOfWeek } from '@/utils/func/getDayOfWeek';
 import { getAccessToken } from '@/utils/lib/tokenHandler';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -16,6 +14,13 @@ import { ReserveError } from '@/utils/types/ReserveError';
 import { formatNextOccurrence } from '@/utils/func/templateTimeConverter';
 import { WeekdayShort } from 'Template';
 import ConfirmModal from '@/components/Modal/Confrim';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGear, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { css } from '@emotion/react';
+import { flex } from '@/styles/tokens';
+import Modal from '@/components/Modal';
+import { injectAnimation } from '@/styles/animations';
+import ConfirmReservationModal from '@/components/BottomModal/ConfirmReservationModal';
 
 const Template = ({
   title,
@@ -26,6 +31,7 @@ const Template = ({
   friends,
   type,
   reserveId,
+  semina,
 }: TemplateProps) => {
   const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
   useEffect(() => {
@@ -84,7 +90,6 @@ const Template = ({
     const ReserveArr: MyTemplate[] = templateArr.filter(
       (e) => e.title == title,
     );
-    console.log(ReserveArr);
 
     const authApi = new AuthApi();
     const korDay = [
@@ -129,45 +134,75 @@ const Template = ({
     }
   };
 
+  const getTemplateDayOfWeek = (number: string): string => {
+    switch (number) {
+      case '1':
+        return '월요일';
+      case '2':
+        return '화요일';
+      case '3':
+        return '수요일';
+      case '4':
+        return '목요일';
+      case '5':
+        return '금요일';
+      case '6':
+        return '토요일';
+      default:
+        throw new Error('Invalid day number.');
+    }
+  };
+
+  const handleTemplateClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsBottomModal(true);
+  };
+
+  const handleRemoveTemplate = () => {
+    if (type === 'RESERVE') {
+      handleOnClickRemoveBtn();
+    } else {
+      handleTemplateRemove();
+    }
+  };
+
   return (
     <>
-      <styles.Container>
+      <styles.Container css={injectAnimation('fadeInTopDown', '0.5s', 'ease')}>
         <InfoBox>
           <styles.TitleBox>
             <div
               onClick={(e) => {
                 if (type === 'TEMPLATE') {
-                  handleOnClickReserve(e);
+                  handleTemplateClick(e);
                 }
               }}
             >
               {title}
             </div>
             <RemoveBox>
-              {type === 'TEMPLATE' ? (
-                <ImgBox>
-                  <EditBtn />
-                </ImgBox>
-              ) : (
-                ''
-              )}
-              <ImgBox style={{ marginLeft: '10px' }}>
-                <RemoveBtn
-                  onClick={() => {
-                    if (type === 'RESERVE') {
-                      handleOnClickRemoveBtn();
-                    } else {
-                      handleTemplateRemove();
-                    }
-                  }}
+              {type === 'TEMPLATE' && (
+                <FontAwesomeIcon
+                  icon={faGear}
+                  css={css`
+                    font-size: 1.6rem;
+                    cursor: pointer;
+                  `}
                 />
-              </ImgBox>
+              )}
+              <FontAwesomeIcon
+                icon={faXmark}
+                onClick={handleRemoveTemplate}
+                css={css`
+                  cursor: pointer;
+                `}
+              />
             </RemoveBox>
           </styles.TitleBox>
           <div
             onClick={(e) => {
               if (type === 'TEMPLATE') {
-                handleOnClickReserve(e);
+                handleTemplateClick(e);
               }
             }}
           >
@@ -224,15 +259,19 @@ const Template = ({
       ) : (
         ''
       )}
-      {isTemplateModalOpen ? (
+      {/* {isTemplateModalOpen ? (
         isSuccess ? (
-          <ConfirmModal
-            title=""
-            message="템플릿 예약 성공"
-            onClick={() => {
-              setIsTemplateModalOpen(false);
-            }}
-          />
+          // <ConfirmModal
+          //   title=""
+          //   message="템플릿 예약 성공"
+          //   onClick={() => {
+          //     setIsTemplateModalOpen(false);
+          //   }}
+          // />
+          <Modal modalType='confirm' title='' message="템플릿 예약 성공"
+          onClick={() => {
+            setIsTemplateModalOpen(false);
+          }}/>
         ) : (
           <ConfirmModal
             title=""
@@ -244,35 +283,22 @@ const Template = ({
         )
       ) : (
         ''
-      )}
-      {isBottomModal
-        ? ''
-        : // <ConfirmReservationModal
-          //   slotDay={}
-          //   day={}
-          //   startTime={beginTime}
-          //   endTime={endTime}
-          //   companions={friends}
-          //   seminaRoom={}
-          //   type={}
-          //   data={}
-          //   setIsSuccess={}
-          //   setIsError={}
-          // />
-          ''}
+      )} */}
     </>
   );
 };
 
 const RemoveBox = styled.div`
   margin-left: auto;
-  display: flex;
+  ${flex('row', 'end', 'center', 1)}
+  font-size: 2rem;
+  gap: 0.6rem;
 `;
 
 const InfoBox = styled.div`
-  width: 329px;
+  width: 100%;
   background-color: ${COLORS.grey7};
-  padding: 15px 15px 15px 20px;
+  padding: 1.8rem 1.8rem 1.8rem 2.2rem;
   border-radius: 10px 0 0 10px;
 `;
 

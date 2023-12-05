@@ -1,6 +1,6 @@
-import { atom } from "jotai";
+import { atom } from 'jotai';
 
-export type ToastTheme = "negative" | "positive";
+export type ToastTheme = 'negative' | 'positive';
 
 interface ToastType {
   isOpen: boolean;
@@ -10,8 +10,8 @@ interface ToastType {
 
 export const toastState = atom<ToastType>({
   isOpen: false,
-  theme: "positive",
-  content: "",
+  theme: 'positive',
+  content: '',
 });
 
 export const toastTransitionState = atom<boolean>(false);

@@ -7,7 +7,6 @@ import { MenuTitle } from './common';
 import { TextInput } from '../Field';
 import { ItemButton } from '../Buttons';
 import RoundButton from '../Buttons/Round';
-import Link from 'next/link';
 import { useAtom, useSetAtom } from 'jotai';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { templateAtom } from '.';
@@ -73,7 +72,7 @@ const NameTimeType = () => {
     setUsageBtns(newUsageBtns);
   };
 
-  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const [template] = useAtom<MyTemplate>(templateAtom);
   const setAtomTemplate = useSetAtom(templateAtom);
 
   const AvailableTime = () => {

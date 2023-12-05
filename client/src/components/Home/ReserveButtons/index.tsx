@@ -35,7 +35,8 @@ const ReserveButtons = () => {
     },
   ];
 
-  //@ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
   return <ButtonsWrapper>{configs.map(ReservationButton)}</ButtonsWrapper>;
 };
 

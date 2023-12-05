@@ -35,5 +35,6 @@ export const Default: Story = {
     type: 1,
     date: '2023-11-09',
     setIsSuccess: () => {},
+    createType: 'template',
   },
 };

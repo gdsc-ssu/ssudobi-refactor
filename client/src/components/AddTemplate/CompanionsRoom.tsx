@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
 import { ItemButton } from '../Buttons';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { templateAtom } from '.';
 
@@ -84,7 +84,7 @@ const CompanionsRoom = () => {
     '7번',
   ];
 
-  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const template = useAtomValue<MyTemplate>(templateAtom);
   const setAtomTemplate = useSetAtom(templateAtom);
 
   const handleOnClickNext = () => {

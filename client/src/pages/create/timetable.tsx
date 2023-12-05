@@ -40,6 +40,7 @@ const Timetable = () => {
     ? RESERVE_TIME[timeQuery]
     : undefined;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isOpenSeminar, setIsOpenSeminar] = useState<boolean>(false);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [roomData, setRoomData] = useState<RoomData>();
@@ -243,7 +244,7 @@ const Timetable = () => {
       </Main>
       {isSelected && !isSuccess && !isError.isError && (
         <ReserveConfirmBottomModal
-          type={ROOM_USE_SECTION[useCaseQuery]}
+          type={ROOM_USE_SECTION[useCaseQuery as keyof typeof ROOM_USE_SECTION]}
           setIsSuccess={setIsSuccess}
           setIsError={setIsError}
           semina={seminaRoom}

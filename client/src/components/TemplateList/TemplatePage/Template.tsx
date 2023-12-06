@@ -11,14 +11,14 @@ import { flex } from '@/styles/tokens';
 import { injectAnimation } from '@/styles/animations';
 import { useTemplate, useTransition } from '@/hooks';
 import Modal from '@/components/Modal';
-import ReserveConfirmBottomModal from '@/components/BottomModal/ReserveConfirm';
-import { ROOM_USE_SECTION } from '@/constants/roomUseSection';
 import { CompanionProps } from '@/utils/types/Companion';
 import ConfirmReservationModal from '@/components/BottomModal/ConfirmReservationModal';
-import AuthApi from '@/apis/auth';
 import { MyTemplate } from '@/@types/MyTemplate';
 import { formatNextOccurrence } from '@/utils/func/templateTimeConverter';
 import { WeekdayShort } from 'Template';
+import ConfirmModal from '@/components/Modal/Confrim';
+import { useRouter } from 'next/router';
+import * as bottomStyles from '@/components/BottomModal/ReserveConfirm';
 
 type ModalType = 'remove' | 'bottom' | 'confirm';
 
@@ -43,6 +43,8 @@ const Template = ({
     useTemplate();
   const { isTransition, isMount, handleOpen, handleClose } = useTransition(400);
   const [modalType, setModalType] = useState(initModalType);
+  const [isBottomOpen, setIsBottomOpen] = useState<boolean>(false);
+  const [date, setDate] = useState<string>('');
 
   const handleModalOpen = (e: React.MouseEvent, type: ModalType) => {
     e.stopPropagation();
@@ -73,6 +75,7 @@ const Template = ({
     },
   ]);
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
+  const typeNumber = ['학습', '회의', '수업', '기타'];
 
   useEffect(() => {
     const storedCompanionMember = localStorage.getItem('templateArr');
@@ -80,15 +83,14 @@ const Template = ({
       setTemplateArr(JSON.parse(storedCompanionMember));
     }
   }, []);
+  const [selectTemplate, setSelectTemplate] = useState<MyTemplate[]>();
 
-  // 템플릿으로 예약하기
-  const handleOnClickReserve = (e: React.MouseEvent) => {
+  const handleOnClickBottomModalOpen = (e: React.MouseEvent) => {
+    setIsBottomOpen(true);
     e.stopPropagation();
     const ReserveArr: MyTemplate[] = templateArr.filter(
       (e) => e.title == title,
     );
-    const typeNumber = ['학습', '회의', '수업', '기타'];
-    const authApi = new AuthApi();
     const korDay = [
       '일요일',
       '월요일',
@@ -105,27 +107,9 @@ const Template = ({
       ReserveArr[0].finishTime,
     );
 
-    if (ReserveArr[0]?.people[0]?.id !== undefined) {
-      console.log(
-        'comp',
-        ReserveArr[0].people.map((res) => res.id!),
-      );
-      authApi
-        .reservation(
-          String(ReserveArr[0].semina[0]),
-          typeNumber.indexOf(ReserveArr[0].type),
-          beginTime,
-          endTime,
-          ReserveArr[0].people.map((res) => res.info.alternativeId),
-        )
-        .then((res) => {
-          if (res.success) {
-            setIsSuccess(true);
-          } else {
-            setIsError({ isError: true, errorMessage: res.message });
-          }
-        });
-    }
+    console.log(ReserveArr);
+    setDate(beginTime);
+    setSelectTemplate(ReserveArr);
   };
 
   const roomMapping: { [key: number]: string[] } = {
@@ -135,6 +119,12 @@ const Template = ({
     6: ['1', '3', '5', '6', '7', '9'],
     7: ['1', '7', '9'],
     8: ['1', '7', '9'],
+  };
+
+  const route = useRouter();
+  const handleReserveSuccess = () => {
+    route.replace('/schedule');
+    setIsSuccess(false);
   };
 
   useEffect(() => {
@@ -155,7 +145,7 @@ const Template = ({
             name: info.name,
             memberNo: info.sId,
             id: id.toString(),
-            alternativeId: info.sId,
+            alternativeId: info.alternativeId,
           };
         }),
       );
@@ -169,7 +159,7 @@ const Template = ({
             handleModalOpen(e, 'bottom');
           }}
         >
-          <styles.TitleBox onClick={handleOnClickReserve}>
+          <styles.TitleBox onClick={handleOnClickBottomModalOpen}>
             <div>{title}</div>
             <RemoveBox>
               <FontAwesomeIcon
@@ -219,20 +209,47 @@ const Template = ({
           }}
         />
       )}
-      {/* {isMount && modalType.bottom && (
-        <ConfirmReservationModal
-          slotDay={selectedTemplate.day}
-          day={selectedTemplate.day}
-          startTime={selectedTemplate.startTime}
-          endTime={selectedTemplate.finishTime}
-          companions={companions}
-          seminaRoom={selectedTemplate.semina.map(item => `${item}`)}
-          type={}
-          setIsSuccess={setIsSuccess}
-          setIsError={setIsError}
-          createType='reserve'
+      {isBottomOpen && (
+        <bottomStyles.Modal
+          css={
+            isTransition &&
+            injectAnimation('modalBackgroundDisappear', '0.4s', 'ease')
+          }
+          onClick={() => setIsBottomOpen(!isBottomOpen)}
+        >
+          <bottomStyles.ModalView
+            height="500px"
+            style={{ marginBottom: '63px' }}
+            css={
+              isTransition && injectAnimation('modalDisappear', '0.4s', 'ease')
+            }
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <ConfirmReservationModal
+              slotDay={selectedTemplate.day}
+              day={selectedTemplate.day}
+              date={date.slice(0, 10)}
+              startTime={beginTime}
+              endTime={endTime}
+              companions={companions}
+              seminaRoom={selectedTemplate.semina.map((item) => `${item}`)}
+              type={typeNumber.indexOf(selectTemplate[0].type)}
+              setIsSuccess={setIsSuccess}
+              setIsError={setIsError}
+              createType="reserve"
+            />
+          </bottomStyles.ModalView>
+        </bottomStyles.Modal>
+      )}
+      {isSuccess && (
+        <ConfirmModal
+          onClick={handleReserveSuccess}
+          title="예약이 완료되었습니다."
+          message="예약 정보는 스케줄 탭에서 확인하세요!"
         />
-      )} */}
+      )}
     </>
   );
 };

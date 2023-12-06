@@ -234,7 +234,7 @@ const Backdrop = styled.div`
   ${injectAnimation('modalBackgroundAppear', '0.4s', 'ease')};
 `;
 
-const Modal = styled(Backdrop)`
+export const Modal = styled(Backdrop)`
   display: flex;
   text-align: center;
   flex-direction: column-reverse;
@@ -244,7 +244,7 @@ interface ModalViewProps {
   height: string;
 }
 
-const ModalView = styled.div<ModalViewProps>`
+export const ModalView = styled.div<ModalViewProps>`
   margin: 0 auto;
   display: flex;
   flex-direction: column;

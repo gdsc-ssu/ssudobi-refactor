@@ -14,19 +14,16 @@ import Modal from '@/components/Modal';
 import { CompanionProps } from '@/utils/types/Companion';
 import ConfirmReservationModal from '@/components/BottomModal/ConfirmReservationModal';
 import { MyTemplate } from '@/@types/MyTemplate';
-import { formatNextOccurrence } from '@/utils/func/templateTimeConverter';
+import {
+  formatNextOccurrence,
+  formatOnlyDate,
+} from '@/utils/func/templateTimeConverter';
 import { WeekdayShort } from 'Template';
 import ConfirmModal from '@/components/Modal/Confrim';
 import { useRouter } from 'next/router';
 import * as bottomStyles from '@/components/BottomModal/ReserveConfirm';
 
 type ModalType = 'remove' | 'bottom' | 'confirm';
-
-const initModalType = {
-  remove: false,
-  bottom: false,
-  confirm: false,
-};
 
 const Template = ({
   selectedTemplate,
@@ -42,15 +39,12 @@ const Template = ({
   const { removeTemplate, handleRouteTemplate, handleReserveTemplate } =
     useTemplate();
   const { isTransition, isMount, handleOpen, handleClose } = useTransition(400);
-  const [modalType, setModalType] = useState(initModalType);
-  const [isBottomOpen, setIsBottomOpen] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<ModalType>('bottom');
   const [date, setDate] = useState<string>('');
 
   const handleModalOpen = (e: React.MouseEvent, type: ModalType) => {
     e.stopPropagation();
-    setModalType((prev) => {
-      return { ...prev, [type]: true };
-    });
+    setModalType(type);
     handleOpen();
   };
 
@@ -65,7 +59,6 @@ const Template = ({
     isError: false,
     errorMessage: '',
   });
-  const [isSelected, setIsSelected] = useState<boolean>(false);
   const [companions, setCompanions] = useState<CompanionProps[]>([
     {
       name: '',
@@ -74,7 +67,6 @@ const Template = ({
       alternativeId: '',
     },
   ]);
-  const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
   const typeNumber = ['학습', '회의', '수업', '기타'];
 
   useEffect(() => {
@@ -86,7 +78,6 @@ const Template = ({
   const [selectTemplate, setSelectTemplate] = useState<MyTemplate[]>();
 
   const handleOnClickBottomModalOpen = (e: React.MouseEvent) => {
-    setIsBottomOpen(true);
     e.stopPropagation();
     const ReserveArr: MyTemplate[] = templateArr.filter(
       (e) => e.title == title,
@@ -107,18 +98,8 @@ const Template = ({
       ReserveArr[0].finishTime,
     );
 
-    console.log(ReserveArr);
     setDate(beginTime);
     setSelectTemplate(ReserveArr);
-  };
-
-  const roomMapping: { [key: number]: string[] } = {
-    3: ['1', '2', '3', '4', '5', '6', '7'],
-    4: ['1', '2', '3', '4', '5', '6', '7', '9'],
-    5: ['1', '3', '4', '5', '6', '7', '9'],
-    6: ['1', '3', '5', '6', '7', '9'],
-    7: ['1', '7', '9'],
-    8: ['1', '7', '9'],
   };
 
   const route = useRouter();
@@ -157,9 +138,10 @@ const Template = ({
         <InfoBox
           onClick={(e) => {
             handleModalOpen(e, 'bottom');
+            handleOnClickBottomModalOpen(e);
           }}
         >
-          <styles.TitleBox onClick={handleOnClickBottomModalOpen}>
+          <styles.TitleBox>
             <div>{title}</div>
             <RemoveBox>
               <FontAwesomeIcon
@@ -197,7 +179,7 @@ const Template = ({
         </InfoBox>
         <SideLine />
       </styles.Container>
-      {isMount && modalType.remove && (
+      {isMount && modalType === 'remove' && (
         <Modal
           isTransition={isTransition}
           modalType="decision"
@@ -209,13 +191,13 @@ const Template = ({
           }}
         />
       )}
-      {isBottomOpen && (
+      {isMount && modalType === 'bottom' && (
         <bottomStyles.Modal
           css={
             isTransition &&
             injectAnimation('modalBackgroundDisappear', '0.4s', 'ease')
           }
-          onClick={() => setIsBottomOpen(!isBottomOpen)}
+          onClick={handleClose}
         >
           <bottomStyles.ModalView
             height="500px"
@@ -228,14 +210,14 @@ const Template = ({
             }}
           >
             <ConfirmReservationModal
-              slotDay={selectedTemplate.day}
+              slotDay={formatOnlyDate(date)}
               day={selectedTemplate.day}
               date={date.slice(0, 10)}
               startTime={beginTime}
               endTime={endTime}
               companions={companions}
               seminaRoom={selectedTemplate.semina.map((item) => `${item}`)}
-              type={typeNumber.indexOf(selectTemplate[0].type)}
+              type={typeNumber.indexOf(selectTemplate![0].type)}
               setIsSuccess={setIsSuccess}
               setIsError={setIsError}
               createType="reserve"

@@ -94,3 +94,16 @@ export const formatDateRange = (dateStart: string, dateEnd: string): string => {
 
   return `${formattedString} ${timeRange}`;
 };
+
+export const formatOnlyDate = (date: string) => {
+  const startDate = new Date(date);
+  const year = startDate.getFullYear();
+  const month = startDate.getMonth() + 1;
+  const day = startDate.getDate();
+
+  const beginTime = `${year}-${month.toString().padStart(2, '0')}-${day
+    .toString()
+    .padStart(2, '0')}`;
+
+  return beginTime;
+};

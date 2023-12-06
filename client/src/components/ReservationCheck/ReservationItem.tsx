@@ -53,7 +53,7 @@ const ReservationItem = ({
           },
         );
 
-        queryClient.invalidateQueries(['reserveCancel']);
+        queryClient.invalidateQueries(['reserveData']);
       },
     },
   );

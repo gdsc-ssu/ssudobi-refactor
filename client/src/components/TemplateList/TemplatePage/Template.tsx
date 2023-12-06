@@ -15,6 +15,10 @@ import ReserveConfirmBottomModal from '@/components/BottomModal/ReserveConfirm';
 import { ROOM_USE_SECTION } from '@/constants/roomUseSection';
 import { CompanionProps } from '@/utils/types/Companion';
 import ConfirmReservationModal from '@/components/BottomModal/ConfirmReservationModal';
+import AuthApi from '@/apis/auth';
+import { MyTemplate } from '@/@types/MyTemplate';
+import { formatNextOccurrence } from '@/utils/func/templateTimeConverter';
+import { WeekdayShort } from 'Template';
 
 type ModalType = 'remove' | 'bottom' | 'confirm';
 
@@ -34,6 +38,7 @@ const Template = ({
   place,
   friends,
 }: TemplateProps) => {
+  const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
   const { removeTemplate, handleRouteTemplate, handleReserveTemplate } =
     useTemplate();
   const { isTransition, isMount, handleOpen, handleClose } = useTransition(400);
@@ -69,55 +74,59 @@ const Template = ({
   ]);
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
 
-  // // 템플릿으로 예약하기
-  // const handleOnClickReserve = (e: React.MouseEvent) => {
-  //   e.stopPropagation();
-  //   const ReserveArr: MyTemplate[] = templateList.filter(
-  //     (e) => e.title == title,
-  //   );
+  useEffect(() => {
+    const storedCompanionMember = localStorage.getItem('templateArr');
+    if (storedCompanionMember) {
+      setTemplateArr(JSON.parse(storedCompanionMember));
+    }
+  }, []);
 
-  //   const authApi = new AuthApi();
-  //   const korDay = [
-  //     '일요일',
-  //     '월요일',
-  //     '화요일',
-  //     '수요일',
-  //     '목요일',
-  //     '금요일',
-  //     '토요일',
-  //   ];
-  //   const engDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  //   const { beginTime, endTime } = formatNextOccurrence(
-  //     engDay[korDay.indexOf(ReserveArr[0].day)] as WeekdayShort,
-  //     ReserveArr[0].startTime,
-  //     ReserveArr[0].finishTime,
-  //   );
+  // 템플릿으로 예약하기
+  const handleOnClickReserve = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const ReserveArr: MyTemplate[] = templateArr.filter(
+      (e) => e.title == title,
+    );
+    const typeNumber = ['학습', '회의', '수업', '기타'];
+    const authApi = new AuthApi();
+    const korDay = [
+      '일요일',
+      '월요일',
+      '화요일',
+      '수요일',
+      '목요일',
+      '금요일',
+      '토요일',
+    ];
+    const engDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const { beginTime, endTime } = formatNextOccurrence(
+      engDay[korDay.indexOf(ReserveArr[0].day)] as WeekdayShort,
+      ReserveArr[0].startTime,
+      ReserveArr[0].finishTime,
+    );
 
-  //   if (ReserveArr[0]?.people[0]?.id !== undefined) {
-  //     console.log(
-  //       'comp',
-  //       ReserveArr[0].people.map((res) => res.id!),
-  //     );
-  //     authApi
-  //       .reservation(
-  //         String(ReserveArr[0].semina[0]),
-  //         typeNumber.indexOf(ReserveArr[0].type),
-  //         beginTime,
-  //         endTime,
-  //         ReserveArr[0].people.map((res) => res.info.alternativeId),
-  //       )
-  //       .then((res) => {
-  //         if (res.success) {
-  //           setIsSuccess(true);
-  //           setIsTemplateModalOpen(true);
-  //         } else {
-  //           setIsTemplateModalOpen(true);
-
-  //           setIsError({ isError: true, errorMessage: res.message });
-  //         }
-  //       });
-  //   }
-  // };
+    if (ReserveArr[0]?.people[0]?.id !== undefined) {
+      console.log(
+        'comp',
+        ReserveArr[0].people.map((res) => res.id!),
+      );
+      authApi
+        .reservation(
+          String(ReserveArr[0].semina[0]),
+          typeNumber.indexOf(ReserveArr[0].type),
+          beginTime,
+          endTime,
+          ReserveArr[0].people.map((res) => res.info.alternativeId),
+        )
+        .then((res) => {
+          if (res.success) {
+            setIsSuccess(true);
+          } else {
+            setIsError({ isError: true, errorMessage: res.message });
+          }
+        });
+    }
+  };
 
   const roomMapping: { [key: number]: string[] } = {
     3: ['1', '2', '3', '4', '5', '6', '7'],
@@ -160,7 +169,7 @@ const Template = ({
             handleModalOpen(e, 'bottom');
           }}
         >
-          <styles.TitleBox>
+          <styles.TitleBox onClick={handleOnClickReserve}>
             <div>{title}</div>
             <RemoveBox>
               <FontAwesomeIcon

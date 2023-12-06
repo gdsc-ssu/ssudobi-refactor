@@ -19,6 +19,7 @@ import { injectAnimation } from '@/styles/animations';
 import { ReserveError } from '@/utils/types/ReserveError';
 import ConfirmModal from '@/components/Modal/Confrim';
 import { useRouter } from 'next/router';
+import ReactPortal from '@/components/Modal/Portal';
 
 type ModalType = 'remove' | 'bottom' | 'confirm';
 
@@ -31,6 +32,7 @@ const HomeTemplate = ({
   semina,
   people,
 }: MyTemplate) => {
+  const { pathname } = useRouter();
   const [isMax, setIsMax] = useState(false);
   const [patrons, setPatrons] = useState<string[]>([]);
   const [companions, setCompanions] = useState<CompanionProps[]>([
@@ -152,38 +154,41 @@ const HomeTemplate = ({
         </styles.PeopleBox>
       </InfoBox>
       {isMount && modalType === 'bottom' && (
-        <bottomStyles.Modal
-          css={
-            isTransition &&
-            injectAnimation('modalBackgroundDisappear', '0.4s', 'ease')
-          }
-          onClick={handleClose}
-        >
-          <bottomStyles.ModalView
-            height="500px"
-            style={{ marginBottom: '63px' }}
+        <ReactPortal wrapperId="modal-bottom-sheet">
+          <bottomStyles.Modal
             css={
-              isTransition && injectAnimation('modalDisappear', '0.4s', 'ease')
+              isTransition &&
+              injectAnimation('modalBackgroundDisappear', '0.4s', 'ease')
             }
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
+            onClick={handleClose}
           >
-            <ConfirmReservationModal
-              slotDay={formatOnlyDate(date)}
-              day={day}
-              date={date.slice(0, 10)}
-              startTime={startTime}
-              endTime={finishTime}
-              companions={companions}
-              seminaRoom={convertNumberArrayToStringArray(semina)}
-              type={typeNumber.indexOf(seminarType)}
-              setIsSuccess={setIsSuccess}
-              setIsError={setIsError}
-              createType="reserve"
-            />
-          </bottomStyles.ModalView>
-        </bottomStyles.Modal>
+            <bottomStyles.ModalView
+              height="500px"
+              style={{ marginBottom: pathname === '/' ? '0px' : '63px' }}
+              css={
+                isTransition &&
+                injectAnimation('modalDisappear', '0.4s', 'ease')
+              }
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <ConfirmReservationModal
+                slotDay={formatOnlyDate(date)}
+                day={day}
+                date={date.slice(0, 10)}
+                startTime={startTime}
+                endTime={finishTime}
+                companions={companions}
+                seminaRoom={convertNumberArrayToStringArray(semina)}
+                type={typeNumber.indexOf(seminarType)}
+                setIsSuccess={setIsSuccess}
+                setIsError={setIsError}
+                createType="reserve"
+              />
+            </bottomStyles.ModalView>
+          </bottomStyles.Modal>
+        </ReactPortal>
       )}
       {isSuccess && (
         <ConfirmModal

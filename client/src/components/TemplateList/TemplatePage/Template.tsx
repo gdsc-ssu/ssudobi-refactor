@@ -135,14 +135,16 @@ const Template = ({
   return (
     <>
       <styles.Container css={injectAnimation('fadeInTopDown', '0.5s', 'ease')}>
-        <InfoBox
-          onClick={(e) => {
-            handleModalOpen(e, 'bottom');
-            handleOnClickBottomModalOpen(e);
-          }}
-        >
+        <InfoBox>
           <styles.TitleBox>
-            <div>{title}</div>
+            <div
+              onClick={(e) => {
+                handleModalOpen(e, 'bottom');
+                handleOnClickBottomModalOpen(e);
+              }}
+            >
+              {title}
+            </div>
             <RemoveBox>
               <FontAwesomeIcon
                 onClick={() => handleRouteTemplate('edit', selectedTemplate)}
@@ -161,7 +163,12 @@ const Template = ({
               />
             </RemoveBox>
           </styles.TitleBox>
-          <div>
+          <div
+            onClick={(e) => {
+              handleModalOpen(e, 'bottom');
+              handleOnClickBottomModalOpen(e);
+            }}
+          >
             <styles.DateBox>
               {day + ' ' + beginTime + ' ~ ' + endTime}
             </styles.DateBox>

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import Loading from '@/assets/svg/loading.svg';
+import Lottie from 'lottie-react';
+import loading from '@/assets/json/magnifying.json';
 import { TYPO } from '@/styles/typo';
 
 interface TimeSlot {
@@ -86,7 +87,7 @@ const Schedule: React.FC<TProps> = ({
   if (processData.length === 0) {
     return (
       <LoadingContainer>
-        <Loading />
+        <Lottie animationData={loading} autoPlay />
         <div style={{ height: '20px' }}></div>
         <LoadingText>세미나룸 예약 가능 시간을</LoadingText>
         <LoadingText>찾고있어요!</LoadingText>
@@ -334,7 +335,6 @@ const LoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-top: 150px;
   justify-content: center;
   align-items: center;
 `;

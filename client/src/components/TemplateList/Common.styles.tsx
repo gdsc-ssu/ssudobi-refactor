@@ -4,7 +4,9 @@ import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
+  width: 100%;
   display: flex;
+  position: relative;
 `;
 
 export const TitleBox = styled.div`
@@ -19,7 +21,7 @@ export const DateBox = styled.div`
 `;
 
 export const PlaceBox = styled.div`
-  margin-top: 3px;
+  margin-top: 5px;
   ${TYPO.text3.Reg};
 `;
 
@@ -32,7 +34,7 @@ export const PeopleBox = styled.div`
   display: flex;
   ${flex('row', 'start', 'end', 0.5)};
   flex-wrap: wrap;
-  margin-top: 1rem;
+  margin-top: 1.3rem;
 `;
 
 export const PersonInfo = styled.div`

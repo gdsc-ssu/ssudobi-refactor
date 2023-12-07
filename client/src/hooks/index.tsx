@@ -5,3 +5,4 @@ export { default as useAuth } from './useAuth';
 export { default as useToast } from './useToast';
 export { default as useTransition } from './useTransition';
 export { default as useMate } from './useMate';
+export { default as useTemplate } from './useTemplate';

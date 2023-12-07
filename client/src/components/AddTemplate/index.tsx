@@ -1,40 +1,24 @@
 import styled from '@emotion/styled';
-import { atom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { authInfoState } from '@/atoms/authInfoState';
 import { Title } from '../Layouts';
 import { SquareButton } from '../Buttons';
 import Template from '../TemplateList/TemplatePage/Template';
 import Link from 'next/link';
-import { MyTemplate } from '@/@types/MyTemplate';
-import { useEffect, useState } from 'react';
 import { flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
 import { injectAnimation } from '@/styles/animations';
-
-export const templateAtom = atom<MyTemplate>({
-  title: '',
-  day: '',
-  time: 0,
-  usePerson: 0,
-  startTime: '',
-  finishTime: '',
-  people: [],
-  semina: [],
-  type: '회의',
-  seminarType: '세미나실',
-});
+import { useTemplate } from '@/hooks';
+import { useEffect } from 'react';
 
 const AddTemplate = () => {
   const authInfo = useAtomValue(authInfoState);
-  const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
+  const { templateList, getMyTemplateList, handleRouteTemplate } =
+    useTemplate();
 
   useEffect(() => {
-    // 처음 렌더링 시 로컬 스토리지에서 데이터 가져오기
-    const storedCompanionMember = localStorage.getItem('templateArr');
-    if (storedCompanionMember) {
-      setTemplateArr(JSON.parse(storedCompanionMember));
-    }
-  }, []); // 빈 배열을  전달하여 처음 렌더링 시에만 실행되도록 함
+    getMyTemplateList();
+  }, []);
 
   return (
     <Container>
@@ -45,30 +29,32 @@ const AddTemplate = () => {
           animated={true}
         />
       </TitleWrapper>
-      <ButtonBox css={paddingStyle}>
-        <Link href={'/template/1'}>
+      <UnderWrapper css={paddingStyle}>
+        <ButtonBox onClick={() => handleRouteTemplate('create')}>
           <SquareButton title="템플릿 추가하기" theme="primary" />
-        </Link>
-      </ButtonBox>
-      <ReservationListsBox>
-        {templateArr !== undefined
-          ? templateArr.map((el, idx) => (
-              <ListBox key={idx}>
-                <Template
-                  title={el.title}
-                  day={el.day}
-                  beginTime={el.startTime}
-                  endTime={el.finishTime}
-                  friends={el.people}
-                  place={el.seminarType + ' ' + el.semina}
-                  idx={idx}
-                  type="TEMPLATE"
-                  onClick={() => {}}
-                />
-              </ListBox>
-            ))
-          : '템플릿 없음'}
-      </ReservationListsBox>
+        </ButtonBox>
+        <ReservationListsBox>
+          {templateList !== undefined
+            ? templateList.map((el, idx) => (
+                <ListBox key={idx}>
+                  <Template
+                    selectedTemplate={el}
+                    uuid={el.uuid}
+                    title={el.title}
+                    day={el.day}
+                    beginTime={el.startTime}
+                    endTime={el.finishTime}
+                    friends={el.people}
+                    place={el.seminarType + ' ' + el.semina}
+                    idx={idx}
+                    semina={el.semina}
+                    onClick={() => {}}
+                  />
+                </ListBox>
+              ))
+            : '템플릿 없음'}
+        </ReservationListsBox>
+      </UnderWrapper>
     </Container>
   );
 };
@@ -96,9 +82,15 @@ const ReservationListsBox = styled.div`
 `;
 
 const ListBox = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   margin: 0 auto 15px;
+`;
+
+const UnderWrapper = styled.div`
+  width: 100%;
+  ${flex('column', 'start', 'start', 1.5)};
 `;
 
 const paddingStyle = css`

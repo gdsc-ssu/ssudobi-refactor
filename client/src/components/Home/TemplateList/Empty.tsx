@@ -1,17 +1,17 @@
+import { useTemplate } from '@/hooks';
 import { COLORS } from '@/styles/colors';
 import { flex } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
 import { faMarker } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/router';
 
 const Empty = () => {
-  const router = useRouter();
+  const { handleRouteTemplate } = useTemplate();
 
   return (
     <Container>
-      <Button onClick={() => router.push('/template/1')}>
+      <Button onClick={() => handleRouteTemplate('create')}>
         <Content>템플릿 추가하기</Content>
         <FontAwesomeIcon icon={faMarker} />
       </Button>

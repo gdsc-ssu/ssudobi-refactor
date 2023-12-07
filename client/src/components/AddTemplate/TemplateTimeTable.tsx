@@ -1,9 +1,6 @@
-import { useHeader } from '@/hooks';
+import { useTemplate } from '@/hooks';
 import { PageContainer } from '@/styles/tokens';
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { MyTemplate } from '@/@types/MyTemplate';
-import { useAtom } from 'jotai';
-import { templateAtom } from '.';
 import Schedule from '../Timetable';
 import { WeeklyData } from '../Timetable/getTimeTable';
 import { useRouter } from 'next/router';
@@ -18,13 +15,7 @@ import ConfirmModal from '../Modal/Confrim';
 import { ReserveError } from '@/utils/types/ReserveError';
 
 const TemplateTimeTable = () => {
-  const { setHeader } = useHeader();
-  useLayoutEffect(() => {
-    setHeader('템플릿 추가하기');
-  }, []);
-
-  const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
-  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
+  const { settingHeader, template, handleNextStage, editing } = useTemplate();
   const [companions, setCompanions] = useState<CompanionProps[]>([
     {
       name: '',
@@ -34,12 +25,44 @@ const TemplateTimeTable = () => {
     },
   ]);
 
+  const route = useRouter();
+  const [processData, setProcessData] = useState<WeeklyData[]>(EmptyDate);
+  const [isSelected, setIsSelected] = useState<boolean>(false);
+  const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isError, setIsError] = useState<ReserveError>({
+    isError: false,
+    errorMessage: '',
+  });
+  const [dates, setDates] = useState<string[]>([]);
+
+  const roomMapping: { [key: number]: string[] } = {
+    3: ['1', '2', '3', '4', '5', '6', '7'],
+    4: ['1', '2', '3', '4', '5', '6', '7', '9'],
+    5: ['1', '3', '4', '5', '6', '7', '9'],
+    6: ['1', '3', '5', '6', '7', '9'],
+    7: ['1', '7', '9'],
+    8: ['1', '7', '9'],
+  };
+
+  const handleTemplateError = () => {
+    setIsError({ isError: false, errorMessage: '' });
+    setIsSelected(false);
+  };
+
+  const handleTemplateSuccess = () => {
+    setIsSuccess(false);
+    route.push('/template');
+  };
+
+  const getTitle = () => {
+    if (editing) return '템플릿이 수정되었습니다.';
+    else return '템플릿이 추가되었습니다.';
+  };
+
   useEffect(() => {
-    const storedCompanionMember = localStorage.getItem('templateArr');
-    if (storedCompanionMember) {
-      setTemplateArr(JSON.parse(storedCompanionMember));
-    }
-  }, []);
+    if (isSuccess) handleNextStage('time');
+  }, [isSuccess]);
 
   useEffect(() => {
     setCompanions(
@@ -64,39 +87,9 @@ const TemplateTimeTable = () => {
     );
   }, [template.people]);
 
-  useEffect(() => {
-    // templateArr가 변경될 때마다 로컬 스토리지에 업데이트
-    localStorage.setItem('templateArr', JSON.stringify(templateArr));
-  }, [templateArr]);
-
-  const route = useRouter();
-  const [processData, setProcessData] = useState<WeeklyData[]>(EmptyDate);
-  const [isSelected, setIsSelected] = useState<boolean>(false);
-  const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [isError, setIsError] = useState<ReserveError>({
-    isError: false,
-    errorMessage: '',
-  });
-  const [dates, setDates] = useState<string[]>([]);
-
-  const roomMapping: { [key: number]: string[] } = {
-    3: ['1', '2', '3', '4', '5', '6', '7'],
-    4: ['1', '2', '3', '4', '5', '6', '7', '9'],
-    5: ['1', '3', '4', '5', '6', '7', '9'],
-    6: ['1', '3', '5', '6', '7', '9'],
-    7: ['1', '7', '9'],
-    8: ['1', '7', '9'],
-  };
-  const handleTemplateError = () => {
-    setIsError({ isError: false, errorMessage: '' });
-    setIsSelected(false);
-  };
-
-  const handleTemplateSuccess = () => {
-    setIsSuccess(false);
-    route.push('/template');
-  };
+  useLayoutEffect(() => {
+    settingHeader();
+  }, []);
 
   return (
     <>
@@ -145,7 +138,7 @@ const TemplateTimeTable = () => {
       {isSuccess && (
         <ConfirmModal
           onClick={handleTemplateSuccess}
-          title="템플릿이 추가되었습니다."
+          title={getTitle()}
           message="템플릿 정보는 템플릿 탭에서 확인하세요!"
         />
       )}

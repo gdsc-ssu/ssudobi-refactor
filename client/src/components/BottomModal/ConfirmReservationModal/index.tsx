@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { COLORS } from '@/styles/colors';
 import { TYPO } from '@/styles/typo';
@@ -7,9 +7,7 @@ import Companion from '@/components/CompanionsList/Companion';
 import AuthApi from '@/apis/auth';
 import { CompanionProps } from '@/utils/types/Companion';
 import { ReserveError } from '@/utils/types/ReserveError';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { templateAtom } from '@/components/AddTemplate';
-import { MyTemplate } from '@/@types/MyTemplate';
+import { useTemplate } from '@/hooks';
 
 interface ConfirmReservationModalProps {
   /**
@@ -69,33 +67,16 @@ const ConfirmReservationModal = ({
   setIsError,
   createType,
 }: ConfirmReservationModalProps) => {
-  const [templateArr, setTemplateArr] = useState<MyTemplate[]>([]);
-  const template = useAtomValue<MyTemplate>(templateAtom);
-  const setAtomTemplate = useSetAtom(templateAtom);
+  const { template, settingReservationInfo } = useTemplate();
 
   useEffect(() => {
-    const storedCompanionMember = localStorage.getItem('templateArr');
-    if (storedCompanionMember) {
-      setTemplateArr(JSON.parse(storedCompanionMember));
-    }
-  }, []);
-
-  useEffect(() => {
-    // templateArr가 변경될 때마다 로컬 스토리지에 업데이트
-    localStorage.setItem('templateArr', JSON.stringify(templateArr));
-  }, [templateArr]);
-
-  useEffect(() => {
-    if (createType === 'template') {
-      const updateTemplate: MyTemplate = {
-        ...template,
-        day: slotDay,
-        startTime: startTime,
-        finishTime: endTime,
-        semina: seminaRoom.map(Number),
-      };
-      setAtomTemplate(updateTemplate);
-    }
+    if (createType === 'template')
+      settingReservationInfo(
+        slotDay,
+        startTime,
+        endTime,
+        seminaRoom.map(Number),
+      );
   }, [seminaRoom]);
 
   return (
@@ -178,7 +159,6 @@ const ConfirmReservationModal = ({
               });
           } else {
             setIsSuccess(true);
-            setTemplateArr((res) => [...res, template]);
           }
         }}
       >
@@ -209,8 +189,8 @@ const BodyText = styled.div<BodyTextProps>`
     props.color === 'red'
       ? COLORS.negative
       : props.color === 'blue'
-        ? COLORS.primary
-        : '#444'};
+      ? COLORS.primary
+      : '#444'};
   text-align: left;
   ${TYPO.text1.Reg};
 `;
@@ -269,8 +249,8 @@ const ReservationButton = styled.div<ReservationButtonProps>`
     props.curScreen === 'confirm'
       ? COLORS.primary
       : props.isChecked
-        ? COLORS.primary
-        : COLORS.grey3};
+      ? COLORS.primary
+      : COLORS.grey3};
   color: #fff;
   display: flex;
   justify-content: center;

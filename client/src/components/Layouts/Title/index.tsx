@@ -49,6 +49,7 @@ const typo = {
   subtitle: css`
     ${TYPO.text1.Reg};
     color: ${COLORS.grey1};
+    line-height: 155%;
   `,
 };
 

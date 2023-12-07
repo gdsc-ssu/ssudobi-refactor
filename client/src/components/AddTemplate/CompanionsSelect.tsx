@@ -1,36 +1,28 @@
 import { MateManageKit } from '@/components/Mate';
-import { useMate } from '@/hooks';
+import { useMate, useTemplate } from '@/hooks';
 import styled from '@emotion/styled';
 import { Title } from '../Layouts';
 import { PageContainer, flex } from '@/styles/tokens';
 import RoundButton from '../Buttons/Round';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
-import { MyTemplate } from '@/@types/MyTemplate';
-import { useAtom, useSetAtom } from 'jotai';
-import { templateAtom } from '.';
 import { css } from '@emotion/react';
 import { injectAnimation } from '@/styles/animations';
-import { useRouter } from 'next/router';
+import { useLayoutEffect } from 'react';
 
 const CompanionsSelect = () => {
   const { selectedList, handleSelect } = useMate();
-  const router = useRouter();
+  const { settingHeader, settingCompanion, handleNextStage, template } =
+    useTemplate();
 
-  const [template, setTemplate] = useAtom<MyTemplate>(templateAtom);
-  const setAtomTemplate = useSetAtom(templateAtom);
-
-  const hanldeOnClickNext = () => {
-    const updatedTemplate: MyTemplate = {
-      ...template,
-      people: selectedList,
-      usePerson: selectedList.length,
-    };
-    setAtomTemplate(updatedTemplate);
-    router.push('/template/3');
+  const handleRoute = () => {
+    settingCompanion(selectedList);
+    handleNextStage('companion');
   };
 
-  console.log('selectedlist', selectedList);
+  useLayoutEffect(() => {
+    settingHeader();
+  }, []);
 
   return (
     <PageContainer css={pageStyle}>
@@ -59,7 +51,7 @@ const CompanionsSelect = () => {
             title="예약 가능 시간 탐색하기"
             theme="primary"
             disabled={selectedList.length < 2}
-            onClick={hanldeOnClickNext}
+            onClick={handleRoute}
           />
         </ButtonWrapper>
       </NextBox>

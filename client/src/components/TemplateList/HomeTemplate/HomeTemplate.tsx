@@ -188,14 +188,14 @@ const HomeTemplate = ({
               />
             </bottomStyles.ModalView>
           </bottomStyles.Modal>
+          {isSuccess && (
+            <ConfirmModal
+              onClick={handleReserveSuccess}
+              title="예약이 완료되었습니다."
+              message="예약 정보는 스케줄 탭에서 확인하세요!"
+            />
+          )}
         </ReactPortal>
-      )}
-      {isSuccess && (
-        <ConfirmModal
-          onClick={handleReserveSuccess}
-          title="예약이 완료되었습니다."
-          message="예약 정보는 스케줄 탭에서 확인하세요!"
-        />
       )}
     </>
   );

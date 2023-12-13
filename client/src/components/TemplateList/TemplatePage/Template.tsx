@@ -108,6 +108,9 @@ const Template = ({
     route.replace('/schedule');
     setIsSuccess(false);
   };
+  const handleReserveError = () => {
+    setIsError({ isError: false, errorMessage: '' });
+  };
 
   useEffect(() => {
     if (selectedTemplate)
@@ -244,6 +247,13 @@ const Template = ({
             message="예약 정보는 스케줄 탭에서 확인하세요!"
           />
         </ReactPortal>
+      )}
+      {isError.isError && (
+        <ConfirmModal
+          onClick={handleReserveError}
+          title="예약에 실패하였습니다."
+          message={isError.errorMessage}
+        />
       )}
     </>
   );

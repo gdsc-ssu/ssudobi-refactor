@@ -87,6 +87,10 @@ const HomeTemplate = ({
   ];
   const engDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const typeNumber = ['학습', '회의', '수업', '기타'];
+  const handleReserveError = () => {
+    setIsError({ isError: false, errorMessage: '' });
+    handleClose();
+  };
 
   const route = useRouter();
   const handleReserveSuccess = () => {
@@ -193,6 +197,13 @@ const HomeTemplate = ({
               onClick={handleReserveSuccess}
               title="예약이 완료되었습니다."
               message="예약 정보는 스케줄 탭에서 확인하세요!"
+            />
+          )}
+          {isError.isError && (
+            <ConfirmModal
+              onClick={handleReserveError}
+              title="예약에 실패하였습니다."
+              message={isError.errorMessage}
             />
           )}
         </ReactPortal>

@@ -22,6 +22,7 @@ import { WeekdayShort } from 'Template';
 import ConfirmModal from '@/components/Modal/Confrim';
 import { useRouter } from 'next/router';
 import * as bottomStyles from '@/components/BottomModal/ReserveConfirm';
+import ReactPortal from '@/components/Modal/Portal';
 
 type ModalType = 'remove' | 'bottom' | 'confirm';
 
@@ -199,45 +200,50 @@ const Template = ({
         />
       )}
       {isMount && modalType === 'bottom' && (
-        <bottomStyles.Modal
-          css={
-            isTransition &&
-            injectAnimation('modalBackgroundDisappear', '0.4s', 'ease')
-          }
-          onClick={handleClose}
-        >
-          <bottomStyles.ModalView
-            height="500px"
-            style={{ marginBottom: '63px' }}
+        <ReactPortal wrapperId="modal-bottom-sheet">
+          <bottomStyles.Modal
             css={
-              isTransition && injectAnimation('modalDisappear', '0.4s', 'ease')
+              isTransition &&
+              injectAnimation('modalBackgroundDisappear', '0.4s', 'ease')
             }
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
+            onClick={handleClose}
           >
-            <ConfirmReservationModal
-              slotDay={formatOnlyDate(date)}
-              day={selectedTemplate.day}
-              date={date.slice(0, 10)}
-              startTime={beginTime}
-              endTime={endTime}
-              companions={companions}
-              seminaRoom={selectedTemplate.semina.map((item) => `${item}`)}
-              type={typeNumber.indexOf(selectTemplate![0].type)}
-              setIsSuccess={setIsSuccess}
-              setIsError={setIsError}
-              createType="reserve"
-            />
-          </bottomStyles.ModalView>
-        </bottomStyles.Modal>
+            <bottomStyles.ModalView
+              height="500px"
+              css={
+                isTransition &&
+                injectAnimation('modalDisappear', '0.4s', 'ease')
+              }
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <ConfirmReservationModal
+                slotDay={formatOnlyDate(date)}
+                day={selectedTemplate.day}
+                date={date.slice(0, 10)}
+                startTime={beginTime}
+                endTime={endTime}
+                companions={companions}
+                seminaRoom={selectedTemplate.semina.map((item) => `${item}`)}
+                type={typeNumber.indexOf(selectTemplate![0].type)}
+                setIsSuccess={setIsSuccess}
+                setIsError={setIsError}
+                createType="reserve"
+                handleClose={handleClose}
+              />
+            </bottomStyles.ModalView>
+          </bottomStyles.Modal>
+        </ReactPortal>
       )}
       {isSuccess && (
-        <ConfirmModal
-          onClick={handleReserveSuccess}
-          title="예약이 완료되었습니다."
-          message="예약 정보는 스케줄 탭에서 확인하세요!"
-        />
+        <ReactPortal wrapperId="confirm-success-modal">
+          <ConfirmModal
+            onClick={handleReserveSuccess}
+            title="예약이 완료되었습니다."
+            message="예약 정보는 스케줄 탭에서 확인하세요!"
+          />
+        </ReactPortal>
       )}
     </>
   );

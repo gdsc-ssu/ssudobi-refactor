@@ -40,7 +40,7 @@ const ReservationCheck = () => {
           reservationData?.data?.list.map((el, idx) => (
             <ListBox key={idx}>
               <ReservationItem
-                title="외부 예약"
+                title="예약 완료"
                 beginTime={el.beginTime}
                 endTime={el.endTime}
                 room={el.room.name}

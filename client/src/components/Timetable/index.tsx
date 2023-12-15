@@ -40,8 +40,6 @@ const Schedule: React.FC<TProps> = ({
   const [isDataAllFalse, setIsDataAllFalse] = useState(false);
 
   const SeminarTimes = [
-    '09',
-    ' ',
     '10',
     ' ',
     '11',

@@ -58,7 +58,7 @@ const HomeTemplate = ({
   };
 
   const organizePatron = (patron: MateItemType) => {
-    return `${patron.info.sId} ${patron.info.name}`;
+    return `${patron.info.name} / ${patron.info.sId}`;
   };
 
   const calculPatrons = () => {

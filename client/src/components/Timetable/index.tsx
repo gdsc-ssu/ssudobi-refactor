@@ -65,6 +65,9 @@ const Schedule: React.FC<TProps> = ({
   ];
 
   const OpenSeminarTimes = [
+    '06',
+    '07',
+    '08',
     '09',
     '10',
     '11',

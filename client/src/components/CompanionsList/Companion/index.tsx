@@ -28,6 +28,10 @@ interface ModalProps extends ComponentProps<'div'> {
    * 제거 가능 여부
    */
   isRemovable?: boolean;
+  /**
+   * 클릭 시 해당 요소 상태 변경 함수
+   */
+  onClick: () => void;
 }
 
 const Companion = ({
@@ -36,6 +40,7 @@ const Companion = ({
   memberNo,
   isSelected,
   isRemovable,
+  onClick,
   ...props
 }: ModalProps) => {
   const ProfileIcon = companionIconGetter();
@@ -46,7 +51,12 @@ const Companion = ({
   };
 
   return (
-    <Container isSelected={isSelected} css={getContainerStyle} {...props}>
+    <Container
+      onClick={onClick}
+      isSelected={isSelected}
+      css={getContainerStyle}
+      {...props}
+    >
       <ProfileWrapper>
         <ProfileIcon css={logoStyle} />
         <Profile>

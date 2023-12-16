@@ -1,7 +1,41 @@
+import { injectAnimation } from '@/styles/animations';
 import { COLORS } from '@/styles/colors';
 import { flex, transform, transition } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
+
+export const Backdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+`;
+
+export const Modal = styled(Backdrop)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+export const ModalView = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  background-color: white;
+  border-radius: 10px;
+  max-width: 50rem;
+
+  transition: height 0.5s ease;
+  ${injectAnimation('modalBackgroundAppear', '0.5s', 'ease')};
+`;
 
 export const ModalContent = styled.div`
   ${flex('column', 'center', 'center', 0)}

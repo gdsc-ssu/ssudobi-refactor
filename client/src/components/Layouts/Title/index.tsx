@@ -24,7 +24,7 @@ interface Props extends ComponentProps<'div'> {
 const Title = ({ title, subtitle, animated, ...props }: Props) => {
   return (
     <TitleWrapper
-      css={animated && injectAnimation('fadeInTopDown', '0.5s')}
+      css={animated && injectAnimation('fadeInTopDown', '0.5s', 'ease')}
       {...props}
     >
       <span css={typo.title}>{title}</span>
@@ -44,10 +44,12 @@ const typo = {
   title: css`
     ${TYPO.title1.Sb};
     color: ${COLORS.grey1};
+    line-height: 148%;
   `,
   subtitle: css`
     ${TYPO.text1.Reg};
     color: ${COLORS.grey1};
+    line-height: 155%;
   `,
 };
 

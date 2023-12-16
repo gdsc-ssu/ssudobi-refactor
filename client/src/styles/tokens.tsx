@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { mq } from './breakpoints';
 
 type Direction = 'row' | 'column';
 type JustifyContent =
@@ -59,7 +60,7 @@ export const transform = (transformVal: string) => {
 export const transition = (duration: string, animationType = 'linear') => {
   return css`
     -o-transition: all ${duration} ${animationType};
-    -webkit-transition: -webkit-transform ${duration};
+    -webkit-transition: all ${duration};
     -ms-transition: all ${duration};
     -moz-transition: all ${duration};
     transition: all ${duration};
@@ -68,5 +69,23 @@ export const transition = (duration: string, animationType = 'linear') => {
 
 export const PageContainer = styled.div`
   width: 100%;
-  padding: 1rem 2.7rem;
+  min-height: 100%;
 `;
+
+/** 공통 헤더 높이 */
+export const HEADER_HEIGHT = 6;
+/** 공통 바텀 네비게이션바 높이 */
+export const BOTTOM_HEIGHT = 7;
+
+export const containerStyle = {
+  navigator: css`
+    padding-top: ${HEADER_HEIGHT}rem;
+    padding-bottom: ${BOTTOM_HEIGHT}rem;
+  `,
+  header: css`
+    padding-top: ${HEADER_HEIGHT}rem;
+  `,
+  skinight: css`
+    padding: 0rem;
+  `,
+};

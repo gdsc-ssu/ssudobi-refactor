@@ -1,59 +1,48 @@
 import { COLORS } from '@/styles/colors';
+import { flex } from '@/styles/tokens';
+import { TYPO } from '@/styles/typo';
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
+  width: 100%;
   display: flex;
-`;
-
-// export const SideLine = styled.div`
-//   background-color: ${COLORS.grey7};
-//   border-radius: 0 10px 10px 0;
-// `;
-
-export const InfoBox = styled.div`
-  width: 250px;
-  background-color: ${COLORS.grey7};
-  padding: 15px 20px;
-  border-radius: 10px;
-  margin-right: 12px;
+  position: relative;
 `;
 
 export const TitleBox = styled.div`
+  display: flex;
   color: ${COLORS.primary};
-  font-size: 1.2rem;
+  ${TYPO.text2.Sb};
 `;
 
 export const DateBox = styled.div`
   margin-top: 5px;
-
-  font-size: 1rem;
-  font-weight: 400;
+  ${TYPO.text3.Reg};
 `;
 
 export const PlaceBox = styled.div`
-  margin-top: 3px;
-  font-size: 1rem;
-  font-weight: 400;
+  margin-top: 5px;
+  ${TYPO.text3.Reg};
 `;
 
 export const NoteBox = styled.div`
-  font-weight: 300;
-  font-size: 1rem;
-  margin-top: 10px;
+  ${TYPO.text3.Lg};
+  margin-top: 1rem;
 `;
 
 export const PeopleBox = styled.div`
   display: flex;
+  ${flex('row', 'start', 'end', 0.5)};
+  flex-wrap: wrap;
+  margin-top: 1.3rem;
 `;
 
 export const PersonInfo = styled.div`
-  font-size: 0.8rem;
+  ${TYPO.label.Md};
   border-radius: 3px;
   color: ${COLORS.grey3};
   background-color: #ececec;
   padding: 2px 5px;
-  margin-right: 5px;
-  margin-top: 10px;
 `;
 
 export const PlusBox = styled.button`

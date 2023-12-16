@@ -157,6 +157,7 @@ const ConfirmReservationModal = ({
                   setIsSuccess(true);
                   if (handleClose) handleClose();
                 } else {
+                  if (handleClose) handleClose();
                   setIsError({ isError: true, errorMessage: res.message });
                 }
               });

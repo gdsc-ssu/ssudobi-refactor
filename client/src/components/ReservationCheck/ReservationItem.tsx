@@ -97,8 +97,8 @@ const ReservationItem = ({
         <Modal
           isTransition={isTransition}
           modalType="decision"
-          title={title}
-          message="예약을 정말 삭제할까요?"
+          title="예약을 정말 삭제할까요?"
+          message="삭제한 예약은 복구할 수 없어요."
           handleClose={handleClose}
           onClick={handleRemove}
         />

@@ -52,6 +52,7 @@ interface ConfirmReservationModalProps {
   setIsError: Dispatch<SetStateAction<ReserveError>>;
   // 템플릿용인지 예약용인지
   createType: 'template' | 'reserve';
+  handleClose?: () => void;
 }
 
 const ConfirmReservationModal = ({
@@ -66,6 +67,7 @@ const ConfirmReservationModal = ({
   setIsSuccess,
   setIsError,
   createType,
+  handleClose,
 }: ConfirmReservationModalProps) => {
   const { template, settingReservationInfo } = useTemplate();
 
@@ -153,12 +155,14 @@ const ConfirmReservationModal = ({
               .then((res) => {
                 if (res.success) {
                   setIsSuccess(true);
+                  if (handleClose) handleClose();
                 } else {
                   setIsError({ isError: true, errorMessage: res.message });
                 }
               });
           } else {
             setIsSuccess(true);
+            if (handleClose) handleClose();
           }
         }}
       >

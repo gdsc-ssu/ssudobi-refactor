@@ -1,15 +1,17 @@
 import Head from 'next/head';
+import { ReactNode } from 'react';
 
 export interface headProps {
   title: string;
   desc: string;
+  children?: ReactNode;
 }
 
 /**
  * 검색 최적화를 위한 Seo 컴포넌트
  * 페이지 최 상단에 선언하면 됩니다.
  */
-const Seo = ({ title, desc }: headProps) => {
+const Seo = ({ title, desc, children }: headProps) => {
   return (
     <Head>
       <title>{`${title} | SSUDOBI : 숭실대학교 도서관 비대면 예약 시스템`}</title>
@@ -26,7 +28,8 @@ const Seo = ({ title, desc }: headProps) => {
       <meta name="og:image" content="/og.jpg" />
       <meta name="og:description" content={desc} />
       <meta name="og:type" content="website" />
-      <meta name="twitter:title" content="BAMBI" />
+      <meta name="twitter:title" content="SSUDOBI" />
+      {children}
     </Head>
   );
 };

@@ -24,7 +24,9 @@ const Landing = () => {
 
   return (
     <Container css={fullPageStyle()}>
-      <Seo {...seos.landing} />
+      <Seo {...seos.landing}>
+        <meta name="msapplication-TileColor" content="#1D9BF0"></meta>
+      </Seo>
       <TitleWrapper>
         <span css={TYPO.title1.Eb}>SSUDOBI</span>
         <span css={TYPO.title2.Reg}>숭실대학교 도서관 비대면 예약 시스템</span>

@@ -11,6 +11,8 @@ import { CompanionProps } from '@/utils/types/Companion';
 import { PageContainer, flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
 import { Title } from '@/components/Layouts';
+import Seo from '@/components/Seo';
+import { seos } from '@/assets/seos';
 
 /**
  * 예약하기 페이지
@@ -55,6 +57,7 @@ const Reserve = () => {
 
   return (
     <PageContainer css={pageStyle}>
+      <Seo {...seos.reserve} />
       <Title
         title="메이트를 선택할거예요"
         subtitle="함께 도서관을 이용할 메이트를 선택해주세요."

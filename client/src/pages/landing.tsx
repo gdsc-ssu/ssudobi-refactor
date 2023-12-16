@@ -1,5 +1,7 @@
+import { seos } from '@/assets/seos';
 import { RoundButton } from '@/components/Buttons';
 import { Circle } from '@/components/Login';
+import Seo from '@/components/Seo';
 import { useVh } from '@/hooks';
 import { injectAnimation } from '@/styles/animations';
 import { COLORS } from '@/styles/colors';
@@ -22,6 +24,7 @@ const Landing = () => {
 
   return (
     <Container css={fullPageStyle()}>
+      <Seo {...seos.landing} />
       <TitleWrapper>
         <span css={TYPO.title1.Eb}>SSUDOBI</span>
         <span css={TYPO.title2.Reg}>숭실대학교 도서관 비대면 예약 시스템</span>

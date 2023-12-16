@@ -19,6 +19,8 @@ import ConfirmModal from '@/components/Modal/Confrim';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
 import { CompanionProps } from '@/utils/types/Companion';
+import Seo from '@/components/Seo';
+import { seos } from '@/assets/seos';
 
 const Timetable = () => {
   const isKeyOfReserveTime = (
@@ -190,6 +192,7 @@ const Timetable = () => {
 
   return (
     <Container>
+      <Seo {...seos.reserve} />
       <HeaderDiv>
         <HeaderEachDiv>
           <HeaderDivBoldText>사용시간</HeaderDivBoldText>

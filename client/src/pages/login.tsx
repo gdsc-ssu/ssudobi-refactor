@@ -1,5 +1,7 @@
+import { seos } from '@/assets/seos';
 import { RoundButton } from '@/components/Buttons';
 import { TextInput } from '@/components/Field';
+import Seo from '@/components/Seo';
 import { useAuth, useHeader, useInput, useVh } from '@/hooks';
 import { COLORS } from '@/styles/colors';
 import { HEADER_HEIGHT, flex } from '@/styles/tokens';
@@ -27,6 +29,7 @@ const Login = () => {
 
   return (
     <Container css={fullPageStyle(HEADER_HEIGHT)}>
+      <Seo {...seos.login} />
       <InputWrapper>
         <InputBox>
           <Caption>학번</Caption>

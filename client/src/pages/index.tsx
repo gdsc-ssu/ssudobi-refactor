@@ -1,5 +1,7 @@
+import { seos } from '@/assets/seos';
 import { MateList, ReserveButtons, TemplateList } from '@/components/Home';
 import { Title } from '@/components/Layouts';
+import Seo from '@/components/Seo';
 import { useAuth, useMate } from '@/hooks';
 import { PageContainer, flex } from '@/styles/tokens';
 import { css } from '@emotion/react';
@@ -28,6 +30,7 @@ const Home = () => {
 
   return (
     <PageContainer css={pageStyle}>
+      <Seo {...seos.index} />
       <TitleWrapper css={paddingStyle}>
         <Title {...configs.reserve} />
         <ReserveButtons />

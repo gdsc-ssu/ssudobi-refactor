@@ -1,5 +1,7 @@
+import { seos } from '@/assets/seos';
 import Modal from '@/components/Modal';
 import { MenuBox, ProfileBox } from '@/components/Profile';
+import Seo from '@/components/Seo';
 import { useAuth, useHeader, useTransition } from '@/hooks';
 import { COLORS } from '@/styles/colors';
 import { PageContainer, flex } from '@/styles/tokens';
@@ -70,6 +72,7 @@ const Mypage = () => {
 
   return (
     <PageContainer css={pageStyle}>
+      <Seo {...seos.mypage} />
       <ProfileBox
         name={authInfo?.name || ''}
         memberNo={authInfo?.sId || ''}

@@ -1,5 +1,7 @@
+import { seos } from '@/assets/seos';
 import { Title } from '@/components/Layouts';
 import { MateManageKit } from '@/components/Mate';
+import Seo from '@/components/Seo';
 import { useAuth } from '@/hooks';
 import { injectAnimation } from '@/styles/animations';
 import { PageContainer, flex } from '@/styles/tokens';
@@ -16,6 +18,7 @@ const Mate = () => {
 
   return (
     <PageContainer css={pageStyle}>
+      <Seo {...seos.mate} />
       <TitleWrapper css={paddingStyle}>
         <Title {...config} />
       </TitleWrapper>

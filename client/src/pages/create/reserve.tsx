@@ -13,6 +13,8 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import { Title } from '@/components/Layouts';
 import { injectAnimation } from '@/styles/animations';
+import Seo from '@/components/Seo';
+import { seos } from '@/assets/seos';
 
 /**
  * 예약하기 페이지
@@ -44,6 +46,7 @@ const Reserve = () => {
 
   return (
     <PageContainer css={pageStyle}>
+      <Seo {...seos.reserve} />
       <Title
         title="세미나실을 예약할 거예요."
         subtitle="간단한 예약 정보를 입력해 주세요!"

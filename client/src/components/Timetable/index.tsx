@@ -40,6 +40,8 @@ const Schedule: React.FC<TProps> = ({
   const [isDataAllFalse, setIsDataAllFalse] = useState(false);
 
   const SeminarTimes = [
+    '09',
+    ' ',
     '10',
     ' ',
     '11',
@@ -231,6 +233,10 @@ const Schedule: React.FC<TProps> = ({
                                       ) {
                                         return;
                                       }
+                                      console.log(
+                                        'newSelect',
+                                        newSelectedSlots,
+                                      );
                                       setSelectedSlots(newSelectedSlots);
                                       setIsSelected((res: boolean) => !res);
                                     }

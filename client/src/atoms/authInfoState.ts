@@ -5,4 +5,4 @@ export type authInfoType = {
   sId: string;
 };
 
-export const authInfoState = atom<authInfoType | null>(null);
+export const authInfoState = atom<authInfoType | null>({ name: '', sId: '' });

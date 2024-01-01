@@ -1,6 +1,8 @@
 export const EmptyDate = [
   {
     '2023-01-00': {
+      '0900': true,
+      '0930': true,
       '1000': true,
       '1030': true,
       '1100': true,
@@ -25,6 +27,8 @@ export const EmptyDate = [
       '2030': true,
     },
     '2023-02-00': {
+      '0900': true,
+      '0930': true,
       '1000': true,
       '1030': true,
       '1100': true,
@@ -49,6 +53,8 @@ export const EmptyDate = [
       '2030': true,
     },
     '2023-03-00': {
+      '0900': true,
+      '0930': true,
       '1000': true,
       '1030': true,
       '1100': true,
@@ -73,6 +79,8 @@ export const EmptyDate = [
       '2030': true,
     },
     '2023-04-00': {
+      '0900': true,
+      '0930': true,
       '1000': true,
       '1030': true,
       '1100': true,
@@ -97,6 +105,8 @@ export const EmptyDate = [
       '2030': true,
     },
     '2023-05-00': {
+      '0900': true,
+      '0930': true,
       '1000': true,
       '1030': true,
       '1100': true,
@@ -121,6 +131,8 @@ export const EmptyDate = [
       '2030': true,
     },
     '2023-06-00': {
+      '0900': true,
+      '0930': true,
       '1000': true,
       '1030': true,
       '1100': true,

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { MateBox, lineStyles } from './common';
 import { flex, transition } from '@/styles/tokens';
 import { FormEvent, useState } from 'react';
-import { useInput, useTransition } from '@/hooks';
+import { useAuth, useInput, useTransition } from '@/hooks';
 import PlusIcon from '@/assets/svg/plus-circle.svg';
 import { TYPO } from '@/styles/typo';
 import { COLORS } from '@/styles/colors';
@@ -11,6 +11,7 @@ import { TextInput } from '@/components/Field';
 import { motion } from 'framer-motion';
 import { SquareButton } from '@/components/Buttons';
 import Modal from '@/components/Modal';
+import LoadingScreen from './LoadingScreen';
 
 type FormData = {
   name: string;
@@ -35,11 +36,13 @@ const ANIMATION_STYLES = {
 
 const AddMateBox = ({ saveMateList, isErr }: Props) => {
   const [toggleOpen, setToggleOpen] = useState(false);
-  const { values, handleChange, setValue } = useInput<FormData>({
+  const [loading, setLoading] = useState(false);
+  const { values, handleChange, handleClear } = useInput<FormData>({
     name: '',
     sId: '',
   });
   const { isMount, isTransition, handleOpen, handleClose } = useTransition();
+  const { authInfo } = useAuth();
 
   const modalConfig = {
     title: '메이트 등록에 실패하였습니다.',
@@ -53,16 +56,21 @@ const AddMateBox = ({ saveMateList, isErr }: Props) => {
   };
 
   const clearInput = () => {
-    setValue('name', '');
-    setValue('sId', '');
+    handleClear();
     setToggleOpen(false);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.name === '' || values.sId === '') return;
+    if (values.name === authInfo.name && values.sId === authInfo.sId) {
+      handleOpen();
+      return;
+    }
 
+    setLoading(true);
     const res = await saveMateList(values.name, values.sId);
+    setLoading(false);
     if (res) clearInput();
     else handleOpen();
   };
@@ -128,6 +136,7 @@ const AddMateBox = ({ saveMateList, isErr }: Props) => {
           isTransition={isTransition}
         />
       )}
+      {loading && <LoadingScreen />}
     </Container>
   );
 };

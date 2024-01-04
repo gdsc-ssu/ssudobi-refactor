@@ -1,7 +1,7 @@
 import { RoundButton } from '@/components/Buttons';
 import Usage from '@/components/Buttons/Usage';
 import { Picker } from '@/components/Layouts';
-import { useHeader } from '@/hooks';
+import { useDisabled, useHeader } from '@/hooks';
 import { COLORS } from '@/styles/colors';
 import { PageContainer, flex } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
@@ -22,6 +22,7 @@ import { seos } from '@/assets/seos';
 const Reserve = () => {
   const { setHeader } = useHeader();
   const route = useRouter();
+  useDisabled();
 
   const [checkedButton, setCheckedButton] = useState<boolean>(true);
   const [checkBox, setCheckBox] = useState<boolean>(false);

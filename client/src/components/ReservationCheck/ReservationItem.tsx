@@ -19,6 +19,8 @@ interface Props {
   endTime: string;
   room: string;
   patrons: PatronInfo[];
+  patron: string;
+  authName: string;
   reserveId: number;
 }
 
@@ -28,6 +30,8 @@ const ReservationItem = ({
   endTime,
   room,
   patrons,
+  patron,
+  authName,
   reserveId,
 }: Props) => {
   const { isMount, handleOpen, handleClose, isTransition } = useTransition();
@@ -80,7 +84,14 @@ const ReservationItem = ({
         </TitleBox>
         <div>
           <DateBox>{formatDateRange(beginTime, endTime)}</DateBox>
-          <PlaceBox>{room}</PlaceBox>
+          <PlaceBox>
+            {room}
+            {patron !== authName && (
+              <PersonInfo style={{ backgroundColor: 'transparent' }}>
+                {' 예약자: ' + patron}
+              </PersonInfo>
+            )}
+          </PlaceBox>
           <PeopleBox>
             {patrons.map((el, idx) => {
               return (
@@ -143,6 +154,8 @@ const DateBox = styled.div`
 const PlaceBox = styled.div`
   margin-top: 5px;
   ${TYPO.text3.Reg};
+  display: flex;
+  align-items: center;
 `;
 
 const PeopleBox = styled.div`

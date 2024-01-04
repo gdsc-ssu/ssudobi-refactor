@@ -45,7 +45,9 @@ const ReservationCheck = () => {
                 endTime={el.endTime}
                 room={el.room.name}
                 patrons={el.patrons}
+                patron={el.patron.name}
                 reserveId={el.id}
+                authName={authInfo?.name}
               />
             </ListBox>
           ))

@@ -42,7 +42,7 @@ const ToastInnerWrapper = styled.div`
 `;
 
 const ToastContent = styled.span`
-  ${TYPO.text2.Reg};
+  ${TYPO.text1.Reg};
   color: ${COLORS.grey2};
   white-space: pre-line;
   text-align: start;

@@ -21,6 +21,7 @@ import { COLORS } from '@/styles/colors';
 import { CompanionProps } from '@/utils/types/Companion';
 import Seo from '@/components/Seo';
 import { seos } from '@/assets/seos';
+import { useDisabled } from '@/hooks';
 
 const Timetable = () => {
   const isKeyOfReserveTime = (
@@ -28,6 +29,7 @@ const Timetable = () => {
   ): key is keyof typeof RESERVE_TIME => {
     return key in RESERVE_TIME;
   };
+  useDisabled();
 
   const route = useRouter();
   const timeQuery = route.query.time as string;

@@ -4,6 +4,7 @@ import { set } from 'lodash';
 type UseInputReturnType<T> = {
   values: T;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleClear: () => void;
   setValue: <K extends keyof T>(path: K, value: T[K]) => void;
 };
 
@@ -23,9 +24,14 @@ const useInput = <T extends object>(
     setValues(updatedValues as T);
   };
 
+  const handleClear = () => {
+    setValues(initialValues);
+  };
+
   return {
     values,
     handleChange,
+    handleClear,
     setValue,
   };
 };

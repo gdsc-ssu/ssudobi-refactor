@@ -31,7 +31,6 @@ export const ModalView = styled.div`
 
   background-color: white;
   border-radius: 10px;
-  max-width: 50rem;
 
   transition: height 0.5s ease;
   ${injectAnimation('modalBackgroundAppear', '0.5s', 'ease')};
@@ -41,9 +40,9 @@ export const ModalContent = styled.div`
   ${flex('column', 'center', 'center', 0)}
 
   background-color: ${COLORS.white};
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 30rem;
+  padding: 3rem;
+  border-radius: 1.5rem;
+  width: 33rem;
   text-align: center;
   box-shadow:
     rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
@@ -60,7 +59,7 @@ export const ModalButton = styled.button`
   color: ${COLORS.white};
   border-radius: 50rem;
 
-  height: 3.2rem;
+  height: 3.5rem;
   ${TYPO.text2.Md};
 
   position: relative;
@@ -76,10 +75,11 @@ export const ModalButton = styled.button`
 `;
 
 export const Title = styled.div`
-  ${TYPO.text1.Md};
+  ${TYPO.title3.Md};
   text-align: center;
 `;
 
 export const Message = styled.p`
+  ${TYPO.text2.Reg};
   margin-bottom: 2.2rem;
 `;

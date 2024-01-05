@@ -1,7 +1,5 @@
 import { RoundButton } from '@/components/Buttons';
-import { useHeader, useMate } from '@/hooks';
-import { COLORS } from '@/styles/colors';
-import { TYPO } from '@/styles/typo';
+import { useDisabled, useHeader, useMate } from '@/hooks';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect, useLayoutEffect, useState } from 'react';
@@ -19,6 +17,8 @@ import { seos } from '@/assets/seos';
  */
 const Reserve = () => {
   const { setHeader } = useHeader();
+  useDisabled();
+
   const route = useRouter();
 
   const time = route.query.time as string;

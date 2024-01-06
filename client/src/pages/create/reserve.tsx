@@ -1,7 +1,7 @@
 import { RoundButton } from '@/components/Buttons';
 import Usage from '@/components/Buttons/Usage';
 import { Picker } from '@/components/Layouts';
-import { useDisabled, useHeader } from '@/hooks';
+import { useDisabled, useHeader, useTemplate } from '@/hooks';
 import { COLORS } from '@/styles/colors';
 import { PageContainer, flex } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
@@ -15,6 +15,8 @@ import { Title } from '@/components/Layouts';
 import { injectAnimation } from '@/styles/animations';
 import Seo from '@/components/Seo';
 import { seos } from '@/assets/seos';
+import { MenuTitle } from '@/components/AddTemplate/common';
+import { TextInput } from '@/components/Field';
 
 /**
  * 예약하기 페이지
@@ -23,6 +25,17 @@ const Reserve = () => {
   const { setHeader } = useHeader();
   const route = useRouter();
   useDisabled();
+
+  const {
+    settingHeader,
+    template,
+    settingTitle,
+    settingSeminarType,
+    settingTime,
+    settingUsage,
+    handleNextStage,
+    editing,
+  } = useTemplate();
 
   const [checkedButton, setCheckedButton] = useState<boolean>(true);
   const [checkBox, setCheckBox] = useState<boolean>(false);
@@ -116,6 +129,16 @@ const Reserve = () => {
         </CheckBoxDiv>
         <Caption>{`자주하는 예약의 경우 탬플릿으로 추가하면\n다음번에 간편하게 예약할 수 있어요`}</Caption>
       </CheckWrapper>
+      {checkBox && (
+        <MenuBox>
+          <MenuTitle>템플릿 이름</MenuTitle>
+          <TextInput
+            value={template.title}
+            onChange={settingTitle}
+            placeholder="ex. 슈도비 프로젝트 회의"
+          />
+        </MenuBox>
+      )}
       <RoundButton
         css={buttonStyle}
         title="예약 가능 시간 탐색하기"
@@ -189,4 +212,9 @@ const CheckBoxText = styled.div`
 
 const buttonStyle = css`
   margin-top: 5rem;
+`;
+
+const MenuBox = styled.div`
+  width: 100%;
+  ${flex('column', 'start', 'start', 1.5)};
 `;

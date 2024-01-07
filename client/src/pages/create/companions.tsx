@@ -1,5 +1,5 @@
 import { RoundButton } from '@/components/Buttons';
-import { useDisabled, useHeader, useMate } from '@/hooks';
+import { useDisabled, useHeader, useMate, useTemplate } from '@/hooks';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect, useLayoutEffect, useState } from 'react';
@@ -18,6 +18,7 @@ import { seos } from '@/assets/seos';
 const Reserve = () => {
   const { setHeader } = useHeader();
   useDisabled();
+  const { settingCompanion } = useTemplate();
 
   const route = useRouter();
 
@@ -81,7 +82,7 @@ const Reserve = () => {
             if (checkedButton) return;
             const companionsJson = JSON.stringify(companions);
             const encodedCompanions = encodeURIComponent(companionsJson);
-
+            settingCompanion(selectedList);
             route.push({
               pathname: '/create/timetable',
               query: {

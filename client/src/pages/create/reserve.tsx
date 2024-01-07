@@ -1,7 +1,7 @@
 import { RoundButton } from '@/components/Buttons';
 import Usage from '@/components/Buttons/Usage';
 import { Picker } from '@/components/Layouts';
-import { useDisabled, useHeader } from '@/hooks';
+import { useDisabled, useHeader, useTemplate } from '@/hooks';
 import { COLORS } from '@/styles/colors';
 import { PageContainer, flex } from '@/styles/tokens';
 import { TYPO } from '@/styles/typo';
@@ -15,6 +15,10 @@ import { Title } from '@/components/Layouts';
 import { injectAnimation } from '@/styles/animations';
 import Seo from '@/components/Seo';
 import { seos } from '@/assets/seos';
+import { MenuTitle } from '@/components/AddTemplate/common';
+import { TextInput } from '@/components/Field';
+import { useAtom } from 'jotai';
+import { makeTemplateState } from '@/atoms/templateState';
 
 /**
  * 예약하기 페이지
@@ -24,9 +28,17 @@ const Reserve = () => {
   const route = useRouter();
   useDisabled();
 
+  const {
+    template,
+    settingTitle,
+    settingSeminarType,
+    settingTime,
+    settingUsage,
+  } = useTemplate();
+
   const [checkedButton, setCheckedButton] = useState<boolean>(true);
-  const [checkBox, setCheckBox] = useState<boolean>(false);
-  const [selectedUsage, setSelectedUsage] = useState('학습');
+  const [checkBox, setCheckBox] = useAtom(makeTemplateState);
+  const [selectedUsage, setSelectedUsage] = useState('');
 
   const handleUsageClick = (title: string) => {
     setSelectedUsage(title);
@@ -62,6 +74,7 @@ const Reserve = () => {
           itemType="Info"
           isMultiple={false}
           itemSetter={setTime}
+          onClick={() => settingTime(Number(time[0]?.slice(0, 1)))}
           contents={[
             {
               disabled: false,
@@ -83,22 +96,34 @@ const Reserve = () => {
             <Usage
               title="학습"
               checked={selectedUsage === '학습'}
-              onClick={() => handleUsageClick('학습')}
+              onClick={() => {
+                handleUsageClick('학습');
+                settingUsage('학습');
+              }}
             />
             <Usage
               title="회의"
               checked={selectedUsage === '회의'}
-              onClick={() => handleUsageClick('회의')}
+              onClick={() => {
+                handleUsageClick('회의');
+                settingUsage('회의');
+              }}
             />
             <Usage
               title="수업"
               checked={selectedUsage === '수업'}
-              onClick={() => handleUsageClick('수업')}
+              onClick={() => {
+                handleUsageClick('수업');
+                settingUsage('수업');
+              }}
             />
             <Usage
               title="기타"
               checked={selectedUsage === '기타'}
-              onClick={() => handleUsageClick('기타')}
+              onClick={() => {
+                handleUsageClick('기타');
+                settingUsage('기타');
+              }}
             />
           </UsageDiv>
         </UsageContainer>
@@ -116,12 +141,24 @@ const Reserve = () => {
         </CheckBoxDiv>
         <Caption>{`자주하는 예약의 경우 탬플릿으로 추가하면\n다음번에 간편하게 예약할 수 있어요`}</Caption>
       </CheckWrapper>
+      {checkBox && (
+        <MenuBox>
+          <MenuTitle>템플릿 이름</MenuTitle>
+          <TextInput
+            value={template.title}
+            onChange={settingTitle}
+            placeholder="ex. 슈도비 프로젝트 회의"
+          />
+        </MenuBox>
+      )}
       <RoundButton
         css={buttonStyle}
         title="예약 가능 시간 탐색하기"
         theme="primary"
         disabled={checkedButton}
         onClick={() => {
+          // TODO: 추후에 세미나실 또는 개방형세미나실 조건에 맞게 변경 필요
+          settingSeminarType('세미나실');
           route.push({
             pathname: '/create/companions',
             query: { time: time, useCase: selectedUsage },
@@ -189,4 +226,9 @@ const CheckBoxText = styled.div`
 
 const buttonStyle = css`
   margin-top: 5rem;
+`;
+
+const MenuBox = styled.div`
+  width: 100%;
+  ${flex('column', 'start', 'start', 1.5)};
 `;

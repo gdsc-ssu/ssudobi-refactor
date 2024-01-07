@@ -17,3 +17,4 @@ export const initTemplateState: MyTemplate = {
 
 export const templateState = atom<MyTemplate>(initTemplateState);
 export const myTemplateListState = atom<MyTemplate[]>([]);
+export const makeTemplateState = atom(false);

@@ -21,7 +21,7 @@ import { COLORS } from '@/styles/colors';
 import { CompanionProps } from '@/utils/types/Companion';
 import Seo from '@/components/Seo';
 import { seos } from '@/assets/seos';
-import { useDisabled } from '@/hooks';
+import { useDisabled, useTemplate } from '@/hooks';
 
 const Timetable = () => {
   const isKeyOfReserveTime = (
@@ -30,6 +30,7 @@ const Timetable = () => {
     return key in RESERVE_TIME;
   };
   useDisabled();
+  const { handleNextStage } = useTemplate();
 
   const route = useRouter();
   const timeQuery = route.query.time as string;
@@ -191,6 +192,10 @@ const Timetable = () => {
     if (processData.length === 0) return;
     setCurProcessDataIdx((res) => res - 1);
   };
+
+  useEffect(() => {
+    if (isSuccess) handleNextStage('time');
+  }, [isSuccess]);
 
   return (
     <Container>

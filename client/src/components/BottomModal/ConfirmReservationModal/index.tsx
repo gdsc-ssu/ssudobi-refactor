@@ -10,7 +10,6 @@ import { ReserveError } from '@/utils/types/ReserveError';
 import { useTemplate } from '@/hooks';
 import { makeTemplateState } from '@/atoms/templateState';
 import { useAtom } from 'jotai';
-import { editingState } from '@/atoms/editingState';
 
 interface ConfirmReservationModalProps {
   /**
@@ -72,7 +71,7 @@ const ConfirmReservationModal = ({
   createType,
   handleClose,
 }: ConfirmReservationModalProps) => {
-  const { template, settingReservationInfo } = useTemplate();
+  const { settingReservationInfo } = useTemplate();
   const [checkbox, setCheckBox] = useAtom(makeTemplateState);
   function getDayOfWeek(inputDate: string): string {
     const currentDate = new Date();

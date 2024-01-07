@@ -30,7 +30,7 @@ const Timetable = () => {
     return key in RESERVE_TIME;
   };
   useDisabled();
-  const { template, handleNextStage } = useTemplate();
+  const { handleNextStage } = useTemplate();
 
   const route = useRouter();
   const timeQuery = route.query.time as string;

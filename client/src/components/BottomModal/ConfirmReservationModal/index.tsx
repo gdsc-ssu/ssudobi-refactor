@@ -8,6 +8,9 @@ import AuthApi from '@/apis/auth';
 import { CompanionProps } from '@/utils/types/Companion';
 import { ReserveError } from '@/utils/types/ReserveError';
 import { useTemplate } from '@/hooks';
+import { makeTemplateState } from '@/atoms/templateState';
+import { useAtom } from 'jotai';
+import { editingState } from '@/atoms/editingState';
 
 interface ConfirmReservationModalProps {
   /**
@@ -70,6 +73,32 @@ const ConfirmReservationModal = ({
   handleClose,
 }: ConfirmReservationModalProps) => {
   const { template, settingReservationInfo } = useTemplate();
+  const [checkbox, setCheckBox] = useAtom(makeTemplateState);
+  function getDayOfWeek(inputDate: string): string {
+    const currentDate = new Date();
+    const inputYear = currentDate.getFullYear();
+    const formattedDate = `${inputYear}-${inputDate}`;
+
+    const daysOfWeek = [
+      '일요일',
+      '월요일',
+      '화요일',
+      '수요일',
+      '목요일',
+      '금요일',
+      '토요일',
+    ];
+    const dateObject = new Date(formattedDate);
+
+    if (isNaN(dateObject.getTime())) {
+      return '유효하지 않은 날짜';
+    }
+
+    const dayIndex = dateObject.getDay();
+    const dayOfWeek = daysOfWeek[dayIndex];
+
+    return dayOfWeek;
+  }
 
   useEffect(() => {
     if (createType === 'template')
@@ -79,6 +108,11 @@ const ConfirmReservationModal = ({
         endTime,
         seminaRoom.map(Number),
       );
+    if (checkbox) {
+      settingReservationInfo(getDayOfWeek(slotDay), startTime, endTime, [
+        Number(seminaRoom[0].slice(0, 1)),
+      ]);
+    }
   }, [seminaRoom]);
 
   return (
@@ -161,6 +195,7 @@ const ConfirmReservationModal = ({
                   setIsError({ isError: true, errorMessage: res.message });
                 }
               });
+            setCheckBox(false);
           } else {
             setIsSuccess(true);
             if (handleClose) handleClose();

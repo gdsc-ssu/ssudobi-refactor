@@ -227,6 +227,11 @@ const useTemplate = () => {
     return res;
   };
 
+  /**---------- 예약시 템플릿 저장하기 관련 ----------**/
+  const settingEdit = () => {
+    setEditing(true);
+  };
+
   return {
     settingHeader,
     settingTitle,
@@ -243,6 +248,7 @@ const useTemplate = () => {
     template,
     editing,
     templateList,
+    settingEdit,
   };
 };
 

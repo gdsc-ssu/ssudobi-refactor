@@ -17,6 +17,8 @@ import Seo from '@/components/Seo';
 import { seos } from '@/assets/seos';
 import { MenuTitle } from '@/components/AddTemplate/common';
 import { TextInput } from '@/components/Field';
+import { useAtom } from 'jotai';
+import { makeTemplateState } from '@/atoms/templateState';
 
 /**
  * 예약하기 페이지
@@ -27,19 +29,16 @@ const Reserve = () => {
   useDisabled();
 
   const {
-    settingHeader,
     template,
     settingTitle,
     settingSeminarType,
     settingTime,
     settingUsage,
-    handleNextStage,
-    editing,
   } = useTemplate();
 
   const [checkedButton, setCheckedButton] = useState<boolean>(true);
-  const [checkBox, setCheckBox] = useState<boolean>(false);
-  const [selectedUsage, setSelectedUsage] = useState('학습');
+  const [checkBox, setCheckBox] = useAtom(makeTemplateState);
+  const [selectedUsage, setSelectedUsage] = useState('');
 
   const handleUsageClick = (title: string) => {
     setSelectedUsage(title);
@@ -75,6 +74,7 @@ const Reserve = () => {
           itemType="Info"
           isMultiple={false}
           itemSetter={setTime}
+          onClick={() => settingTime(Number(time[0]?.slice(0, 1)))}
           contents={[
             {
               disabled: false,
@@ -96,22 +96,34 @@ const Reserve = () => {
             <Usage
               title="학습"
               checked={selectedUsage === '학습'}
-              onClick={() => handleUsageClick('학습')}
+              onClick={() => {
+                handleUsageClick('학습');
+                settingUsage('학습');
+              }}
             />
             <Usage
               title="회의"
               checked={selectedUsage === '회의'}
-              onClick={() => handleUsageClick('회의')}
+              onClick={() => {
+                handleUsageClick('회의');
+                settingUsage('회의');
+              }}
             />
             <Usage
               title="수업"
               checked={selectedUsage === '수업'}
-              onClick={() => handleUsageClick('수업')}
+              onClick={() => {
+                handleUsageClick('수업');
+                settingUsage('수업');
+              }}
             />
             <Usage
               title="기타"
               checked={selectedUsage === '기타'}
-              onClick={() => handleUsageClick('기타')}
+              onClick={() => {
+                handleUsageClick('기타');
+                settingUsage('기타');
+              }}
             />
           </UsageDiv>
         </UsageContainer>
@@ -145,6 +157,8 @@ const Reserve = () => {
         theme="primary"
         disabled={checkedButton}
         onClick={() => {
+          // TODO: 추후에 세미나실 또는 개방형세미나실 조건에 맞게 변경 필요
+          settingSeminarType('세미나실');
           route.push({
             pathname: '/create/companions',
             query: { time: time, useCase: selectedUsage },
